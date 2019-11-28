@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dp_20">
+
+   <ImageView
+       android:id="@+id/img_noti_app"
+       android:layout_width="@dimen/dp_50"
+       android:layout_height="@dimen/dp_50"
+       android:src="@drawable/ic_launcher_background"/>
+
+    <TextView
+        android:id="@+id/txt_appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_apk_found"
+        android:layout_toRightOf="@id/img_noti_app"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_16"/>
+
+    <TextView
+        android:id="@+id/txt_versionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_desc"
+        android:layout_below="@id/txt_appName"
+        android:layout_toRightOf="@id/img_noti_app"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_12"/>
+
+    <TextView
+        android:id="@+id/btn_notifi_install"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/install"
+        android:background="@drawable/uninstall_background"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_16"
+        android:textSize="@dimen/dp_14"/>
+
+
+</RelativeLayout>

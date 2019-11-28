@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/dp_10">
+
+   <ImageView
+       android:id="@+id/img_apk"
+       android:layout_width="@dimen/dp_40"
+       android:layout_height="@dimen/dp_40"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_margin="@dimen/dp_20"
+       android:src="@drawable/ic_launcher_background"/>
+
+    <TextView
+        android:id="@+id/txt_apkName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_dummy_text"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_apk"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_14"
+        android:layout_marginRight="@dimen/dp_10"/>
+
+    <TextView
+        android:id="@+id/txt_versionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version_dummy_text"
+        app:layout_constraintTop_toBottomOf="@id/txt_apkName"
+        app:layout_constraintStart_toEndOf="@id/img_apk"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_10"/>
+
+    <TextView
+        android:id="@+id/txt_downloaded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dowloaded_text"
+        app:layout_constraintTop_toBottomOf="@id/img_apk"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_downloaded_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_date"
+        app:layout_constraintTop_toBottomOf="@id/img_apk"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/path"
+        app:layout_constraintTop_toBottomOf="@id/txt_downloaded"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_apkPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txt_path"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:layout_marginRight="@dimen/dp_16"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_permissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permissions"
+        app:layout_constraintTop_toBottomOf="@id/txt_apkPath"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_16"/>
+
+ <ImageView
+     android:id="@+id/img_permission_arrow"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:src="@drawable/ic_drop_down"
+     android:paddingRight="@dimen/dp_20"
+     android:paddingLeft="@dimen/dp_20"
+     app:layout_constraintTop_toBottomOf="@id/txt_apkPath"
+     app:layout_constraintEnd_toEndOf="parent"
+     android:layout_marginRight="@dimen/dp_16"
+     android:layout_marginTop="@dimen/dp_20"
+     android:textColor="@color/black"
+     android:textStyle="bold"
+     android:textSize="@dimen/dp_16"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_permissions"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="@drawable/grey_background"
+        app:layout_constraintTop_toBottomOf="@id/txt_permissions"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        tools:listitem="@layout/item_permissions">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

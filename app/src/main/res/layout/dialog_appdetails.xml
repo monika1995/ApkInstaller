@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/dp_20">
+
+   <ImageView
+       android:id="@+id/img_app"
+       android:layout_width="@dimen/dp_40"
+       android:layout_height="@dimen/dp_40"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_margin="@dimen/dp_20"
+       android:src="@drawable/ic_launcher_background"/>
+
+    <TextView
+        android:id="@+id/txt_appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_dummy_text"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_app"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_16"/>
+
+    <TextView
+        android:id="@+id/txt_versionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version_dummy_text"
+        app:layout_constraintTop_toBottomOf="@id/txt_appName"
+        app:layout_constraintStart_toEndOf="@id/img_app"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_12"/>
+
+    <TextView
+        android:id="@+id/txt_installation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/installation_text"
+        app:layout_constraintTop_toBottomOf="@id/img_app"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_installation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_date"
+        app:layout_constraintTop_toBottomOf="@id/img_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_uninstall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uninstall"
+        app:layout_constraintTop_toBottomOf="@id/txt_installation"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/btn_uninstall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uninstall"
+        android:background="@drawable/uninstall_background"
+        app:layout_constraintTop_toBottomOf="@id/txt_installation_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_16"
+        android:textSize="@dimen/dp_14"/>
+
+    <TextView
+        android:id="@+id/txt_permissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permissions"
+        app:layout_constraintTop_toBottomOf="@id/txt_uninstall"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_16"/>
+
+  <ImageView
+      android:id="@+id/img_permission_arrow"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_drop_down"
+      android:paddingRight="@dimen/dp_20"
+      android:paddingLeft="@dimen/dp_20"
+      app:layout_constraintTop_toBottomOf="@id/btn_uninstall"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginRight="@dimen/dp_16"
+      android:layout_marginTop="@dimen/dp_20"
+      android:textColor="@color/black"
+      android:textStyle="bold"
+      android:textSize="@dimen/dp_16"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_permissions"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="@drawable/grey_background"
+        app:layout_constraintTop_toBottomOf="@id/txt_permissions"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        tools:listitem="@layout/item_permissions">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

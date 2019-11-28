@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">APP Installer</string>
+    <string name="start">Start</string>
+    <string name="proceeding_text">By Proceeding, you agree to the \n <u>Privacy Policy</u> &amp; <u>Terms of service</u></string>
+
+    <string name="total_apps">Total Apps: 0</string>
+    <string name="total_apks">Total Downloaded Apks: 0</string>
+    <string name="app_dummy_text">Internet Speed Test</string>
+    <string name="version_dummy_text">6.22 MB | Version - 1.0</string>
+    <string name="launch">Launch</string>
+    <string name="install">Install</string>
+    <string name="details">Details</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="playstore">Play Store</string>
+    <string name="file_info">File Info</string>
+    <string name="installation_text">Installation Date</string>
+    <string name="dummy_date">07/09/2019</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="permissions">Permissions</string>
+    <string name="permission_dummy_text">android.permission-group.network</string>
+    <string name="update_now">Update Now</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="dowloaded_text">Downloaded Date</string>
+    <string name="path">Path</string>
+    <string name="sort_by">Sort By :</string>
+    <string name="system_apps">System Apps</string>
+    <string name="sort_by_size">Sort By Size</string>
+    <string name="sort_by_name">Sort By Name</string>
+    <string name="installed_app">Installed Apps</string>
+    <string name="loading_updates">Checking for Update</string>
+    <string name="permissions_required">Permission Required</string>
+    <string name="more">More</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="more_apps">More Apps</string>
+    <string name="share_app">Share App</string>
+    <string name="feedback">Feedback</string>
+    <string name="about_us">About Us</string>
+    <string name="settings">Settings</string>
+    <string name="no_apps_found">No Apps Aound</string>
+    <string name="no_apks_found">No Apks Found</string>
+    <string name="manage_notification">Manage Notification</string>
+    <string name="apk_alert">New APK found alert</string>
+    <string name="alert_turnon">Turn ON to be notified to install a downloaded APK</string>
+    <string name="alert_turnoff">Turn OFF if you don\'t wish to be bothered</string>
+    <string name="new_apk_found">New APK Found</string>
+    <string name="notification_desc">Want to install this app</string>
+</resources>

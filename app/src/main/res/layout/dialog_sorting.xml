@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingTop="@dimen/dp_8"
+    android:paddingBottom="@dimen/dp_8"
+    android:layout_gravity="right"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txt_sortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_16"/>
+
+    <RadioGroup
+        android:id="@+id/rdGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txt_sortBy"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dp_6">
+
+
+        <RadioButton
+            android:id="@+id/radio_systemApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/system_apps"
+            android:textColor="@color/black"
+            android:checked="true"
+            android:buttonTint="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radio_installedApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/installed_app"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radio_SortByName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by_name"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radio_SortBySize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by_size"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"/>
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
