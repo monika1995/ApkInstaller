@@ -1,4 +1,4 @@
-package com.q4u.apkinstaller;
+package com.techproof.appinstaller;
 
 import org.junit.Test;
 

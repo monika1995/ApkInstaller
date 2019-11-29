@@ -1,135 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_white"
-    android:paddingTop="@dimen/dp_10"
-    android:paddingBottom="@dimen/dp_10"
-    android:layout_marginBottom="@dimen/dp_10"
-    android:id="@+id/layout_apps">
+    android:layout_marginBottom="@dimen/dp_10">
 
-    <ImageView
-        android:id="@+id/img_app"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
-        android:layout_marginTop="@dimen/dp_6"/>
-
-    <TextView
-        android:id="@+id/txt_appName"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_apps"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_dummy_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guidelineLeft"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_4"/>
-
-    <TextView
-        android:id="@+id/txt_versionName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/version_dummy_text"
-        app:layout_constraintTop_toBottomOf="@id/txt_appName"
-        app:layout_constraintStart_toEndOf="@id/guidelineLeft"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
-        android:layout_marginLeft="@dimen/dp_4"/>
-
-
-    <TextView
-        android:id="@+id/txt_launch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background"
-        android:paddingLeft="@dimen/dp_26"
+        android:background="@color/light_white"
+        android:orientation="vertical"
         android:paddingTop="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_26"
         android:paddingBottom="@dimen/dp_10"
-        android:text="@string/launch"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guidelineRight"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/dp_10"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_app"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_6"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_appName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/app_dummy_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+            app:layout_constraintStart_toEndOf="@id/guidelineLeft"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_versionName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:text="@string/version_dummy_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+            app:layout_constraintStart_toEndOf="@id/guidelineLeft"
+            app:layout_constraintTop_toBottomOf="@id/txt_appName" />
 
 
-    <TextView
-        android:id="@+id/txt_appDetails"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/txt_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/background"
+            android:paddingLeft="@dimen/dp_26"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_26"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/launch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidelineRight"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txt_appDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawableLeft="@drawable/ic_details"
+            android:drawablePadding="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="@string/details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toStartOf="@id/guidelineLeft1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_app" />
+
+        <TextView
+            android:id="@+id/txt_updates"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawableLeft="@drawable/ic_check_for_updates"
+            android:drawablePadding="@dimen/dp_4"
+            android:text="@string/check_for_updates"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+            app:layout_constraintStart_toEndOf="@id/guidelineLeft1"
+            app:layout_constraintTop_toBottomOf="@id/img_app" />
+
+        <TextView
+            android:id="@+id/txt_playstore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawableLeft="@drawable/ic_playstore"
+            android:drawablePadding="@dimen/dp_4"
+            android:paddingRight="@dimen/dp_4"
+            android:text="@string/playstore"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidelineRight"
+            app:layout_constraintTop_toBottomOf="@id/img_app" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLeft1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.30" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ads_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/details"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
-        app:layout_constraintTop_toBottomOf="@id/img_app"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guidelineLeft1"
-        android:layout_marginTop="@dimen/dp_16"
-        android:paddingLeft="@dimen/dp_20"
-        android:drawableLeft="@drawable/ic_details"
-        android:drawablePadding="@dimen/dp_4"/>
-
-    <TextView
-        android:id="@+id/txt_updates"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@string/check_for_updates"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
-        app:layout_constraintTop_toBottomOf="@id/img_app"
-        app:layout_constraintStart_toEndOf="@id/guidelineLeft1"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        android:layout_marginTop="@dimen/dp_16"
-        android:drawableLeft="@drawable/ic_check_for_updates"
-        android:drawablePadding="@dimen/dp_4" />
-
-    <TextView
-        android:id="@+id/txt_playstore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/playstore"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
-        app:layout_constraintTop_toBottomOf="@id/img_app"
-        app:layout_constraintStart_toEndOf="@id/guidelineRight"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/dp_16"
-        android:paddingRight="@dimen/dp_4"
-        android:drawableLeft="@drawable/ic_playstore"
-        android:drawablePadding="@dimen/dp_4"/>
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.70"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineLeft1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.30"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

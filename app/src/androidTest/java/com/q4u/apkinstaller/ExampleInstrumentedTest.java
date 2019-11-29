@@ -1,4 +1,4 @@
-package com.q4u.apkinstaller;
+package com.techproof.appinstaller;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.q4u.apkinstaller", appContext.getPackageName());
+        assertEquals("com.techproof.appinstaller", appContext.getPackageName());
     }
 }

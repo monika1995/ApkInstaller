@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="ad_one_padding">10dp</dimen>
+    <dimen name="ad_one_banner_height">200dp</dimen>
+
+    <dimen name="cardevalu">4dp</dimen>
+    <dimen name="melayoutsize">70dp</dimen>
+    <dimen name="cardcontentpadding">1dp</dimen>
+    <dimen name="padding2dp">2dp</dimen>
+    <dimen name="mefragment_icon">35dp</dimen>
+    <dimen name="padding4dp">6dp</dimen>
+    <dimen name="textMefragment">10sp</dimen>
+
+    <dimen name="padding10dp">10dp</dimen>
+    <dimen name="padding15dp">15dp</dimen>
+
+    <dimen name="padding5dp">5dp</dimen>
+    <dimen name="margin10dp">10dp</dimen>
+
+    <dimen name="banner_height">60dp</dimen>
+    <dimen name="banner_large_height">100dp</dimen>
+    <dimen name="banner_rectangle_height">250dp</dimen>
+    <dimen name="banner_rectangle_width">300dp</dimen>
+</resources>

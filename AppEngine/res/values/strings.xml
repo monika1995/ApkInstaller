@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_removeads">Remove Ads</string>
+
+    <string name="please_wait">Please Wait!!</string>
+
+    <string name="notification_setting">Notification Setting</string>
+    <string name="settings">Settings</string>
+    <string name="pindi_Available_RAM">Available RAM</string>
+    <string name="shownotification">Show Notification</string>
+    <string name="showongoing">Show ongoing running notification</string>
+    <string name="showhighramnoti">Show high RAM use Notification</string>
+    <string name="notifywhenram">Notify when phone RAM use is on higher side</string>
+    <string name="keepservicerunning">Keep Service Running</string>
+    <string name="keepappservicesrunn">Keep app services running on device Reboot</string>
+    <string name="deleteoldversion">Delete Old Version</string>
+    <string name="deleteoldversionapk">Delete old version apk and Override with latest</string>
+    <string name="showsystemapp">Show System Apps</string>
+    <string name="showallpreinstall">Show all Pre-installed App in List</string>
+    <string name="autobackup">Auto Backup</string>
+    <string name="rateapptop">Like US</string>
+    <string name="rateapp">Rate Appliction on Play Store</string>
+    <string name="rateapp2">Love using app ? Please Rate with 5 Stars </string>
+    <string name="getmoresecurityapp">Get More Phone Security Apps</string>
+    <string name="getmoresecurityapp2">Hi Tech AppLock | Phone Sim Details | Call Recorders | HD Image Converter | Hide Pictures</string>
+    <string name="Backup_Alert">App Backup</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="notnow">Not Now</string>
+    <string name="boost">Boost</string>
+    <string name="notifytotake">Notify to take backup on New App installtion</string>
+    <string name="reload">Reload</string>
+    <string name="appsbackup">Apps Backup</string>
+    <string name="moresec">More Security</string>
+    <string name="rambooster">RAM Booster</string>
+    <string name="normalscan">Normal Scan</string>
+    <string name="fastscan">Fast Scan</string>
+    <string name="virusscan">Virus Scanner</string>
+    <string name="perms">Permissions</string>
+    <string name="reloaded">Reloaded</string>
+    <string name="warning">Warning</string>
+    <string name="share">Share using</string>
+    <string name="warning_msg">Do you really want to extract all the Apps?</string>
+    <string name="confirm">Confirm</string>
+    <string name="nope">Nope</string>
+    <string name="gen_apk">Generating Apk</string>
+    <string name="apks">apks</string>
+    <string name="app_name">3G To 4G Switch</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share APK</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="pls_select">Please select application first</string>
+    <string name="app_boosted">%s Applications Boosted</string>
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+
+        <item>Settings</item>
+        <!--           <item>Change Language</item> -->
+        <item>Rate App</item>
+        <item>Share App </item>
+    </string-array>
+
+    <string name="showdata">Show Data From</string>
+    <string name="showdata_asset">Default Value</string>
+    <string name="showdata_server">Server Value</string>
+
+    <string name="noappselected">No App Selected</string>
+    <string name="no_backup">No Backup yet</string>
+    <string name="archived">Archived</string>
+    <string name="backup">Backup</string>
+    <string name="restore">Restore</string>
+    <string name="installed">Installed</string>
+    <string name="installed_count">Installed %s</string>
+    <string name="archived_count">Archived %s</string>
+    <string name="no_of_perm">%s Perm\'s</string>
+    <string name="backup_all">Backup of all Apk\'s are made at Location %s</string>
+    <string name="backup_complete">Backup completed</string>
+    <string name="scan_complete">Scanning Complete,no threat found.</string>
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+
+    <array name="nav_drawer_icons">
+
+
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <!-- Content Description -->
+
+    <string name="pindi_ad_unit_google">ca-app-pub-3451337100490595/8973395265</string>
+    <string name="pindi_ad_unit_id2">ca-app-pub-3451337100490595/5365655266</string>
+    <string name="pindi_ad_unit_id">ca-app-pub-3451337100490595/6842388463</string>
+    <string name="pindi_ad_unit_id_int">ca-app-pub-3451337100490595/8319121660</string>
+
+    <string name="termsCond">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string name="fcm_defaultSenderId">180857058491</string>
+    <string name="upgradetopro_text">"* No Ads\n\n* All Feature Upgrades Free\n\n* No Monthly Charges\n\n* No Recurring, Lifetime Payment Once"</string>
+    <string name="forAlert">Want to exit from app?</string>
+    <string name="forOption">Exit</string>
+    <string name="forMoreOption">More Apps</string>
+    <string name="title_toolbar_about_us">About Us</string>
+
+    <!--Provider app id -->
+    <!--<string name="fb_login_protocol_scheme">fb473831583374039</string>-->
+    <!--<string name="app_id_facebook">473831583374039</string>-->
+    <string name="app_id_admob">ca-app-pub-3135070603528872~7890084182</string>
+    <!--<string name="app_id_vungle">5cdd195c6f69b9001109b932</string>-->
+    <string name="app_id_unity">3378606</string>
+    <string name="app_id_applovin">QDC9FDFrr-cdtD-6uvCt5Adct_CZDRncddROp_9SlI7WI_npLVec7K08EekzU2cBRlPzCLHTCF8_Icw0bgSbOT</string>
+    <string name="ads_loading">Ads Loading....</string>
+    <string name="replay">Replay</string>
+    <string name="learn_more">Learn More</string>
+    <string name="sponsored">Sponsored</string>
+
+</resources>

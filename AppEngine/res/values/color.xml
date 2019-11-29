@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="transparent">#00000000</drawable>
+    <color name="red">#ffe2231a</color>
+    <color name="dark_red">#ff510209</color>
+    <color name="thumbColor">#66aaaaaa</color>
+    <color name="translittle2">#90676767</color>
+    <color name="translittle">#60676767</color>
+    <color name="pink">#FF1493</color>
+    <color name="yellow">#D7DF01</color>
+    <color name="ddcolor">#6c3a3a</color>
+    <color name="blue_bg">#0000ff</color>
+    <color name="font_color">#138eff</color>
+    <color name="deep_red">#ff0000</color>
+    <color name="white">#9fff</color>
+    <color name="deep_white">#fff</color>
+    <color name="red2">#FF0000</color>
+    <color name="brown">#787878</color>
+    <color name="grey">#9fff</color>
+    <color name="black">#000000</color>
+    <color name="black_new">#D0000000</color>
+    <color name="black_new_seperator">#32000000</color>
+    <color name="cyan">#9AFEFF</color>
+    <color name="bg">#FFBD82</color>
+    <color name="newblue">#0094d1</color>
+    <color name="newblack">#EE2E2E2E</color>
+
+    <color name="ornage">#ca5f46</color>
+    <color name="v2_app_bg">#f0f0f0</color>
+    <color name="v2_blue">#33a0c1</color>
+    <color name="green">#00FF00</color>
+    <color name="black_text">#6b6b6b</color>
+    <color name="solid_green">#f0f0</color>
+    <color name="fullads_color">#606161</color>
+    <color name="dark_grey">#aca3a3</color>
+    <color name="light_grey">#bbbbbb</color>
+    <color name="blue">#0094d1</color>
+    <color name="purple">#B93B8F</color>
+    <color name="ptcolor">#c6ff00</color>
+    <color name="greenobutton">#c6ff00</color>
+    <color name="broadcast_green">#c6ff00</color>
+    <color name="notification_header_color">#339fc1</color>
+    <color name="notification_desc_color">#70bf1b</color>
+    <color name="green3">#049009</color>
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#000000</color>
+    <color name="list_background_pressed">#0B3B24</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    <color name="mygreen">#4a9131</color>
+    <color name="semiblack">#D9000000</color>
+    <color name="trans">#00000000</color>
+    <color name="select">#0174DF</color>
+    <color name="unselect">#BDBDBD</color>
+    <color name="header">#4C0B5F</color>
+    <color name="header1">#FF666666</color>
+    <color name="header2">#FF5722</color>
+    <color name="header3">#FFC74B46</color>
+    <color name="header4">#FFF4842D</color>
+    <color name="header5">#FF3F9FE0</color>
+    <color name="header6">#FF5161BC</color>
+    <color name="v7_blue1">#0B3B24</color>
+    <color name="v7_darkblue">#1E90FF</color>
+    <color name="v7_blue2">#1A237E</color>
+    <color name="v7_blue3">#00BCD4</color>
+    <color name="v7_blue5">#009688</color>
+    <color name="v7_blue4">#004D40</color>
+    <color name="v7_orange1">#FF5722</color>
+    <color name="v7_orange2">#1A237E</color>
+    <color name="v7_orange3">#D84315</color>
+    <color name="v7_orange4">#DD2C00</color>
+    <color name="v7_grey1">#263238</color>
+    <color name="v7_grey2">#607D8B</color>
+    <color name="v7_greybrown">#3E2723</color>
+    <color name="v7_grey4">#757575</color>
+    <color name="greennew">#0066CC</color>
+    <color name="newbottom">#330033</color>
+    <color name="White_Snow">#FFFAFA</color>
+    <color name="White_transparent_white_hex_2">#22ffffff</color>
+    <color name="White_transparent_white_hex_1">#11ffffff</color>
+    <color name="White_transparent_white_hex_10">#aaffffff</color>
+    <color name="White_transparent_white_hex_11">#bbffffff</color>
+    <color name="White_transparent_white_hex_12">#ccffffff</color>
+    <color name="White_transparent_white_hex_13">#ddffffff</color>
+    <color name="White_transparent_white_hex_14">#eeffffff</color>
+    <color name="White_transparent_white_hex_15">#ffffffff</color>
+    <color name="White_transparent_white_hex_3">#33ffffff</color>
+    <color name="White_transparent_white_hex_4">#44ffffff</color>
+    <color name="White_transparent_white_hex_5">#55ffffff</color>
+    <color name="White_transparent_white_hex_6">#66ffffff</color>
+    <color name="White_transparent_white_hex_7">#77ffffff</color>
+    <color name="White_transparent_white_hex_8">#88ffffff</color>
+    <color name="White_transparent_white_hex_9">#99ffffff</color>
+    <color name="White_transparent_white_percent_10">#1Affffff</color>
+    <color name="White_transparent_white_percent_15">#26ffffff</color>
+    <color name="White_transparent_white_percent_20">#33ffffff</color>
+    <color name="White_transparent_white_percent_25">#40ffffff</color>
+    <color name="White_transparent_white_percent_30">#4Dffffff</color>
+    <color name="White_transparent_white_percent_35">#59ffffff</color>
+    <color name="White_transparent_white_percent_40">#66ffffff</color>
+    <color name="White_transparent_white_percent_45">#73ffffff</color>
+    <color name="White_transparent_white_percent_5">#0Dffffff</color>
+    <color name="White_transparent_white_percent_50">#80ffffff</color>
+    <color name="White_transparent_white_percent_55">#8Cffffff</color>
+    <color name="White_transparent_white_percent_60">#99ffffff</color>
+    <color name="White_transparent_white_percent_65">#A6ffffff</color>
+    <color name="White_transparent_white_percent_70">#B3ffffff</color>
+    <color name="White_transparent_white_percent_75">#BFffffff</color>
+    <color name="White_transparent_white_percent_80">#CCffffff</color>
+    <color name="White_transparent_white_percent_85">#D9ffffff</color>
+    <color name="White_transparent_white_percent_90">#E6ffffff</color>
+    <color name="White_transparent_white_percent_95">#F2ffffff</color>
+    <color name="bottom_bg">#1f1d20</color>
+
+    <!-- version colors -->
+    <color name="new_actionbar_color">#354260</color>
+    <color name="new_tab_strip_header">#5D6A88</color>
+    <color name="new_background">#D4D6D5</color>
+    <color name="new_sim_detail_banner">#2f79fe</color>
+
+    <color name="new_speedmeter">#151B54</color>
+
+
+    <color name="native_med_bg">#20FFFFFF</color>
+    <color name="native_med_text_color">#FFFFFF</color>
+    <color name="native_med_sub_text_color">#FFFFFF</color>
+    <color name="native_med_button_bg">#2f79fe</color>
+    <color name="native_med_button_text_color">#FFFFFF</color>
+
+
+    <color name="native_large_bg">#FFFFFF</color>
+    <color name="native_large_text_color">#000000</color>
+    <color name="native_large_sub_text_color">#000000</color>
+    <color name="native_large_button_bg">#2f79fe</color>
+    <color name="native_large_button_text_color">#FFFFFF</color>
+
+    <color name="native_med_bg_grid">#000000</color>
+    <color name="native_med_text_color_grid">#FFFFFF</color>
+    <color name="native_med_sub_text_color_grid">#FFFFFF</color>
+    <color name="native_med_button_bg_grid">#009957</color>
+    <color name="native_med_button_text_color_grid">#FFFFFF</color>
+
+
+    <color name="native_rect_bg">#FFFFFF</color>
+    <color name="native_rect_text_color">#000000</color>
+    <color name="native_rect_sub_text_color">#000000</color>
+    <color name="native_rect_button_bg">#00a26a</color>
+    <color name="native_rect_button_text_color">#FFFFFF</color>
+
+    <color name="color_disable">#A9A9A9</color>
+    <color name="view_details_color">#303F9F</color>
+    <color name="view_detail_stroke">#0e8bef</color>
+
+    <color name="billing_list_header">#1a1a1a</color>
+    <color name="billing_list_subtitle">#525151</color>
+
+    <!--<color name="colorPrimary">#0068C1</color>-->
+    <!--<color name="colorPrimaryDark">#065dac</color>-->
+    <!--<color name="colorAccent">#0068C1</color>-->
+
+    <color name="colorPrimary">#040c14</color>
+    <color name="colorPrimaryDark">#040c14</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <color name="scroolcolor">#252424</color>
+    <color name="colorblacktrans">#bb000000</color>
+    <color name="toolbarred">#df2046</color>
+
+    <color name="native_med_bg_stoke_color">#00ff60</color>
+    <color name="native_large_bg_stoke_color">#00ff60</color>
+    <color name="rate_us_green">#3ca840</color>
+
+</resources>

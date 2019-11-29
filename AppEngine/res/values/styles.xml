@@ -1,0 +1,73 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+    -->
+    <style name="BaseTheme" parent="android:Theme.Holo.Light.Dialog" />
+    <!-- ThemarkActionBar -->
+    <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+
+    -->
+    <!-- </style> -->
+
+
+    <!-- Application theme. -->
+    <!-- <style name="AppTheme" parent="@style/Theme.AppCompat"> -->
+    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <!-- </style> -->
+
+    <style name="Theme_Dialog" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:layout_width">match_parent</item>
+
+    </style>
+
+    <style name="Theme_Dialog_more" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <!--<item name="android:windowMinWidthMajor">80%</item>-->
+        <!--<item name="android:windowMinWidthMinor">80%</item>-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+
+    </style>
+
+    <style name="AppTheme.NoActionBar.Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+
+    </style>
+
+    <style name="AppTransparent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:colorPrimary">#b50915</item>
+        <item name="android:colorPrimaryDark">#b50915</item>
+        <item name="android:colorAccent">#b50915</item>
+    </style>
+
+    <style name="AboutUsM24.Toolbar.Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="AboutUsTechApp.Toolbar.Theme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>

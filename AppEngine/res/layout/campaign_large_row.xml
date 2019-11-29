@@ -1,0 +1,26 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/ad_one_padding"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <app.utils.SelectableRoundedImageView
+            android:id="@+id/largeImageCampaign"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ad_one_banner_height"
+            app:sriv_left_top_corner_radius="2dp"
+            app:sriv_right_top_corner_radius="2dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

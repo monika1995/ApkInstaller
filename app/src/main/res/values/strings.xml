@@ -44,4 +44,6 @@
     <string name="alert_turnoff">Turn OFF if you don\'t wish to be bothered</string>
     <string name="new_apk_found">New APK Found</string>
     <string name="notification_desc">Want to install this app</string>
+    <string name="no_update_available">No Update Available</string>
+    <string name="update_available">Update Available</string>
 </resources>
