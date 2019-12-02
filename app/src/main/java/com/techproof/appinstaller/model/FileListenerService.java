@@ -37,6 +37,7 @@ public class FileListenerService extends Service {
         fileObserver = new RecursiveFileObserver(getPackageName(),getApplicationContext(),path);
         fileObserver.startWatching();
 
+
     }
 
     public void createChannel()

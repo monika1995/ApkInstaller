@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="app.pnd.adshandler" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="28" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_id_admob" />
+
+        <!-- <meta-data -->
+        <!-- android:name="com.facebook.sdk.ApplicationId" -->
+        <!-- android:value="@string/app_id_facebook" /> -->
+
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="@string/app_id_applovin" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/status_app_icon" />
+
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_color" -->
+        <!-- android:resource="@android:color/white" /> -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/fcm_defaultSenderId" />
+
+        <!-- Engine Activity Start -->
+        <activity
+            android:name="app.ui.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.ui.AboutUsActivityM24"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutUsM24.Toolbar.Theme" />
+        <activity
+            android:name="app.ui.AboutUsActivityLIV"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.ui.AboutUsActivityTechApp"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutUsTechApp.Toolbar.Theme" />
+        <activity
+            android:name="app.ui.PrintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.fcm.NotificationTypeFour"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+        <activity
+            android:name="app.inapp.BillingListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.inapp.BillingDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.adshandler.FullPagePromo"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="app.ui.ExitAdsActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+        <activity
+            android:name="app.ui.AdsLoadingActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+
+        <!-- Engine Activity End -->
+
+
+        <!-- Admob Activity -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent"
+            tools:node="replace" />
+
+        <!-- Facebook Activity -->
+        <!-- <activity -->
+        <!-- android:name="com.facebook.ads.AudienceNetworkActivity" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- tools:node="replace" /> -->
+
+
+        <!-- Unity Activities -->
+        <activity android:name="com.unity3d.services.ads.adunit.AdUnitActivity" />
+        <activity android:name="com.unity3d.services.ads.adunit.AdUnitSoftwareActivity" />
+
+        <!-- Vungle Activities -->
+        <!-- <activity -->
+        <!-- android:name="com.vungle.warren.ui.VungleActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.vungle.warren.ui.VungleFlexViewActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+
+
+        <!-- Applovin Activities -->
+        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
+
+        <!-- Startapp Activities -->
+        <activity
+            android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
+            android:theme="@android:style/Theme" />
+        <activity
+            android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.startapp.android.publish.adsCommon.activities.FullScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme" />
+
+        <!-- morefeature -->
+        <activity
+            android:name="app.ui.MoreFeatureActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Dialog_more" />
+
+        <receiver
+            android:name="app.fcm.InstallReferrerReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="app.fcm.NotificationActionReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="sec_btn" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="app.receiver.FirebaseAlarmReceiver" />
+        <receiver android:name="app.receiver.TopicAlarmReceiver" />
+    </application>
+
+</manifest>

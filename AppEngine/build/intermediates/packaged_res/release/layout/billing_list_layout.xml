@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@android:color/black"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/billing_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/pro_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/billing_icon"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:text="Pick your best plan &amp; enjoy premium features "
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="#e8e8e8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e8e8e8"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <!--free-->
+                <FrameLayout
+                    android:id="@+id/parentFree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_free"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_free_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_free"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_free_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_free_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_free"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_price_free"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_free_title"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/iv_offer_free"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <!--PRO-->
+                <FrameLayout
+                    android:id="@+id/parentPro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentPro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_pro"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_pro_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_pro"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_pro_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_pro_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_pro"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+                        <Button
+                            android:id="@+id/btn_pro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/tv_pro_subtitle"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toEndOf="@+id/iv_pro"
+                            android:layout_toRightOf="@+id/iv_pro"
+                            android:background="@drawable/button_background"
+                            android:padding="2dp"
+                            android:paddingStart="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="View Details"
+                            android:textAllCaps="false"
+                            android:textColor="@color/view_details_color"
+                            android:textSize="11dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_price_pro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_pro_subtitle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:id="@+id/iv_offer_pro"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <!--weekly-->
+                <FrameLayout
+                    android:id="@+id/parentweekly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentweekly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_weekly"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_weekly_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_weekly"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_weekly_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_weekly_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_weekly"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+                        <Button
+                            android:id="@+id/btn_weekly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/tv_weekly_subtitle"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_weekly"
+                            android:background="@drawable/button_background"
+                            android:padding="2dp"
+                            android:paddingLeft="5dp"
+                            android:text="View Details"
+                            android:textAllCaps="false"
+                            android:textColor="@color/view_details_color"
+                            android:textSize="11dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_weekly_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_weekly_subtitle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_offer_weekly"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <!--monthly-->
+                <FrameLayout
+                    android:id="@+id/parentMonthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentMonthly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_monthly"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_monthly_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_monthly"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_monthly_subTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_monthly_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_monthly"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+
+                        <Button
+                            android:id="@+id/btn_monthly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/tv_monthly_subTitle"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_monthly"
+                            android:background="@drawable/button_background"
+                            android:padding="2dp"
+                            android:paddingLeft="5dp"
+                            android:text="View Details"
+                            android:textAllCaps="false"
+                            android:textColor="@color/view_details_color"
+                            android:textSize="11dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_monthly_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_monthly_subTitle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_offer_monthly"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <!--half yearly-->
+                <FrameLayout
+                    android:id="@+id/parentHalfYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentHalfYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_halfYear"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_halfYear_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_halfYear"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_halfYear_subTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_halfYear_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_halfYear"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+
+                        <Button
+                            android:id="@+id/btn_halfyearly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/tv_halfYear_subTitle"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_halfYear"
+                            android:background="@drawable/button_background"
+                            android:padding="2dp"
+                            android:paddingLeft="5dp"
+                            android:text="View Details"
+                            android:textAllCaps="false"
+                            android:textColor="@color/view_details_color"
+                            android:textSize="11dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_halfYear_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_halfYear_subTitle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_offer_halfYear"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <!--yearly-->
+                <FrameLayout
+                    android:id="@+id/parentYearly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_parentYearly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/white"
+                        android:padding="25dp">
+
+                        <ImageView
+                            android:id="@+id/iv_Year"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_Year_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/iv_Year"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_header"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_Year_subTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_Year_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_Year"
+                            android:paddingLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/billing_list_subtitle"
+                            android:textSize="12dp" />
+
+
+                        <Button
+                            android:id="@+id/btn_yearly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/tv_Year_subTitle"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/iv_Year"
+                            android:background="@drawable/button_background"
+                            android:padding="2dp"
+                            android:paddingLeft="5dp"
+                            android:text="View Details"
+                            android:textAllCaps="false"
+                            android:textColor="@color/view_details_color"
+                            android:textSize="11dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_Year_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_Year_subTitle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="5dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_offer_Year"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

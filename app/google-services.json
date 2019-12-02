@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "936676814359",
+    "firebase_url": "https://app-installer-fb6e6.firebaseio.com",
+    "project_id": "app-installer-fb6e6",
+    "storage_bucket": "app-installer-fb6e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936676814359:android:9cea78036ebcd321047652",
+        "android_client_info": {
+          "package_name": "com.techproof.appinstaller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936676814359-tb27ng119cpl9nuvpe1tvtia38hsbcst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrE9vWUzbS5ChVQyNAtMs0WTrGzlNNNg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936676814359-tb27ng119cpl9nuvpe1tvtia38hsbcst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

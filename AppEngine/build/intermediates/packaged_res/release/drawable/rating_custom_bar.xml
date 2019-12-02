@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@android:id/background"
+        android:drawable="@drawable/start_blank"
+        android:left="5dp"
+        android:right="5dp"/>
+    <item
+        android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/start_blank"
+        android:left="5dp"
+        android:right="5dp"/>
+    <item
+        android:id="@android:id/progress"
+        android:drawable="@drawable/start_filled"
+        android:left="5dp"
+        android:right="5dp"/>
+
+</layer-list>

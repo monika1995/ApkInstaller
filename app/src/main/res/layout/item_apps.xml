@@ -21,6 +21,7 @@
             android:layout_height="@dimen/dp_50"
             android:layout_marginTop="@dimen/dp_6"
             android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,9 +52,25 @@
             app:layout_constraintStart_toEndOf="@id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@id/txt_appName" />
 
-
         <TextView
             android:id="@+id/txt_launch"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding5dp"
+            android:background="@drawable/native_med_button_color"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:text="@string/launch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidelineRight"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp_10"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -65,6 +82,7 @@
             android:text="@string/launch"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineRight"
             app:layout_constraintTop_toTopOf="parent" />

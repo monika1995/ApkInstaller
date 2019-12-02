@@ -50,26 +50,44 @@
         app:layout_constraintStart_toEndOf="@id/guidelineLeft"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_8"
+        android:textSize="@dimen/sp_10"
         android:layout_marginLeft="@dimen/dp_4"/>
 
 
+        <TextView
+            android:id="@+id/txt_install"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding5dp"
+            android:background="@drawable/native_med_button_color"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:text="@string/install"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidelineRight"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp_10"/>
+
     <TextView
-        android:id="@+id/txt_install"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background"
-        android:paddingLeft="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:text="@string/install"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_10"
+        android:textSize="@dimen/sp_20"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineRight"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/dp_10"/>
+        android:layout_marginTop="@dimen/dp_10"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/txt_FileInfo"
@@ -97,7 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_20"
         android:paddingLeft="@dimen/dp_30"
-        android:drawableLeft="@drawable/ic_play_store"
+        android:drawableLeft="@drawable/ic_playstore"
         android:drawablePadding="@dimen/dp_4"/>
 
 

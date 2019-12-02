@@ -52,13 +52,6 @@ public class SplashActivityV3 extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(new Intent(getApplicationContext(), FileListenerService.class));
-        } else {
-            startService(new Intent(getApplicationContext(), FileListenerService.class));
-        }
-
-
         isFromNotification = getIntent().getBooleanExtra(Constant.FROM_NOTIFICATION,false);
         path = getIntent().getStringExtra(Constant.PATH);
 

@@ -21,6 +21,7 @@
             android:background="?attr/colorPrimary"
             app:title="@string/more"
             app:navigationIcon="@drawable/ic_back"
+            android:paddingLeft="@dimen/dp_6"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,14 +35,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/rate_us"
+        android:textStyle="normal"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_star"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <TextView
         android:id="@+id/txt_moreApps"
@@ -52,14 +54,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/more_apps"
+        android:textStyle="normal"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_more_apps"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <TextView
         android:id="@+id/txt_shareApp"
@@ -70,14 +73,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/share_app"
+        android:textStyle="normal"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_share"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <TextView
         android:id="@+id/txt_feedback"
@@ -88,14 +92,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/feedback"
+        android:textStyle="normal"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_feedback"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <TextView
         android:id="@+id/txt_aboutUs"
@@ -106,14 +111,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/about_us"
+        android:textStyle="normal"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_about_us"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <View
         android:id="@+id/view_more"
@@ -135,14 +141,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
+        android:textStyle="normal"
         android:text="@string/settings"
         android:textColor="@color/white"
         android:drawableLeft="@drawable/ic_settings"
-        android:paddingLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_26"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

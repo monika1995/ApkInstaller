@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="300dp"
+    android:layout_height="380dp"
+    android:background="@drawable/bg_purchage_ok"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:background="@drawable/ic_tech_prompt_bg" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Thank You!"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRateDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_Header"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:text="Please rate our app &amp; provide your \n valuable feedback"
+                android:textSize="16dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/submitlinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#24a6b6"
+                    android:gravity="center"
+                    android:text="Rate Now"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+
+
+                <Button
+                    android:id="@+id/remindlinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:text="Dismiss"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

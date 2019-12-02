@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--<solid android:color="@color/native_large_button_bg" />-->
+    <!--<stroke-->
+        <!--android:width="1dip"-->
+        <!--android:color="@color/translittle" />-->
+    <!--<corners android:radius="2dip" />-->
+
+    <gradient
+        android:angle="180"
+        android:centerColor="#D72F79FE"
+        android:endColor="#57affe"
+        android:startColor="#2f79fe"
+        />
+    <corners android:radius="8dp" />
+
+</shape>

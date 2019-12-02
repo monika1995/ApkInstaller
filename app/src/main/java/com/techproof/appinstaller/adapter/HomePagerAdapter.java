@@ -7,11 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.techproof.appinstaller.fragment.ApksFragment;
 import com.techproof.appinstaller.fragment.AppsFragment;
 
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class HomePagerAdapter extends FragmentStatePagerAdapter {
 
     private Context context;
     int totalTabs;

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.pnd.adshandler.test" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="28" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for app.pnd.adshandler.test"
+        android:targetPackage="app.pnd.adshandler.test" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <application
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true" >
+        <uses-library android:name="android.test.runner" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_id_admob" /> <!-- <meta-data -->
+        <!-- android:name="com.facebook.sdk.ApplicationId" -->
+        <!-- android:value="@string/app_id_facebook" /> -->
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="@string/app_id_applovin" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/status_app_icon" /> <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_color" -->
+        <!-- android:resource="@android:color/white" /> -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/fcm_defaultSenderId" /> <!-- Engine Activity Start -->
+        <activity
+            android:name="app.ui.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.ui.AboutUsActivityM24"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutUsM24.Toolbar.Theme" />
+        <activity
+            android:name="app.ui.AboutUsActivityLIV"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.ui.AboutUsActivityTechApp"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutUsTechApp.Toolbar.Theme" />
+        <activity
+            android:name="app.ui.PrintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.fcm.NotificationTypeFour"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+        <activity
+            android:name="app.inapp.BillingListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.inapp.BillingDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="app.adshandler.FullPagePromo"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="app.ui.ExitAdsActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+        <activity
+            android:name="app.ui.AdsLoadingActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" /> <!-- Engine Activity End -->
+        <!-- Admob Activity -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" /> <!-- Facebook Activity -->
+        <!-- <activity -->
+        <!-- android:name="com.facebook.ads.AudienceNetworkActivity" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- tools:node="replace" /> -->
+        <!-- Unity Activities -->
+        <activity
+            android:name="com.unity3d.services.ads.adunit.AdUnitActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.unity3d.services.ads.adunit.AdUnitSoftwareActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> <!-- Vungle Activities -->
+        <!-- <activity -->
+        <!-- android:name="com.vungle.warren.ui.VungleActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.vungle.warren.ui.VungleFlexViewActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+        <!-- Applovin Activities -->
+        <activity
+            android:name="com.applovin.adview.AppLovinInterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="behind" /> <!-- Startapp Activities -->
+        <activity
+            android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
+            android:theme="@android:style/Theme" />
+        <activity
+            android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.startapp.android.publish.adsCommon.activities.FullScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme" /> <!-- morefeature -->
+        <activity
+            android:name="app.ui.MoreFeatureActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Dialog_more" />
+
+        <receiver
+            android:name="app.fcm.InstallReferrerReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="app.fcm.NotificationActionReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="sec_btn" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="app.receiver.FirebaseAlarmReceiver" />
+        <receiver android:name="app.receiver.TopicAlarmReceiver" />
+        <!--
+             FirebaseMessagingService performs security checks at runtime,
+             but set to not exported to explicitly avoid allowing another app to call it.
+        -->
+        <service
+            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+            android:exported="false" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="app.pnd.adshandler.test.com.squareup.picasso"
+            android:exported="false" />
+
+        <service android:name="com.startapp.android.publish.common.metaData.PeriodicMetaDataService" />
+        <service android:name="com.startapp.android.publish.common.metaData.InfoEventService" />
+        <service
+            android:name="com.startapp.android.publish.common.metaData.PeriodicJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name="com.startapp.android.publish.common.metaData.BootCompleteListener" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentSoftwareActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.applovin.sdk.AppLovinWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.applovin.mediation.MaxDebuggerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:name="com.applovin.mediation.MaxDebuggerDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" /> <!-- The activity will be merged into the manifest of the hosting app. -->
+        <activity
+            android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity"
+            android:enabled="false"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:process=":playcore_missing_splits_activity"
+            android:stateNotNeeded="true" />
+        <activity
+            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+            android:enabled="false"
+            android:exported="false"
+            android:process=":playcore_dialog_wrapper_activity"
+            android:stateNotNeeded="true"
+            android:theme="@style/Theme.PlayCore.Transparent" />
+
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name="com.google.firebase.components.ComponentDiscoveryService"
+            android:directBootAware="true"
+            android:exported="false" >
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
+
+        <provider
+            android:name="com.google.android.gms.ads.MobileAdsInitProvider"
+            android:authorities="app.pnd.adshandler.test.mobileadsinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="app.pnd.adshandler.test.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

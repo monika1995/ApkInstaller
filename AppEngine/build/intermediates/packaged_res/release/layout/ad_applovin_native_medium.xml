@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/native_ad_unit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/native_med_bg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <RelativeLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp">
+
+        <ImageView
+            android:id="@+id/appIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ad_choices_container"
+            android:layout_toRightOf="@+id/appIcon"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:layout_toStartOf="@+id/ad_choices_container"
+            android:layout_toEndOf="@+id/appIcon"
+            android:paddingStart="5dp">
+
+            <TextView
+                android:id="@+id/appTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/native_med_text_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/native_ad_sponsored_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/sponsored"
+                android:textColor="@color/native_med_sub_text_color"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ad_choices_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/mediaViewPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@android:color/white"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:orientation="vertical"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/appDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="4"
+                android:paddingRight="5dp"
+                android:textColor="@color/native_med_sub_text_color"
+                android:textSize="10sp"
+                android:paddingEnd="5dp" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8">
+
+            <Button
+                android:id="@+id/appDownloadButton"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/native_med_button_color"
+                android:textColor="@color/native_med_button_text_color"
+                android:textSize="11sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

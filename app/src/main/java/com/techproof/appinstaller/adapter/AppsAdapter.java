@@ -92,7 +92,6 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
             }
 
             holder.txtAppName.setText(appsList.get(position).applicationInfo.loadLabel(context.getPackageManager()).toString());
-            ApplicationInfo tmpInfo = null;
             long fileSizeInMB = 0;
             try {
                 long size = new File(appsList.get(position).applicationInfo.sourceDir).length();
@@ -124,7 +123,6 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         }
 
     }
-
 
     public void setSearchFilter(List<PackageInfo> newList) {
         appsList.clear();

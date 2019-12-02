@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="300dp"
+    android:layout_height="420dp"
+    android:background="@drawable/bg_rate_us_v2"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/iv_rate_us"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/rate_like" />
+
+
+            <TextView
+                android:id="@+id/tv_Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_rate_us"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:text="Enjoying using our app"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:textColor="#DBDBDB" />
+
+            <TextView
+                android:id="@+id/tvRateDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar1"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:text="Please rate our app &amp; provide your \n valuable feedback"
+                android:textColor="@android:color/white"
+                android:textSize="17dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_above="@+id/ll_button"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/ll_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/remindlinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_v2_password"
+                    android:gravity="center"
+                    android:text="Dismiss"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal" />
+
+                <Button
+                    android:id="@+id/submitlinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_v2_password"
+                    android:gravity="center"
+                    android:text="Rate"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

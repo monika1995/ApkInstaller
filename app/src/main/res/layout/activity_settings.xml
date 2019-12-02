@@ -20,7 +20,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:title="@string/settings"
-            app:titleMarginStart="@dimen/dp_40"
+            app:titleMarginStart="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
             app:navigationIcon="@drawable/ic_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 

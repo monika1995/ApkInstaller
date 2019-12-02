@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:background="#0e8ee5">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/pro_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="Upgrade to Pro Version"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:id="@+id/rl_benefits_of_upgrade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+
+            <ImageView
+                android:id="@+id/iv_benifits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/pro_header" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_benifits"
+                android:padding="12dp"
+                android:text="Benefits of upgrade"
+                android:textColor="#1a1a1a"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_layout_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_benefits_of_upgrade"
+            android:layout_marginTop="4dp">
+
+
+            <ImageView
+                android:id="@+id/iv_check_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/app_icon"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/iv_check_one"
+                android:padding="12dp"
+                android:text="No Ads"
+                android:textColor="#1a1a1a"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/btn_getPro"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="#0e8ee5"
+            android:padding="8dp"
+            android:text="Get Pro Version"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

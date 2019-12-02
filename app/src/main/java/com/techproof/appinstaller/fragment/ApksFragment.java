@@ -1,13 +1,17 @@
 package com.techproof.appinstaller.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,6 +33,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
@@ -136,6 +141,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         if(height>=2120){
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -500);
+        }else if(height>=1407){
+            pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -300);
         }else {
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 40, -110);
         }
@@ -174,41 +181,41 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         if (type == R.id.radio_SortByName)
         {
             sortedList.addAll(apkList);
-            Collections.sort(sortedList, new Comparator<ApkListModel>(){
-                public int compare(ApkListModel obj1, ApkListModel obj2) {
-                    return obj1.getPackageInfo().applicationInfo.loadLabel(getActivity().getPackageManager()).toString().compareToIgnoreCase(obj2.getPackageInfo().applicationInfo.loadLabel(getActivity().getPackageManager()).toString());
-                }
-            });
+            Collections.sort(sortedList, (obj1, obj2) -> obj1.getPackageInfo().packageName.compareToIgnoreCase(obj2.getPackageInfo().packageName));
         }
         else if (type == R.id.radio_SortBySize)
         {
             sortedList.addAll(apkList);
-            Collections.sort(sortedList, new Comparator<ApkListModel>(){
-                public int compare(ApkListModel obj1, ApkListModel obj2) {
-                    ApplicationInfo tmpInfo = null;
-                    long obj1Size = 0,Obj2Size = 0;
-                    try {
-                        if(obj1.getPackageInfo().applicationInfo.sourceDir!=null) {
-                            long size = new File(obj1.getPackageInfo().applicationInfo.sourceDir).length();
-                            long fileSizeInKB = size / 1024;
-                            long size1 = new File(obj2.getPackageInfo().applicationInfo.sourceDir).length();
-                            long fileSizeInKB1 = size1 / 1024;
-                            obj1Size = fileSizeInKB / 1024;
-                            Obj2Size = fileSizeInKB1 / 1024;
-                        }
-                        else {
-                            long size = new File(obj1.getApkPath()).length();
-                            long fileSizeInKB = size / 1024;
-                            obj1Size = fileSizeInKB / 1024;
-                            long size1 = new File(obj2.getApkPath()).length();
-                            long fileSizeInKB1 = size1 / 1024;
-                            Obj2Size = fileSizeInKB1 / 1024;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            Collections.sort(sortedList, (obj1, obj2) -> {
+                //ApplicationInfo tmpInfo = null;
+                int obj1Size = 0,Obj2Size = 0;
+                long size = new File(obj1.getApkPath()).length();
+                long fileSizeInKB = size / 1024;
+                long size1 = new File(obj2.getApkPath()).length();
+                long fileSizeInKB1 = size1 / 1024;
+                Obj2Size = (int) fileSizeInKB1 / 1024;
+                obj1Size = (int) fileSizeInKB / 1024;
+                /*try {
+                    if(obj1.getPackageInfo().applicationInfo.sourceDir!=null) {
+                        long size = new File(obj1.getPackageInfo().applicationInfo.sourceDir).length();
+                        long fileSizeInKB = size / 1024;
+                        long size1 = new File(obj2.getPackageInfo().applicationInfo.sourceDir).length();
+                        long fileSizeInKB1 = size1 / 1024;
+                        obj1Size = fileSizeInKB / 1024;
+                        Obj2Size = fileSizeInKB1 / 1024;
                     }
-                    return Integer.parseInt(String.valueOf(Obj2Size - obj1Size));
-                }
+                    else {
+                        long size = new File(obj1.getApkPath()).length();
+                        long fileSizeInKB = size / 1024;
+                        obj1Size = fileSizeInKB / 1024;
+                        long size1 = new File(obj2.getApkPath()).length();
+                        long fileSizeInKB1 = size1 / 1024;
+                        Obj2Size = fileSizeInKB1 / 1024;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+                return (Obj2Size - obj1Size);
             });
         }
         txtNoRecordFound.setVisibility(View.GONE);
@@ -274,7 +281,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
+        int result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             return false;
@@ -282,11 +290,11 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     }
 
     private void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Toast.makeText(getActivity(), "Write External Storage permission allows us to read  files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Toast.makeText(getActivity(), "Write External Storage permission allows us to read files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]
-                    {android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                    {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -326,7 +334,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     }
 
     private void setDialogApkDetails(ApkListModel apkListModel) {
-        dialog = new Dialog(getActivity());
+        dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_apkdetails);
         Window window = dialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -335,6 +343,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
         TextView txtVersionName = dialog.findViewById(R.id.txt_versionName);
@@ -343,10 +352,11 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         TextView txtFilePath = dialog.findViewById(R.id.txt_apkPath);
         ImageView imgDropDown = dialog.findViewById(R.id.img_permission_arrow);
         rvPermissions.setVisibility(View.GONE);
+        cardViewPermissions.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPermissions.setLayoutManager(linearLayoutManager);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        String installTime = dateFormat.format( new Date(apkListModel.getPackageInfo().lastUpdateTime));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String installTime = dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified()));
         txtDownloadedDate.setText(installTime);
         txtAppName.setText(apkListModel.getPackageInfo().packageName);
         txtFilePath.setText(apkListModel.getApkPath());
@@ -385,9 +395,11 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         imgDropDown.setOnClickListener(view -> {
             if(rvPermissions.getVisibility()==View.VISIBLE) {
                 rvPermissions.setVisibility(View.GONE);
+                cardViewPermissions.setVisibility(View.GONE);
                 imgDropDown.setRotation(0);
             }else {
                 rvPermissions.setVisibility(View.VISIBLE);
+                cardViewPermissions.setVisibility(View.VISIBLE);
                 imgDropDown.setRotation(180);
             }
         });
@@ -401,9 +413,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APK_INSTALL);
     }
 
-
     private void setInstallDialog(ApkListModel apkListModel) {
-        dialog = new Dialog(getActivity());
+        dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_apkinstall);
         Window window = dialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -412,6 +423,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
         TextView txtVersionName = dialog.findViewById(R.id.txt_versionName);
@@ -420,9 +432,9 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         TextView txtInstall = dialog.findViewById(R.id.btn_install);
         ImageView imgDropDown = dialog.findViewById(R.id.img_permission_arrow);
         rvPermissions.setVisibility(View.GONE);
+        cvPermission.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPermissions.setLayoutManager(linearLayoutManager);
-        String[] permissions;
         txtAppName.setText(apkListModel.getPackageInfo().packageName);
         //txtAppName.setText(apkListModel.getPackageInfo().applicationInfo.loadLabel(getContext().getPackageManager()).toString());
         long fileSizeInMB = 0;
@@ -467,9 +479,11 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         imgDropDown.setOnClickListener(view -> {
             if(rvPermissions.getVisibility()==View.VISIBLE) {
                 rvPermissions.setVisibility(View.GONE);
+                cvPermission.setVisibility(View.GONE);
                 imgDropDown.setRotation(0);
             }else {
                 rvPermissions.setVisibility(View.VISIBLE);
+                cvPermission.setVisibility(View.VISIBLE);
                 imgDropDown.setRotation(180);
             }
         });
@@ -503,7 +517,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
             }else {
                 setFilter(R.id.radio_SortByName);
             }
-
         }
     }
 
@@ -526,12 +539,11 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         builder.setMessage("Do you want to delete this APK?").setPositiveButton("Ok",(dialogInterface, i) -> {
             String filename = selectedItem.getApkPath();
             String[] fileArr = filename.split("0");
-            File file = new File(Environment.getExternalStorageDirectory() + "/" + fileArr[1]);
-            if(file.exists()) {
-                file.getAbsoluteFile().delete();
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + fileArr[1]);
+           /* if(file.exists()) {
+                file.delete();
                 if (file.exists()) {
                     try {
-                        file.getCanonicalPath();
                         file.getCanonicalFile().delete();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -540,10 +552,16 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                         getContext().deleteFile(file.getName());
                     }
                 }
-            }
+            }*/
+           if(getActivity()!=null) {
+               Uri imageUriLcl = FileProvider.getUriForFile(getActivity(),
+                       getActivity().getApplicationContext().getPackageName() +
+                               ".provider", file);
+               ContentResolver contentResolver = getActivity().getContentResolver();
+               contentResolver.delete(imageUriLcl, null, null);
+           }
             getchangeItemColor();
             apksAdapter.changeItemColor();
-            apksAdapter.notifyItemRemoved(position);
             apksAdapter.notifyDataSetChanged();
         }).setNegativeButton("CANCEL",(dialogInterface, i) -> {
             dialogInterface.dismiss();
@@ -629,5 +647,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     {
         apksAdapter.changeItemColor();
     }
+
 }
  

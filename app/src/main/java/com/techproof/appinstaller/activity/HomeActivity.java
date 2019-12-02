@@ -1,6 +1,7 @@
 package com.techproof.appinstaller.activity;
 
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +28,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
+import androidx.core.view.MenuItemCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,10 +45,13 @@ import com.techproof.appinstaller.adapter.HomePagerAdapter;
 import com.techproof.appinstaller.fragment.ApksFragment;
 import com.techproof.appinstaller.fragment.AppsFragment;
 import com.techproof.appinstaller.model.ApkListModel;
+import com.techproof.appinstaller.model.FileListenerService;
 import com.techproof.appinstaller.utils.AppUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import app.adshandler.AHandler;
@@ -74,12 +80,20 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     public static int count=0;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
+    SearchView searchView;
+    SearchManager searchManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(new Intent(getApplicationContext(), FileListenerService.class));
+        } else {
+            startService(new Intent(getApplicationContext(), FileListenerService.class));
+        }
 
         permissionsList = new ArrayList<>();
         sharedPreferences = getSharedPreferences("My_Pref", 0);
@@ -102,7 +116,6 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
                 }else {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APKS);
                 }
-                //refreshTab(tab.getPosition());
             }
 
             @Override
@@ -150,6 +163,7 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
         TextView txtVersionName = dialog.findViewById(R.id.txt_versionName);
@@ -158,6 +172,7 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         ImageView imgDropDown = dialog.findViewById(R.id.img_permission_arrow);
         TextView txtDownloadedDate = dialog.findViewById(R.id.txt_downloaded_date);
         rvPermissions.setVisibility(View.GONE);
+        cvPermission.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvPermissions.setLayoutManager(linearLayoutManager);
         ApkPermissionAdapter permissionAdapter = new ApkPermissionAdapter(this, permissionsList);
@@ -166,6 +181,8 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         if (apkListModel != null) {
             if(apkListModel.getPackageInfo()!=null) {
                 txtAppName.setText(apkListModel.getPackageInfo().packageName);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                txtDownloadedDate.setText( dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified())));
                 long fileSizeInMB = 0;
                 try {
                     if (apkListModel.getPackageInfo().applicationInfo.sourceDir != null) {
@@ -199,9 +216,11 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
             imgDropDown.setOnClickListener(view -> {
                 if (rvPermissions.getVisibility() == View.VISIBLE) {
                     rvPermissions.setVisibility(View.GONE);
+                    cvPermission.setVisibility(View.GONE);
                     imgDropDown.setRotation(0);
                 } else {
                     rvPermissions.setVisibility(View.VISIBLE);
+                    cvPermission.setVisibility(View.VISIBLE);
                     imgDropDown.setRotation(180);
                 }
             });
@@ -238,6 +257,10 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+
         menu.findItem(R.id.action_delete).setVisible(false);
         menu.findItem(R.id.action_share).setVisible(false);
         return true;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/inhouse_lay"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_margin="0dp"
+        android:minHeight="80dp"
+        android:padding="0dp">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/native_med_bg_grid">
+
+            <TextView
+                android:id="@+id/img_missed"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="Ad"
+                android:textColor="@color/native_med_text_color_grid"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/inhouse_img"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_below="@id/img_missed"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:maxHeight="120dp"
+                android:padding="3dp" />
+
+            <LinearLayout
+                android:id="@+id/lincall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contentad_image"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="2dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/inhouse_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/native_med_button_color_grid"
+                    android:gravity="center"
+                    android:text="Download"
+                    android:textColor="@color/native_med_button_text_color_grid"
+                    android:textSize="11dp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

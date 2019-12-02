@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/smallRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/cardevalu"
+        app:cardCornerRadius="@dimen/cardcontentpadding"
+        app:cardElevation="@dimen/cardevalu"
+        app:contentPadding="@dimen/cardcontentpadding">
+
+        <RelativeLayout
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/melayoutsize"
+            android:padding="@dimen/padding2dp">
+
+            <ImageView
+                android:id="@+id/thumb"
+                android:layout_width="@dimen/mefragment_icon"
+                android:layout_height="@dimen/mefragment_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp" />
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="4dp"
+                android:layout_toLeftOf="@+id/btn_campaign"
+                android:layout_toRightOf="@+id/thumb"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLength="25"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/footer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLength="25"
+                        android:textColor="@color/trans" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/btn_campaign"
+                android:layout_toRightOf="@+id/imageView1"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_campaign"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                android:elevation="10dp"
+                android:padding="@dimen/padding4dp"
+                android:text="ClickMe"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

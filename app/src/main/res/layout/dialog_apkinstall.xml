@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/dp_10">
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_16">
 
    <ImageView
        android:id="@+id/img_apk"
@@ -13,7 +15,11 @@
        android:layout_height="@dimen/dp_40"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       android:layout_margin="@dimen/dp_20"
+       android:layout_marginTop="@dimen/dp_16"
+       android:layout_marginBottom="@dimen/dp_16"
+       android:layout_marginLeft="@dimen/dp_10"
+       android:layout_marginRight="@dimen/dp_10"
+       android:scaleType="centerCrop"
        android:src="@drawable/ic_launcher_background"/>
 
     <TextView
@@ -49,7 +55,7 @@
         android:text="@string/dowloaded_text"
         app:layout_constraintTop_toBottomOf="@id/img_apk"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -62,7 +68,7 @@
         android:text="@string/dummy_date"
         app:layout_constraintTop_toBottomOf="@id/img_apk"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -75,7 +81,7 @@
         android:text="@string/permissions_required"
         app:layout_constraintTop_toBottomOf="@id/txt_downloaded_date"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -90,25 +96,33 @@
         android:paddingLeft="@dimen/dp_20"
         app:layout_constraintTop_toBottomOf="@id/txt_downloaded_date"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="@dimen/dp_16"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_permissions"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_permissions"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
-        android:background="@drawable/grey_background"
+        android:layout_height="200dp"
         app:layout_constraintTop_toBottomOf="@id/txt_permissions"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_6"
-        android:layout_marginBottom="@dimen/dp_6"
-        tools:listitem="@layout/item_permissions">
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_6"
+        app:cardUseCompatPadding="true">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_permissions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_8"
+            tools:listitem="@layout/item_permissions">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.cardview.widget.CardView>
 
   <TextView
      android:id="@+id/btn_install"
@@ -116,9 +130,9 @@
      android:layout_height="wrap_content"
      android:text="@string/install"
      android:background="@drawable/uninstall_background"
-     app:layout_constraintTop_toBottomOf="@id/rv_permissions"
+     app:layout_constraintTop_toBottomOf="@id/cardView_permissions"
      app:layout_constraintEnd_toEndOf="parent"
-     android:layout_marginLeft="@dimen/dp_16"
+     android:layout_marginLeft="@dimen/dp_10"
      android:layout_marginTop="@dimen/dp_16"
      android:textColor="@color/white"
      android:textStyle="bold"
@@ -127,7 +141,7 @@
      android:paddingTop="@dimen/dp_8"
      android:paddingBottom="@dimen/dp_8"
      android:textAlignment="center"
-     android:layout_marginRight="@dimen/dp_16"
+     android:layout_marginRight="@dimen/dp_10"
      android:textSize="@dimen/dp_14"/>
 
 

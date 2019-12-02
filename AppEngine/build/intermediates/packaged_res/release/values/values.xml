@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="nav_drawer_icons">
+
+
+    </array>
+    <string-array name="nav_drawer_items">
+
+        <item>Settings</item>
+        <!--           <item>Change Language</item> -->
+        <item>Rate App</item>
+        <item>Share App </item>
+    </string-array>
+    <color name="White_Snow">#FFFAFA</color>
+    <color name="White_transparent_white_hex_1">#11ffffff</color>
+    <color name="White_transparent_white_hex_10">#aaffffff</color>
+    <color name="White_transparent_white_hex_11">#bbffffff</color>
+    <color name="White_transparent_white_hex_12">#ccffffff</color>
+    <color name="White_transparent_white_hex_13">#ddffffff</color>
+    <color name="White_transparent_white_hex_14">#eeffffff</color>
+    <color name="White_transparent_white_hex_15">#ffffffff</color>
+    <color name="White_transparent_white_hex_2">#22ffffff</color>
+    <color name="White_transparent_white_hex_3">#33ffffff</color>
+    <color name="White_transparent_white_hex_4">#44ffffff</color>
+    <color name="White_transparent_white_hex_5">#55ffffff</color>
+    <color name="White_transparent_white_hex_6">#66ffffff</color>
+    <color name="White_transparent_white_hex_7">#77ffffff</color>
+    <color name="White_transparent_white_hex_8">#88ffffff</color>
+    <color name="White_transparent_white_hex_9">#99ffffff</color>
+    <color name="White_transparent_white_percent_10">#1Affffff</color>
+    <color name="White_transparent_white_percent_15">#26ffffff</color>
+    <color name="White_transparent_white_percent_20">#33ffffff</color>
+    <color name="White_transparent_white_percent_25">#40ffffff</color>
+    <color name="White_transparent_white_percent_30">#4Dffffff</color>
+    <color name="White_transparent_white_percent_35">#59ffffff</color>
+    <color name="White_transparent_white_percent_40">#66ffffff</color>
+    <color name="White_transparent_white_percent_45">#73ffffff</color>
+    <color name="White_transparent_white_percent_5">#0Dffffff</color>
+    <color name="White_transparent_white_percent_50">#80ffffff</color>
+    <color name="White_transparent_white_percent_55">#8Cffffff</color>
+    <color name="White_transparent_white_percent_60">#99ffffff</color>
+    <color name="White_transparent_white_percent_65">#A6ffffff</color>
+    <color name="White_transparent_white_percent_70">#B3ffffff</color>
+    <color name="White_transparent_white_percent_75">#BFffffff</color>
+    <color name="White_transparent_white_percent_80">#CCffffff</color>
+    <color name="White_transparent_white_percent_85">#D9ffffff</color>
+    <color name="White_transparent_white_percent_90">#E6ffffff</color>
+    <color name="White_transparent_white_percent_95">#F2ffffff</color>
+    <color name="bg">#FFBD82</color>
+    <color name="billing_list_header">#1a1a1a</color>
+    <color name="billing_list_subtitle">#525151</color>
+    <color name="black">#000000</color>
+    <color name="black_new">#D0000000</color>
+    <color name="black_new_seperator">#32000000</color>
+    <color name="black_text">#6b6b6b</color>
+    <color name="blue">#0094d1</color>
+    <color name="blue_bg">#0000ff</color>
+    <color name="bottom_bg">#1f1d20</color>
+    <color name="broadcast_green">#c6ff00</color>
+    <color name="brown">#787878</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimary">#040c14</color>
+    <color name="colorPrimaryDark">#040c14</color>
+    <color name="color_disable">#A9A9A9</color>
+    <color name="colorblacktrans">#bb000000</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    <color name="cyan">#9AFEFF</color>
+    <color name="dark_grey">#aca3a3</color>
+    <color name="dark_red">#ff510209</color>
+    <color name="ddcolor">#6c3a3a</color>
+    <color name="deep_red">#ff0000</color>
+    <color name="deep_white">#fff</color>
+    <color name="font_color">#138eff</color>
+    <color name="fullads_color">#606161</color>
+    <color name="green">#00FF00</color>
+    <color name="green3">#049009</color>
+    <color name="greennew">#0066CC</color>
+    <color name="greenobutton">#c6ff00</color>
+    <color name="grey">#9fff</color>
+    <color name="header">#4C0B5F</color>
+    <color name="header1">#FF666666</color>
+    <color name="header2">#FF5722</color>
+    <color name="header3">#FFC74B46</color>
+    <color name="header4">#FFF4842D</color>
+    <color name="header5">#FF3F9FE0</color>
+    <color name="header6">#FF5161BC</color>
+    <color name="light_grey">#bbbbbb</color>
+    <color name="list_background">#000000</color>
+    <color name="list_background_pressed">#0B3B24</color>
+    <color name="list_divider">#272727</color>
+    <color name="list_item_title">#fff</color>
+    <color name="mygreen">#4a9131</color>
+    <color name="native_large_bg">#FFFFFF</color>
+    <color name="native_large_bg_stoke_color">#00ff60</color>
+    <color name="native_large_button_bg">#2f79fe</color>
+    <color name="native_large_button_text_color">#FFFFFF</color>
+    <color name="native_large_sub_text_color">#000000</color>
+    <color name="native_large_text_color">#000000</color>
+    <color name="native_med_bg">#20FFFFFF</color>
+    <color name="native_med_bg_grid">#000000</color>
+    <color name="native_med_bg_stoke_color">#00ff60</color>
+    <color name="native_med_button_bg">#2f79fe</color>
+    <color name="native_med_button_bg_grid">#009957</color>
+    <color name="native_med_button_text_color">#FFFFFF</color>
+    <color name="native_med_button_text_color_grid">#FFFFFF</color>
+    <color name="native_med_sub_text_color">#FFFFFF</color>
+    <color name="native_med_sub_text_color_grid">#FFFFFF</color>
+    <color name="native_med_text_color">#FFFFFF</color>
+    <color name="native_med_text_color_grid">#FFFFFF</color>
+    <color name="native_rect_bg">#FFFFFF</color>
+    <color name="native_rect_button_bg">#00a26a</color>
+    <color name="native_rect_button_text_color">#FFFFFF</color>
+    <color name="native_rect_sub_text_color">#000000</color>
+    <color name="native_rect_text_color">#000000</color>
+    <color name="new_actionbar_color">#354260</color>
+    <color name="new_background">#D4D6D5</color>
+    <color name="new_sim_detail_banner">#2f79fe</color>
+    <color name="new_speedmeter">#151B54</color>
+    <color name="new_tab_strip_header">#5D6A88</color>
+    <color name="newblack">#EE2E2E2E</color>
+    <color name="newblue">#0094d1</color>
+    <color name="newbottom">#330033</color>
+    <color name="notification_desc_color">#70bf1b</color>
+    <color name="notification_header_color">#339fc1</color>
+    <color name="ornage">#ca5f46</color>
+    <color name="pink">#FF1493</color>
+    <color name="ptcolor">#c6ff00</color>
+    <color name="purple">#B93B8F</color>
+    <color name="rate_us_green">#3ca840</color>
+    <color name="red">#ffe2231a</color>
+    <color name="red2">#FF0000</color>
+    <color name="scroolcolor">#252424</color>
+    <color name="select">#0174DF</color>
+    <color name="semiblack">#D9000000</color>
+    <color name="solid_green">#f0f0</color>
+    <color name="thumbColor">#66aaaaaa</color>
+    <color name="toolbarred">#df2046</color>
+    <color name="trans">#00000000</color>
+    <color name="translittle">#60676767</color>
+    <color name="translittle2">#90676767</color>
+    <color name="unselect">#BDBDBD</color>
+    <color name="v2_app_bg">#f0f0f0</color>
+    <color name="v2_blue">#33a0c1</color>
+    <color name="v7_blue1">#0B3B24</color>
+    <color name="v7_blue2">#1A237E</color>
+    <color name="v7_blue3">#00BCD4</color>
+    <color name="v7_blue4">#004D40</color>
+    <color name="v7_blue5">#009688</color>
+    <color name="v7_darkblue">#1E90FF</color>
+    <color name="v7_grey1">#263238</color>
+    <color name="v7_grey2">#607D8B</color>
+    <color name="v7_grey4">#757575</color>
+    <color name="v7_greybrown">#3E2723</color>
+    <color name="v7_orange1">#FF5722</color>
+    <color name="v7_orange2">#1A237E</color>
+    <color name="v7_orange3">#D84315</color>
+    <color name="v7_orange4">#DD2C00</color>
+    <color name="view_detail_stroke">#0e8bef</color>
+    <color name="view_details_color">#303F9F</color>
+    <color name="white">#9fff</color>
+    <color name="yellow">#D7DF01</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="ad_one_banner_height">200dp</dimen>
+    <dimen name="ad_one_padding">10dp</dimen>
+    <dimen name="banner_height">60dp</dimen>
+    <dimen name="banner_large_height">100dp</dimen>
+    <dimen name="banner_rectangle_height">250dp</dimen>
+    <dimen name="banner_rectangle_width">300dp</dimen>
+    <dimen name="cardcontentpadding">1dp</dimen>
+    <dimen name="cardevalu">4dp</dimen>
+    <dimen name="margin10dp">10dp</dimen>
+    <dimen name="mefragment_icon">35dp</dimen>
+    <dimen name="melayoutsize">70dp</dimen>
+    <dimen name="padding10dp">10dp</dimen>
+    <dimen name="padding15dp">15dp</dimen>
+    <dimen name="padding2dp">2dp</dimen>
+    <dimen name="padding4dp">6dp</dimen>
+    <dimen name="padding5dp">5dp</dimen>
+    <dimen name="textMefragment">10sp</dimen>
+    <drawable name="transparent">#00000000</drawable>
+    <string name="Backup_Alert">App Backup</string>
+    <string name="action_removeads">Remove Ads</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share APK</string>
+    <string name="ads_loading">Ads Loading....</string>
+    <string name="apks">apks</string>
+    <string name="app_boosted">%s Applications Boosted</string>
+    <string name="app_id_admob">ca-app-pub-3135070603528872~7890084182</string>
+    <string name="app_id_applovin">QDC9FDFrr-cdtD-6uvCt5Adct_CZDRncddROp_9SlI7WI_npLVec7K08EekzU2cBRlPzCLHTCF8_Icw0bgSbOT</string>
+    <string name="app_id_unity">3378606</string>
+    <string name="app_name">3G To 4G Switch</string>
+    <string name="appsbackup">Apps Backup</string>
+    <string name="archived">Archived</string>
+    <string name="archived_count">Archived %s</string>
+    <string name="autobackup">Auto Backup</string>
+    <string name="backup">Backup</string>
+    <string name="backup_all">Backup of all Apk\'s are made at Location %s</string>
+    <string name="backup_complete">Backup completed</string>
+    <string name="boost">Boost</string>
+    <string name="confirm">Confirm</string>
+    <string name="deleteoldversion">Delete Old Version</string>
+    <string name="deleteoldversionapk">Delete old version apk and Override with latest</string>
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="fastscan">Fast Scan</string>
+    <string name="fcm_defaultSenderId">180857058491</string>
+    <string name="forAlert">Want to exit from app?</string>
+    <string name="forMoreOption">More Apps</string>
+    <string name="forOption">Exit</string>
+    <string name="gen_apk">Generating Apk</string>
+    <string name="getmoresecurityapp">Get More Phone Security Apps</string>
+    <string name="getmoresecurityapp2">Hi Tech AppLock | Phone Sim Details | Call Recorders | HD Image Converter | Hide Pictures</string>
+    <string name="installed">Installed</string>
+    <string name="installed_count">Installed %s</string>
+    <string name="keepappservicesrunn">Keep app services running on device Reboot</string>
+    <string name="keepservicerunning">Keep Service Running</string>
+    <string name="learn_more">Learn More</string>
+    <string name="moresec">More Security</string>
+    <string name="no">No</string>
+    <string name="no_backup">No Backup yet</string>
+    <string name="no_of_perm">%s Perm\'s</string>
+    <string name="noappselected">No App Selected</string>
+    <string name="nope">Nope</string>
+    <string name="normalscan">Normal Scan</string>
+    <string name="notification_setting">Notification Setting</string>
+    <string name="notifytotake">Notify to take backup on New App installtion</string>
+    <string name="notifywhenram">Notify when phone RAM use is on higher side</string>
+    <string name="notnow">Not Now</string>
+    <string name="perms">Permissions</string>
+    <string name="pindi_Available_RAM">Available RAM</string>
+    <string name="pindi_ad_unit_google">ca-app-pub-3451337100490595/8973395265</string>
+    <string name="pindi_ad_unit_id">ca-app-pub-3451337100490595/6842388463</string>
+    <string name="pindi_ad_unit_id2">ca-app-pub-3451337100490595/5365655266</string>
+    <string name="pindi_ad_unit_id_int">ca-app-pub-3451337100490595/8319121660</string>
+    <string name="please_wait">Please Wait!!</string>
+    <string name="pls_select">Please select application first</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="rambooster">RAM Booster</string>
+    <string name="rateapp">Rate Appliction on Play Store</string>
+    <string name="rateapp2">Love using app ? Please Rate with 5 Stars </string>
+    <string name="rateapptop">Like US</string>
+    <string name="reload">Reload</string>
+    <string name="reloaded">Reloaded</string>
+    <string name="replay">Replay</string>
+    <string name="restore">Restore</string>
+    <string name="scan_complete">Scanning Complete,no threat found.</string>
+    <string name="settings">Settings</string>
+    <string name="share">Share using</string>
+    <string name="showallpreinstall">Show all Pre-installed App in List</string>
+    <string name="showdata">Show Data From</string>
+    <string name="showdata_asset">Default Value</string>
+    <string name="showdata_server">Server Value</string>
+    <string name="showhighramnoti">Show high RAM use Notification</string>
+    <string name="shownotification">Show Notification</string>
+    <string name="showongoing">Show ongoing running notification</string>
+    <string name="showsystemapp">Show System Apps</string>
+    <string name="sponsored">Sponsored</string>
+    <string name="termsCond">Terms of Service</string>
+    <string name="title_toolbar_about_us">About Us</string>
+    <string name="upgradetopro_text">"* No Ads\n\n* All Feature Upgrades Free\n\n* No Monthly Charges\n\n* No Recurring, Lifetime Payment Once"</string>
+    <string name="virusscan">Virus Scanner</string>
+    <string name="warning">Warning</string>
+    <string name="warning_msg">Do you really want to extract all the Apps?</string>
+    <string name="yes">Yes</string>
+    <style name="AboutUsM24.Toolbar.Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+    <style name="AboutUsTechApp.Toolbar.Theme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+
+    </style>
+    <style name="AppTransparent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:colorPrimary">#b50915</item>
+        <item name="android:colorPrimaryDark">#b50915</item>
+        <item name="android:colorAccent">#b50915</item>
+    </style>
+    <style name="BaseTheme" parent="android:Theme.Holo.Light.Dialog"/>
+    <style name="Theme_Dialog" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:layout_width">match_parent</item>
+
+    </style>
+    <style name="Theme_Dialog_more" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <!--<item name="android:windowMinWidthMajor">80%</item>-->
+        <!--<item name="android:windowMinWidthMinor">80%</item>-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+
+    </style>
+    <declare-styleable name="SelectableRoundedImageView">
+        <attr format="dimension" name="sriv_left_top_corner_radius"/>
+        <attr format="dimension" name="sriv_right_top_corner_radius"/>
+        <attr format="dimension" name="sriv_left_bottom_corner_radius"/>
+        <attr format="dimension" name="sriv_right_bottom_corner_radius"/>
+        <attr format="dimension" name="sriv_border_width"/>
+        <attr format="color" name="sriv_border_color"/>
+        <attr format="boolean" name="sriv_oval"/>
+        <attr name="android:scaleType"/>
+    </declare-styleable>
+</resources>

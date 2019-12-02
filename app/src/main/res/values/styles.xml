@@ -23,5 +23,5 @@
         <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
     </style>
 
-    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <style name="AlertDialogCustom" parent="Base.Theme.AppCompat.Light.Dialog.Alert"/>
 </resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/bottom_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:theme="@style/Theme_Dialog">
+
+    <RelativeLayout
+        android:id="@+id/rel_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/showdata"
+            android:textColor="@color/White_Snow"
+            android:textSize="22dp" />
+
+        <ImageView
+            android:id="@+id/cross_prompt"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_delete" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_sort"
+        android:layout_marginTop="2dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/show_asset_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/showdata_asset"
+            android:textColor="@color/White_Snow"
+            android:textSize="20dp" />
+
+
+        <TextView
+            android:id="@+id/show_server_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/showdata_server"
+            android:textColor="@color/White_Snow"
+            android:textSize="20dp" />
+    </LinearLayout>
+</RelativeLayout>

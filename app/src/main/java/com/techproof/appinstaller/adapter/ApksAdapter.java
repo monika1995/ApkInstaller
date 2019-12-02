@@ -130,7 +130,6 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
             holder.adsLayout.removeAllViews();
             holder.adsLayout.addView(AHandler.getInstance().getNativeMedium((Activity) context));
         }
-
     }
 
     public void setSearchFilter(List<ApkListModel> newList)

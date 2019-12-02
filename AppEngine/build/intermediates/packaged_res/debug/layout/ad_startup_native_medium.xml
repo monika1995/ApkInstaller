@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/native_ad_unit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/native_med_bg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="2dp"
+            android:text="Sponsored"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="#0000FF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="Ad"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/native_ad_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="3dp" />
+
+
+        <TextView
+            android:id="@+id/native_ad_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@+id/native_ad_icon"
+            android:maxLines="2"
+            android:textColor="@color/native_med_text_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/native_ad_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/native_ad_title"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@+id/native_ad_icon"
+            android:maxLines="3"
+            android:textColor="@color/native_med_sub_text_color" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/native_install"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="3dp"
+            android:background="@color/native_med_button_bg"
+            android:text="Install"
+            android:textColor="@color/native_med_button_text_color" />
+    </RelativeLayout>
+</LinearLayout>

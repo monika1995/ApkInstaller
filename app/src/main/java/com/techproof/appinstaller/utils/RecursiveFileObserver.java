@@ -30,6 +30,7 @@ import com.techproof.appinstaller.activity.SplashActivityV3;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 /**
@@ -134,16 +135,18 @@ public class RecursiveFileObserver extends FileObserver
             switch (event)
             {
                 case FileObserver.CREATE:
-                    DebugLogger.d("RecursiveFileObserver CREATE: " + path);
-                    intent = new Intent("APK file create");
-                    intent.putExtra(Constant.PATH, path);
-                    manager.sendBroadcast(intent);
-                    isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION,true);
-                    editor.putString(Constant.APK_PATH,path);
-                    editor.commit();
-                    DebugLogger.d("isNotification "+ isNotification);
-                    if(isNotification)
-                     createNotification(context,path);
+                    if (path.contains(".apk")) {
+                        DebugLogger.d("RecursiveFileObserver CREATE: " + path);
+                        intent = new Intent("APK file create");
+                        intent.putExtra(Constant.PATH, path);
+                        manager.sendBroadcast(intent);
+                        isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, true);
+                        editor.putString(Constant.APK_PATH, path);
+                        editor.commit();
+                        DebugLogger.d("isNotification " + isNotification);
+                        if (isNotification)
+                            createNotification(context, path);
+                    }
                     break;
                 case FileObserver.MODIFY:
                 case FileObserver.MOVED_TO:
@@ -226,7 +229,7 @@ public class RecursiveFileObserver extends FileObserver
 
             notification = builder.build();
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(101, notification);
+            notificationManager.notify(new Random().nextInt(), notification);
         //}
     }
 }

@@ -31,11 +31,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.techproof.appinstaller.Common.BaseClass;
 import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
@@ -150,7 +152,9 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         if(height>=2120){
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -420);
-        }else {
+        }else if(height>=1407){
+            pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -250);
+        } else{
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 40, -110);
         }
 
@@ -231,29 +235,23 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         } else if (type == R.id.radio_SortByName) {
             sortedList.addAll(appsList);
-            Collections.sort(sortedList, new Comparator<PackageInfo>() {
-                public int compare(PackageInfo obj1, PackageInfo obj2) {
-                    return obj1.applicationInfo.loadLabel(getActivity().getPackageManager()).toString().compareToIgnoreCase(obj2.applicationInfo.loadLabel(getActivity().getPackageManager()).toString());
-                }
-            });
+            Collections.sort(sortedList, (obj1, obj2) -> obj1.applicationInfo.loadLabel(getActivity().getPackageManager()).toString().compareToIgnoreCase(obj2.applicationInfo.loadLabel(getActivity().getPackageManager()).toString()));
         } else if (type == R.id.radio_SortBySize) {
             sortedList.addAll(appsList);
-            Collections.sort(sortedList, new Comparator<PackageInfo>() {
-                public int compare(PackageInfo obj1, PackageInfo obj2) {
-                    ApplicationInfo tmpInfo = null;
-                    long obj1Size = 0, Obj2Size = 0;
-                    try {
-                        long size = new File(obj1.applicationInfo.sourceDir).length();
-                        long fileSizeInKB = size / 1024;
-                        long size1 = new File(obj2.applicationInfo.sourceDir).length();
-                        long fileSizeInKB1 = size1 / 1024;
-                        obj1Size = fileSizeInKB / 1024;
-                        Obj2Size = fileSizeInKB1 / 1024;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return Integer.parseInt(String.valueOf(Obj2Size - obj1Size));
+            Collections.sort(sortedList, (obj1, obj2) -> {
+                ApplicationInfo tmpInfo = null;
+                long obj1Size = 0, Obj2Size = 0;
+                try {
+                    long size = new File(obj1.applicationInfo.sourceDir).length();
+                    long fileSizeInKB = size / 1024;
+                    long size1 = new File(obj2.applicationInfo.sourceDir).length();
+                    long fileSizeInKB1 = size1 / 1024;
+                    obj1Size = fileSizeInKB / 1024;
+                    Obj2Size = fileSizeInKB1 / 1024;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                return Integer.parseInt(String.valueOf(Obj2Size - obj1Size));
             });
         }
         txtNoRecordFound.setVisibility(View.GONE);
@@ -295,7 +293,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     }
 
     private void setDialogAppDetails(PackageInfo packageInfo) {
-        dialog = new Dialog(getActivity());
+        dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_appdetails);
         Window window = dialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -304,6 +302,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_app);
         TextView txtAppName = dialog.findViewById(R.id.txt_appName);
         TextView txtVersionName = dialog.findViewById(R.id.txt_versionName);
@@ -314,10 +313,24 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPermissions.setLayoutManager(linearLayoutManager);
         rvPermissions.setVisibility(View.GONE);
+        cardViewPermissions.setVisibility(View.GONE);
         String[] permissions;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        @SuppressLint("SimpleDateFormat")
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY")
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String installTime = dateFormat.format(new Date(packageInfo.firstInstallTime));
         txtInstallationDate.setText(installTime);
+        long fileSizeInMB = 0;
+        try {
+            long size = new File(packageInfo.applicationInfo.sourceDir).length();
+            long fileSizeInKB = size / 1024;
+            fileSizeInMB = fileSizeInKB / 1024;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String apkSize = fileSizeInMB + " MB | Version - " + appsList.get(position).versionName;
+        txtVersionName.setText(apkSize);
+
         txtAppName.setText(packageInfo.applicationInfo.loadLabel(getContext().getPackageManager()).toString());
         Drawable icon = getContext().getPackageManager().getApplicationIcon(packageInfo.applicationInfo);
         imgApp.setImageDrawable(icon);
@@ -339,9 +352,11 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         imgDropDown.setOnClickListener(view -> {
             if(rvPermissions.getVisibility()==View.VISIBLE) {
                 rvPermissions.setVisibility(View.GONE);
+                cardViewPermissions.setVisibility(View.GONE);
                 imgDropDown.setRotation(0);
             }else {
                 rvPermissions.setVisibility(View.VISIBLE);
+                cardViewPermissions.setVisibility(View.VISIBLE);
                 imgDropDown.setRotation(180);
             }
         });
@@ -372,29 +387,33 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
     @Override
     public void appUpdates(PackageInfo packageInfo) {
-        setDialogUpdates(packageInfo);
-        try {
-            new Handler().postDelayed(() -> {
-                try {
-                    new VersionChecker().execute(packageInfo.packageName).get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }, 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean isNetwork = BaseClass.isNetworkAvailable(getContext());
+        if(isNetwork){
+            setDialogUpdates(packageInfo);
+            try {
+                new Handler().postDelayed(() -> {
+                    try {
+                        new VersionChecker().execute(packageInfo.packageName).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }, 1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_CHECKUPDATES);
+            AHandler.getInstance().showFullAds(getActivity(), false);
+        }else {
+            Toast.makeText(getContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
-
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_CHECKUPDATES);
-        AHandler.getInstance().showFullAds(getActivity(),false);
-
     }
 
     private void setDialogUpdates(PackageInfo packageInfo) {
         appVersionName = packageInfo.versionName;
-        dialog1 = new Dialog(getActivity());
+        dialog1 = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog1.setContentView(R.layout.dialog_updates);
         Window window = dialog1.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

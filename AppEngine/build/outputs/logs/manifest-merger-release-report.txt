@@ -1,0 +1,241 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:2:1-176:12
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:2:1-176:12
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:2:1-176:12
+	package
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:4:5-33
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:3:5-51
+	xmlns:android
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:7:22-76
+uses-permission#android.permission.INTERNET
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:8:5-67
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:8:22-64
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:9:5-66
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:9:22-63
+application
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:11:5-175:19
+uses-library#org.apache.http.legacy
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:13:9-15:40
+	android:required
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:15:13-37
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:14:13-50
+meta-data#android.webkit.WebView.EnableSafeBrowsing
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:17:9-19:36
+	android:value
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:19:13-33
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:18:13-69
+meta-data#com.google.android.gms.ads.APPLICATION_ID
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:21:9-23:52
+	android:value
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:23:13-49
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:22:13-69
+meta-data#applovin.sdk.key
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:29:9-31:55
+	android:value
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:31:13-52
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:30:13-44
+meta-data#com.google.firebase.messaging.default_notification_icon
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:33:9-35:60
+	android:resource
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:35:13-57
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:34:13-83
+meta-data#com.google.firebase.messaging.default_notification_channel_id
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:41:9-43:59
+	android:value
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:43:13-56
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:42:13-89
+activity#app.ui.AboutUsActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:46:9-49:63
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:48:13-49
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:49:13-60
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:47:13-50
+activity#app.ui.AboutUsActivityM24
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:51:9-54:63
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:53:13-49
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:54:13-60
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:52:13-53
+activity#app.ui.AboutUsActivityLIV
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:56:9-58:52
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:58:13-49
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:57:13-53
+activity#app.ui.AboutUsActivityTechApp
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:60:9-63:67
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:62:13-49
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:63:13-64
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:61:13-57
+activity#app.ui.PrintActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:65:9-67:52
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:67:13-49
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:66:13-48
+activity#app.fcm.NotificationTypeFour
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:69:9-71:71
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:71:13-68
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:70:13-56
+activity#app.inapp.BillingListActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:73:9-76:63
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:75:13-49
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:76:13-60
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:74:13-57
+activity#app.inapp.BillingDetailActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:77:9-80:63
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:79:13-49
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:80:13-60
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:78:13-59
+activity#app.adshandler.FullPagePromo
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:82:9-84:75
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:84:13-72
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:83:13-56
+activity#app.ui.ExitAdsActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:86:9-88:71
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:88:13-68
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:87:13-50
+activity#app.ui.AdsLoadingActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:90:9-92:71
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:92:13-68
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:91:13-53
+activity#com.google.android.gms.ads.AdActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:97:9-101:36
+	tools:node
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:101:13-33
+	android:configChanges
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:99:13-122
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:100:13-61
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:98:13-65
+activity#com.unity3d.services.ads.adunit.AdUnitActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:111:9-83
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:111:19-80
+activity#com.unity3d.services.ads.adunit.AdUnitSoftwareActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:112:9-91
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:112:19-88
+activity#com.applovin.adview.AppLovinInterstitialActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:129:9-85
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:129:19-82
+activity#com.startapp.android.publish.ads.list3d.List3DActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:132:9-134:52
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:134:13-49
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:133:13-82
+activity#com.startapp.android.publish.adsCommon.activities.OverlayActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:136:9-139:64
+	android:configChanges
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:138:13-74
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:139:13-61
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:137:13-93
+activity#com.startapp.android.publish.adsCommon.activities.FullScreenActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:141:9-144:52
+	android:configChanges
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:143:13-74
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:144:13-49
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:142:13-96
+activity#app.ui.MoreFeatureActivity
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:147:9-151:56
+	android:screenOrientation
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:150:13-49
+	android:launchMode
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:149:13-42
+	android:theme
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:151:13-53
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:148:13-54
+receiver#app.fcm.InstallReferrerReceiver
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:153:9-160:20
+	android:exported
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:155:13-36
+	android:permission
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:156:13-69
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:154:13-59
+intent-filter#action:name:com.android.vending.INSTALL_REFERRER
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:157:13-159:29
+action#com.android.vending.INSTALL_REFERRER
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:158:17-79
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:158:25-76
+receiver#app.fcm.NotificationActionReceiver
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:163:9-169:20
+	android:exported
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:165:13-37
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:164:13-62
+intent-filter#action:name:sec_btn
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:166:13-168:29
+action#sec_btn
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:167:17-50
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:167:25-47
+receiver#app.receiver.FirebaseAlarmReceiver
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:171:9-71
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:171:19-68
+receiver#app.receiver.TopicAlarmReceiver
+ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:173:9-68
+	android:name
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml:173:19-65
+uses-sdk
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+		ADDED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
+		INJECTED from /Users/quantum4u1/Documents/m_workspace/ApkInstaller/AppEngine/AndroidManifest.xml
