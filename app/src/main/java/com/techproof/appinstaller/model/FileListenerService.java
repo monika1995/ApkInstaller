@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 
+import androidx.core.app.NotificationCompat;
+
 import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.utils.RecursiveFileObserver;
 
@@ -31,32 +33,26 @@ public class FileListenerService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        createChannel();
+        if (Build.VERSION.SDK_INT >= 26) {
+            String CHANNEL_ID = "my_channel_01";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setContentText("").build();
+
+            startForeground(1, notification);
+        }
 
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
         fileObserver = new RecursiveFileObserver(getPackageName(),getApplicationContext(),path);
         fileObserver.startWatching();
 
 
-    }
-
-    public void createChannel()
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            String channelId = getString(R.string.app_name);
-            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription(channelId);
-            notificationChannel.setSound(null, null);
-
-            notificationManager.createNotificationChannel(notificationChannel);
-            Notification notification = new Notification.Builder(this, channelId)
-                    .setPriority(Notification.PRIORITY_MIN)
-                    .build();
-
-            startForeground(1, notification);
-        }
     }
 
     @Override

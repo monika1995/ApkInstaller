@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
             }else{
                 sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,false);
             }
-            sharedPreferences.commit();
+            sharedPreferences.apply();
         });
 
         LinearLayout linearLayout = findViewById(R.id.adsbanner);

@@ -184,6 +184,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         sortedList.clear();
         if (type == R.id.radio_SortByName)
         {
+            DebugLogger.d("apklist:" + apkList.size());
             sortedList.addAll(apkList);
             Collections.sort(sortedList, (obj1, obj2) -> obj1.getPackageInfo().packageName.compareToIgnoreCase(obj2.getPackageInfo().packageName));
         }
@@ -235,7 +236,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
     private void getAllApks() {
         if (checkPermission()) {
-
             filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
             list.clear();
             //getDir(filePath);
@@ -247,16 +247,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                 e.printStackTrace();
             }
 
-            apkList.clear();
-            apkList.addAll(list);
-            /*for (int i = 0; i < list.size(); i++) {
-                PackageInfo info = pm.getPackageArchiveInfo(list.get(i).getApkPath(), 0);
-                DebugLogger.d(info.packageName);
-                apkList.add(info);
-            }*/
-            setFilter(R.id.radio_SortByName);
-            apksAdapter.notifyDataSetChanged();
-
         } else {
             requestPermission();
         }
@@ -266,6 +256,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     private void getDir(String path) {
         final PackageManager pm = getContext().getPackageManager();
         File tempDir = new File(path + "/");
+        DebugLogger.d("getDir");
         if (tempDir.exists()) {
             File fileList[] = tempDir.listFiles();
             if (fileList != null) {
@@ -285,6 +276,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                 }
             }
         }
+        DebugLogger.d("ListSize"+list.size());
     }
 
     public class getApks extends AsyncTask<String,Void,Void>{
@@ -298,20 +290,39 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         @Override
         protected Void doInBackground(String... path) {
 
+            apkList.clear();
+
             getDir(path[0]);
+           // publishProgress();
 
             return null;
         }
 
-        @Override
+        /*@Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+
+            apkList.addAll(list);
 
             if (lastSortingType > 0) {
                 setFilter(lastSortingType);
             } else {
-                setFilter(R.id.radio_systemApps);
+                setFilter(R.id.radio_SortByName);
             }
+
+        }*/
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            apkList.addAll(list);
+
+            if (lastSortingType > 0) {
+                setFilter(lastSortingType);
+            } else {
+                setFilter(R.id.radio_SortByName);
+            }
+
         }
     }
 
@@ -340,6 +351,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getAllApks();
+                    DebugLogger.d("Permission grant");
                 } else {
                     DebugLogger.d("Permission Denied, You cannot use local drive .");
                     requestPermission();
@@ -350,6 +362,10 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
     @Override
     public void redirectToPlayStore(String packageName) {
+
+        AHandler.getInstance().showFullAds(getActivity(),false);
+        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APK_PLAYSTORE);
+
         try {
             startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
         }catch(Exception e) {
@@ -357,8 +373,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
             e.printStackTrace();
         }
 
-        AHandler.getInstance().showFullAds(getActivity(),false);
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APK_PLAYSTORE);
     }
 
     @Override
@@ -471,12 +485,16 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         RecyclerView rvPermissions = dialog.findViewById(R.id.rv_permissions);
         TextView permissionText = dialog.findViewById(R.id.txt_permissions);
         TextView txtInstall = dialog.findViewById(R.id.btn_install);
+        TextView txtDownloadedDate = dialog.findViewById(R.id.txt_downloaded_date);
         ImageView imgDropDown = dialog.findViewById(R.id.img_permission_arrow);
         rvPermissions.setVisibility(View.GONE);
         cvPermission.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPermissions.setLayoutManager(linearLayoutManager);
         txtAppName.setText(apkListModel.getPackageInfo().packageName);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String installTime = dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified()));
+        txtDownloadedDate.setText(installTime);
         //txtAppName.setText(apkListModel.getPackageInfo().applicationInfo.loadLabel(getContext().getPackageManager()).toString());
         long fileSizeInMB = 0;
         try {
@@ -536,7 +554,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         if(!newText.isEmpty()) {
             for (int i = 0; i < apkList.size(); i++) {
-                if ((apkList.get(i).getPackageInfo().applicationInfo.loadLabel(getActivity().getPackageManager()).toString().toLowerCase().contains(newText.toLowerCase()))) {
+                if ((apkList.get(i).getPackageInfo().packageName.toLowerCase().contains(newText.toLowerCase()))) {
                     newList.add(apkList.get(i));
                 }
             }
@@ -690,4 +708,4 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     }
 
 }
- 
+

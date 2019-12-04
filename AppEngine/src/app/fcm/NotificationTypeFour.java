@@ -69,7 +69,6 @@ public class NotificationTypeFour extends Activity {
                     finish();
                 }
 
-
             }
         });
 

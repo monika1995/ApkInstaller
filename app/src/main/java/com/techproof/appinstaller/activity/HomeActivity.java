@@ -1,5 +1,6 @@
 package com.techproof.appinstaller.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
@@ -23,12 +24,15 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -39,6 +43,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.techproof.appinstaller.Common.BaseClass;
 import com.techproof.appinstaller.Common.Constant;
+import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.adapter.ApkPermissionAdapter;
 import com.techproof.appinstaller.adapter.HomePagerAdapter;
@@ -104,18 +109,20 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         toolbar.inflateMenu(R.menu.toolbar_menu);
         setTabs();
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
+        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
 
                 AHandler.getInstance().showFullAds(HomeActivity.this, false);
+
                 if(tab.getPosition()==0) {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APPS);
                 }else {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APKS);
                 }
+
+                viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override

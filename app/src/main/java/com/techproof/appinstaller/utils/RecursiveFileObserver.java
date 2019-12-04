@@ -85,6 +85,7 @@ public class RecursiveFileObserver extends FileObserver
             if (mObservers != null)
                 return ;
 
+            DebugLogger.d("RecursiveFileObserver Start ");
             mObservers = new ArrayList();
             Stack stack = new Stack();
             stack.push(mPath);
@@ -92,7 +93,7 @@ public class RecursiveFileObserver extends FileObserver
             while (!stack.isEmpty())
             {
                 String parent = String.valueOf(stack.pop());
-                mObservers.add(new SingleFileObserver(parent, mMask));
+                mObservers.add(new SingleFileObserver(parent));
                 File path = new File(parent);
                 File[]files = path.listFiles();
                 if (null == files)
@@ -116,6 +117,7 @@ public class RecursiveFileObserver extends FileObserver
         @Override
         public void stopWatching()
         {
+            DebugLogger.d("RecursiveFileObserver stop ");
             if (mObservers == null)
                 return ;
 
@@ -135,16 +137,16 @@ public class RecursiveFileObserver extends FileObserver
             switch (event)
             {
                 case FileObserver.CREATE:
+                    DebugLogger.d("RecursiveFileObserver CREATE: " + path);
                     if (path.contains(".apk")) {
-                        DebugLogger.d("RecursiveFileObserver CREATE: " + path);
-                        isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, true);
+                        intent = new Intent("APK file create");
+                        intent.putExtra(Constant.PATH, path);
+                        manager.sendBroadcast(intent);
+                        isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, false);
                         if (isNotification) {
-                            intent = new Intent("APK file create");
-                            intent.putExtra(Constant.PATH, path);
-                            manager.sendBroadcast(intent);
+                            DebugLogger.d("isNotification " + isNotification);
                             editor.putString(Constant.APK_PATH, path);
                             editor.commit();
-                            DebugLogger.d("isNotification " + isNotification);
                             createNotification(context, path);
                         }
                     }
@@ -153,7 +155,7 @@ public class RecursiveFileObserver extends FileObserver
                 case FileObserver.MOVED_TO:
                 case FileObserver.MOVED_FROM:
                 case FileObserver.MOVE_SELF:
-                    DebugLogger.d("RecursiveFileObserver Modify: " + path);
+                    //DebugLogger.d("RecursiveFileObserver Modify: " + path);
                     break;
                 case FileObserver.DELETE:
                 case FileObserver.DELETE_SELF:

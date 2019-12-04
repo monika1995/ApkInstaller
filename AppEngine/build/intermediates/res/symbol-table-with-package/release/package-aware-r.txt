@@ -1428,6 +1428,8 @@ id adjust_height
 id adjust_width
 id adsNativeExit
 id ads_layout
+id adsbanner
+id adsholder
 id adsimage
 id alertTitle
 id all_apps

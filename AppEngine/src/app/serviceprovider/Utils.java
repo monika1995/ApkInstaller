@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -26,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -257,8 +259,16 @@ public class Utils {
                     }
                 });
         dia.setCancelable(true);
-        dia.show();
+        //dia.show();
 
+        AlertDialog alert = dia.create();
+
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.BLACK);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.BLACK);
+
+        alert.show();
     }
 
     public void showFeedbackPrompt(final Context context, String msg) {
@@ -269,7 +279,6 @@ public class Utils {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 sendFeedback(context);
-
                             }
                         })
                 .setNegativeButton("Later", new DialogInterface.OnClickListener() {
@@ -277,8 +286,17 @@ public class Utils {
                         dialog.dismiss();
                     }
                 });
+
         dia.setCancelable(true);
-        dia.show();
+        //dia.show();
+
+        AlertDialog alert = dia.create();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.BLACK);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.BLACK);
+
+        alert.show();
 
     }
 
@@ -300,7 +318,15 @@ public class Utils {
                         })
                         .setIcon(R.drawable.app_icon).setCancelable(false);
         dia.setCancelable(true);
-        dia.show();
+        //dia.show();
+
+        AlertDialog alert = dia.create();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.BLACK);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.BLACK);
+
+        alert.show();
 
     }
 

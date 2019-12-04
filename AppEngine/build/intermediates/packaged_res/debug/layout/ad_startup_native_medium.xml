@@ -88,7 +88,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_margin="3dp"
-            android:background="@color/native_med_button_bg"
+            android:background="@drawable/native_med_button_color"
             android:text="Install"
             android:textColor="@color/native_med_button_text_color" />
     </RelativeLayout>

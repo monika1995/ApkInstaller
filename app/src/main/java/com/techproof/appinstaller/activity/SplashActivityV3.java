@@ -1,6 +1,7 @@
 package com.techproof.appinstaller.activity;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,11 +13,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.techproof.appinstaller.Common.Constant;
+import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.model.FileListenerService;
 
@@ -40,6 +45,7 @@ public class SplashActivityV3 extends AppCompatActivity {
 
     String path;
     boolean isFromNotification = false;
+    private static final int PERMISSION_REQUEST_CODE = 100;
 
 
     @Override
@@ -137,11 +143,14 @@ public class SplashActivityV3 extends AppCompatActivity {
     };
 
     private void launchApp() {
-        if (!appLaunch) {
-            appLaunch = true;
-            appLaunch(HomeActivity.class);
-            finish();
-
+        if(checkPermission()){
+            if (!appLaunch) {
+                appLaunch = true;
+                appLaunch(HomeActivity.class);
+                finish();
+            }
+        }else {
+            requestPermission();
         }
     }
 
@@ -173,4 +182,47 @@ public class SplashActivityV3 extends AppCompatActivity {
         super.onDestroy();
         AHandler.getInstance().onAHandlerDestroy();
     }
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(SplashActivityV3.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        int result1 = ContextCompat.checkSelfPermission(SplashActivityV3.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED) {
+            DebugLogger.d("Permission grant--3");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(SplashActivityV3.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(SplashActivityV3.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            DebugLogger.d("Permission_storage");
+            Toast.makeText(SplashActivityV3.this, "Write External Storage permission allows us to read files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        } else {
+            DebugLogger.d("Permission_storage");
+            ActivityCompat.requestPermissions(SplashActivityV3.this, new String[]
+                    {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    DebugLogger.d("Permission grant 1---");
+                    if (!appLaunch) {
+                        appLaunch = true;
+                        appLaunch(HomeActivity.class);
+                        finish();
+
+                    }
+                } else {
+                    DebugLogger.d("Permission Denied, You cannot use local drive .");
+                    requestPermission();
+                }
+                break;
+        }
+    }
+
 }

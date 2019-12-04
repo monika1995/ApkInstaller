@@ -1057,6 +1057,7 @@ public class AHandler {
                             new Utils().showAppUpdatePrompt(context);
                             break;
 
+
                     }
                 }
             }

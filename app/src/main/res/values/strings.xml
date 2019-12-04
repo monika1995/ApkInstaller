@@ -36,7 +36,7 @@
     <string name="feedback">Feedback</string>
     <string name="about_us">About Us</string>
     <string name="settings">Settings</string>
-    <string name="no_apps_found">No Apps Aound</string>
+    <string name="no_apps_found">No Apps Found</string>
     <string name="no_apks_found">No Apks Found</string>
     <string name="manage_notification">Manage Notification</string>
     <string name="apk_alert">New APK found alert</string>

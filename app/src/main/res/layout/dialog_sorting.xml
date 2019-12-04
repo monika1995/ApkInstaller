@@ -31,29 +31,12 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/dp_6">
 
-
-        <RadioButton
-            android:id="@+id/radio_systemApps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/system_apps"
-            android:textColor="@color/black"
-            android:checked="true"
-            android:buttonTint="@color/black"/>
-
-        <RadioButton
-            android:id="@+id/radio_installedApps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/installed_app"
-            android:textColor="@color/black"
-            android:buttonTint="@color/black"/>
-
         <RadioButton
             android:id="@+id/radio_SortByName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sort_by_name"
+            android:checked="true"
             android:textColor="@color/black"
             android:buttonTint="@color/black"/>
 
@@ -62,6 +45,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sort_by_size"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radio_systemApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/system_apps"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radio_installedApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/installed_app"
             android:textColor="@color/black"
             android:buttonTint="@color/black"/>
 

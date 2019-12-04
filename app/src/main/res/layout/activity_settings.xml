@@ -80,8 +80,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
                 android:text="@string/alert_turnon"
-                android:textColor="@color/bg_card"
-                android:textSize="@dimen/sp_12"/>
+                android:textColor="@color/off_white"
+                android:textSize="@dimen/sp_10"/>
 
             <TextView
                 android:id="@+id/txt_alert_turnoff"
@@ -91,14 +91,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
                 android:text="@string/alert_turnoff"
-                android:textColor="@color/bg_card"
-                android:textSize="@dimen/sp_12"/>
+                android:textColor="@color/off_white"
+                android:textSize="@dimen/sp_10"/>
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_notification"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:thumbTint="@color/green"
+                app:thumbTint="@drawable/bg_thumb"
                 app:trackTint="@drawable/checker_track"
                 app:layout_constraintStart_toEndOf="@id/guidelineLeft"
                 app:layout_constraintEnd_toEndOf="parent"

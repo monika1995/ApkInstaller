@@ -168,7 +168,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         if (lastSortingType > 0) {
             radioGroup.check(lastSortingType);
         } else {
-            radioGroup.check(R.id.radio_systemApps);
+            radioGroup.check(R.id.radio_SortByName);
         }
 
         RadioButton rdSystemApps = v.findViewById(R.id.radio_systemApps);
@@ -276,24 +276,26 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
     @Override
     public void launchApps(String packageName) {
-        Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-        startActivity(launchIntent);
 
         AHandler.getInstance().showFullAds(getActivity(),false);
         AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_LAUNCH);
+
+        Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        startActivity(launchIntent);
     }
 
     @Override
     public void redirectToPlayStore(String packageName) {
+
+        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_PLAYSTORE);
+        AHandler.getInstance().showFullAds(getActivity(),false);
+
         try {
             startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
         } catch (Exception e) {
             Toast.makeText(getContext(), "Unable to Connect Try Again...", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_PLAYSTORE);
-        AHandler.getInstance().showFullAds(getActivity(),false);
     }
 
     @Override
@@ -627,7 +629,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
             if (lastSortingType > 0) {
                 setFilter(lastSortingType);
             } else {
-                setFilter(R.id.radio_systemApps);
+                setFilter(R.id.radio_SortByName);
             }
         }
     }
@@ -713,7 +715,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
             if (lastSortingType > 0) {
                 setFilter(lastSortingType);
             } else {
-                setFilter(R.id.radio_systemApps);
+                setFilter(R.id.radio_SortByName);
             }
         }
     }

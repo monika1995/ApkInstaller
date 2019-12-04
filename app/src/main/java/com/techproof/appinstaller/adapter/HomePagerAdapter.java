@@ -37,11 +37,6 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE;
-    }
-
-    @Override
     public int getCount() {
         return totalTabs;
     }

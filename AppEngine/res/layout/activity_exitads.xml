@@ -66,8 +66,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:background="@color/colorPrimaryDark"
                 android:orientation="vertical" />
-
 
         </RelativeLayout>
 
