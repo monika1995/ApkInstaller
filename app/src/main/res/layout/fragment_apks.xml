@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="@dimen/dp_16"/>
+        android:layout_marginLeft="@dimen/dp_12"/>
 
     <ImageView
         android:id="@+id/img_apkSorting"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_16"/>
+        android:layout_marginRight="@dimen/dp_12"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_apks"
@@ -37,8 +37,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_16"
-        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_12"
         tools:listitem="@layout/item_apks"/>
 
     <TextView

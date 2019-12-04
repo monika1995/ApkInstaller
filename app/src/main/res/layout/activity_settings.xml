@@ -43,7 +43,7 @@
         android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
         android:drawablePadding="@dimen/dp_20"
-        android:textSize="@dimen/sp_18"/>
+        android:textSize="@dimen/sp_16"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -100,7 +100,6 @@
                 android:layout_height="wrap_content"
                 app:thumbTint="@color/green"
                 app:trackTint="@drawable/checker_track"
-                android:checked="true"
                 app:layout_constraintStart_toEndOf="@id/guidelineLeft"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -116,5 +115,27 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/adsholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:id="@+id/adsbanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

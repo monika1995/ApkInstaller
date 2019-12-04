@@ -45,7 +45,6 @@
         app:layout_constraintStart_toEndOf="@id/img_apk"
         android:layout_marginLeft="@dimen/dp_16"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/sp_10"/>
 
     <TextView
@@ -58,7 +57,6 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/dp_14"/>
 
     <TextView
@@ -84,7 +82,6 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/dp_16"/>
 
     <ImageView
@@ -99,7 +96,6 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/dp_16"/>
 
     <androidx.cardview.widget.CardView
@@ -116,8 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dp_4"
-            android:paddingBottom="@dimen/dp_4"
-            android:layout_marginBottom="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_10"
             tools:listitem="@layout/item_permissions">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -143,6 +138,33 @@
      android:textAlignment="center"
      android:layout_marginRight="@dimen/dp_10"
      android:textSize="@dimen/dp_14"/>
+
+    <LinearLayout
+        android:id="@+id/adsholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_install"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:id="@+id/adsbanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

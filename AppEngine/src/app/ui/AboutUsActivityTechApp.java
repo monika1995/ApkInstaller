@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import app.PrintLog;
+import app.adshandler.AHandler;
 import app.pnd.adshandler.R;
 import app.server.v2.Slave;
 import app.serviceprovider.Utils;
@@ -102,7 +104,11 @@ public class AboutUsActivityTechApp extends AppCompatActivity {
         rl_terms_of_service.setOnClickListener(mOnClickListener);
         rl_privacy_policy.setOnClickListener(mOnClickListener);
         rl_mail_us.setOnClickListener(mOnClickListener);
+
+        LinearLayout linearLayout = findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(AboutUsActivityTechApp.this));
     }
+
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override

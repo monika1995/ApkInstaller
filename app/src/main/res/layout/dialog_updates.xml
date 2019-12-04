@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="275dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
@@ -12,7 +12,10 @@
        android:layout_height="@dimen/dp_40"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       android:layout_margin="@dimen/dp_16"
+       android:layout_marginTop="@dimen/dp_16"
+       android:layout_marginBottom="@dimen/dp_16"
+       android:layout_marginLeft="@dimen/dp_10"
+       android:layout_marginRight="@dimen/dp_10"
        android:scaleType="centerCrop"
        android:src="@drawable/ic_launcher_background"/>
 
@@ -38,7 +41,6 @@
         app:layout_constraintStart_toEndOf="@id/img_app"
         android:layout_marginLeft="@dimen/dp_16"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/sp_12"/>
 
     <TextView
@@ -48,12 +50,11 @@
         android:text="@string/please_wait"
         app:layout_constraintTop_toBottomOf="@id/txt_versionName"
         app:layout_constraintStart_toEndOf="@id/img_app"
-        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_10"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/sp_14" />
 
     <com.wang.avi.AVLoadingIndicatorView
@@ -77,12 +78,11 @@
      android:text="@string/loading_updates"
      app:layout_constraintTop_toBottomOf="@id/progress_updates"
      app:layout_constraintStart_toEndOf="@id/img_app"
-     android:layout_marginLeft="@dimen/dp_16"
+     android:layout_marginLeft="@dimen/dp_10"
      android:layout_marginTop="@dimen/dp_16"
-     android:layout_marginRight="@dimen/dp_16"
+     android:layout_marginRight="@dimen/dp_10"
      android:gravity="center"
      android:textColor="@color/black"
-     android:textStyle="bold"
      android:textSize="@dimen/sp_14" />
 
    <!--<ProgressBar
@@ -122,10 +122,9 @@
         android:paddingBottom="@dimen/dp_16"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="@dimen/sp_14" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,11 +133,41 @@
         app:layout_constraintTop_toBottomOf="@id/txt_loadingUpdates"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
+        android:textAlignment="center"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_8"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="@dimen/sp_16"/>
+        android:textSize="@dimen/sp_18"/>
+
+    <LinearLayout
+        android:id="@+id/adsholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_update"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:id="@+id/adsbanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

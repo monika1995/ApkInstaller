@@ -163,6 +163,8 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(HomeActivity.this));
         CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
@@ -369,7 +371,6 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     private final BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, android.content.Intent intent) {
-            String path = intent.getStringExtra("path");
             changesInFile();
         }
     };

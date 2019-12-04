@@ -2,6 +2,8 @@ package com.techproof.appinstaller.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -22,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -92,7 +95,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     private String appVersionName;
     private ImageView imgAndroid;
     private TextView textView, txtPleaseWait, txtloadingUpdate;
-    private Button btnUpdate;
+    private TextView btnUpdate;
     private AVLoadingIndicatorView progressBar;
 
     private ApiInterface apiInterface;
@@ -131,6 +134,8 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         rvApps.setAdapter(appsAdapter);
 
         imgSorting.setOnClickListener(view1 -> dialogSorting());
+
+        getAllApps();
 
         return view;
     }
@@ -193,11 +198,19 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        getAllApps();
     }
 
     private void getAllApps() {
-        final PackageManager pm = getActivity().getPackageManager();
+
+        try {
+            new getApps().execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        /*final PackageManager pm = getActivity().getPackageManager();
         //get a list of installed apps.
         //List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         List<PackageInfo> apps = getActivity().getPackageManager().getInstalledPackages(0);
@@ -213,7 +226,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
             setFilter(lastSortingType);
         } else {
             setFilter(R.id.radio_systemApps);
-        }
+        }*/
         //appsAdapter.notifyDataSetChanged();
     }
 
@@ -301,6 +314,9 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+
+        LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
 
         CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_app);
@@ -422,6 +438,8 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         dialog1.setCanceledOnTouchOutside(true);
         dialog1.show();
 
+        LinearLayout linearLayout = dialog1.findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
         ImageView imgApp = dialog1.findViewById(R.id.img_app);
         TextView txtAppName = dialog1.findViewById(R.id.txt_appName);
         TextView txtVersionName = dialog1.findViewById(R.id.txt_versionName);
@@ -651,5 +669,52 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     @Override
     public void refreshpage() {
         getAllApps();
+    }
+
+    public class getApps extends AsyncTask<List<PackageInfo>,Void,Void>{
+
+        final PackageManager pm = getActivity().getPackageManager();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(List<PackageInfo>... voids) {
+
+            List<PackageInfo> apps = getActivity().getPackageManager().getInstalledPackages(0);
+
+            appsList.clear();
+            for (PackageInfo packageInfo : apps) {
+                if (pm.getLaunchIntentForPackage(packageInfo.packageName) != null) {
+                    appsList.add(packageInfo);
+                }
+            }
+            //publishProgress(appsList);
+            return null;
+        }
+
+        /*@Override
+        protected void onProgressUpdate(List<PackageInfo>... values) {
+            super.onProgressUpdate(values);
+
+            if (lastSortingType > 0) {
+                setFilter(lastSortingType);
+            } else {
+                setFilter(R.id.radio_systemApps);
+            }
+        }*/
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            if (lastSortingType > 0) {
+                setFilter(lastSortingType);
+            } else {
+                setFilter(R.id.radio_systemApps);
+            }
+        }
     }
 }

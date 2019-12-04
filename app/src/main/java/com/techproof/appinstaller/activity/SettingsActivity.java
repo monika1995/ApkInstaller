@@ -3,6 +3,7 @@ package com.techproof.appinstaller.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.R;
 
+import app.adshandler.AHandler;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.switch_notification)
     SwitchCompat switchNotification;
     SharedPreferences.Editor sharedPreferences;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         sharedPreferences = getApplicationContext().getSharedPreferences(Constant.PREF_NAME, 0).edit();
+        preferences = getApplicationContext().getSharedPreferences(Constant.PREF_NAME, 0);
         ButterKnife.bind(this);
         setSupportActionBar(toolbarMore);
 
@@ -35,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             onBackPressed();
         });
 
+        switchNotification.setChecked(preferences.getBoolean(Constant.IS_NOTIFICATION,false));
         sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,switchNotification.isChecked());
 
         switchNotification.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -44,7 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
             }else{
                 sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,false);
             }
-            sharedPreferences.apply();
+            sharedPreferences.commit();
         });
+
+        LinearLayout linearLayout = findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
     }
 }

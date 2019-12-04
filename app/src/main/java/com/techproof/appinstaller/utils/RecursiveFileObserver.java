@@ -137,15 +137,16 @@ public class RecursiveFileObserver extends FileObserver
                 case FileObserver.CREATE:
                     if (path.contains(".apk")) {
                         DebugLogger.d("RecursiveFileObserver CREATE: " + path);
-                        intent = new Intent("APK file create");
-                        intent.putExtra(Constant.PATH, path);
-                        manager.sendBroadcast(intent);
                         isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, true);
-                        editor.putString(Constant.APK_PATH, path);
-                        editor.commit();
-                        DebugLogger.d("isNotification " + isNotification);
-                        if (isNotification)
+                        if (isNotification) {
+                            intent = new Intent("APK file create");
+                            intent.putExtra(Constant.PATH, path);
+                            manager.sendBroadcast(intent);
+                            editor.putString(Constant.APK_PATH, path);
+                            editor.commit();
+                            DebugLogger.d("isNotification " + isNotification);
                             createNotification(context, path);
+                        }
                     }
                     break;
                 case FileObserver.MODIFY:
@@ -201,19 +202,14 @@ public class RecursiveFileObserver extends FileObserver
             DebugLogger.d("packinfo_noti" + packageInfo);
 
             contentView = new RemoteViews(packageName, R.layout.layout_notification);
-            if (packageInfo != null) {
-                Drawable icon = context.getPackageManager().getApplicationIcon(packageInfo.applicationInfo);
-                Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
-                contentView.setImageViewBitmap(R.id.img_noti_app, bitmap);
-            }
             Intent switchIntent = new Intent(context, SplashActivityV3.class);
             switchIntent.putExtra(Constant.FROM_NOTIFICATION, true);
             switchIntent.putExtra(Constant.PATH, path);
             PendingIntent pendingSwitchIntent = PendingIntent.getActivity(context, 0, switchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             //contentView.setOnClickPendingIntent(R.id.btn_notifi_install, pendingSwitchIntent);
-            contentView.setImageViewResource(R.id.img_noti_app, R.mipmap.ic_launcher);
+            contentView.setImageViewResource(R.id.img_noti_app, R.drawable.ic_android);
 
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.drawable.status_app_icon);
             builder.setAutoCancel(true);
             builder.setPriority(Notification.PRIORITY_DEFAULT);
             builder.setContent(contentView);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">APP Installer</string>
+    <string name="app_name">App Installer</string>
     <string name="start">Start</string>
     <string name="proceeding_text">By Proceeding, you agree to the \n <u>Privacy Policy</u> &amp; <u>Terms of service</u></string>
 

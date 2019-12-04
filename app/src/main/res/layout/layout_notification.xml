@@ -7,9 +7,10 @@
 
    <ImageView
        android:id="@+id/img_noti_app"
-       android:layout_width="@dimen/dp_40"
-       android:layout_height="@dimen/dp_40"
-       android:src="@drawable/ic_launcher_background"
+       android:layout_width="@dimen/dp_30"
+       android:layout_height="@dimen/dp_30"
+       android:src="@drawable/ic_android"
+       android:layout_marginTop="@dimen/dp_6"
        android:layout_marginLeft="@dimen/dp_10"/>
 
     <TextView

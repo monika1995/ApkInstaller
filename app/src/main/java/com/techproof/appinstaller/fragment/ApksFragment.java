@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -61,6 +62,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import app.adshandler.AHandler;
@@ -120,6 +122,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         rvApks.setAdapter(apksAdapter);
 
         imgSorting.setOnClickListener(view1 -> dialogSorting());
+
+        getAllApks();
 
         return view;
     }
@@ -227,7 +231,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        getAllApks();
     }
 
     private void getAllApks() {
@@ -235,9 +238,14 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
             filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
             list.clear();
-            getDir(filePath);
-
-            final PackageManager pm = getActivity().getPackageManager();
+            //getDir(filePath);
+            try {
+                new getApks().execute(filePath).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             apkList.clear();
             apkList.addAll(list);
@@ -275,6 +283,34 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                         getDir(file.getAbsolutePath());
                     }
                 }
+            }
+        }
+    }
+
+    public class getApks extends AsyncTask<String,Void,Void>{
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... path) {
+
+            getDir(path[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+
+            if (lastSortingType > 0) {
+                setFilter(lastSortingType);
+            } else {
+                setFilter(R.id.radio_systemApps);
             }
         }
     }
@@ -342,6 +378,9 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+
+        LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
 
         CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
@@ -423,6 +462,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
+        LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
+        linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
         CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
