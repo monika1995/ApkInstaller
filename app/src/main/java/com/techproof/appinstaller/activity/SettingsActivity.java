@@ -12,11 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.R;
 
+import org.jsoup.Connection;
+
 import app.adshandler.AHandler;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_more)
     Toolbar toolbarMore;
@@ -53,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         LinearLayout linearLayout = findViewById(R.id.adsbanner);
-        linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
+        //linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
+        linearLayout.addView(getBanner());
     }
 }

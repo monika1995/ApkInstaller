@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MoreActivity extends AppCompatActivity implements View.OnClickListener {
+public class MoreActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar_more)
     Toolbar toolbarMore;
@@ -59,6 +60,9 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         textViewAboutUs.setOnClickListener(this);
         textViewSetting.setOnClickListener(this);
 
+        LinearLayout linearLayout = findViewById(R.id.adsbanner);
+        //linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
+        linearLayout.addView(getBanner());
     }
 
     @Override

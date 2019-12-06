@@ -20,8 +20,8 @@
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginTop="@dimen/dp_6"
-            android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,19 +56,19 @@
             android:id="@+id/txt_launch"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding5dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/native_med_button_color"
             android:ellipsize="end"
             android:gravity="center"
+            android:padding="@dimen/padding5dp"
             android:singleLine="true"
+            android:text="@string/launch"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="normal"
-            android:text="@string/launch"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guidelineRight"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/dp_10"/>
+            app:layout_constraintStart_toEndOf="@id/guidelineRight"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,6 +131,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineRight"
             app:layout_constraintTop_toBottomOf="@id/img_app" />
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@android:color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txt_playstore"
+            app:layout_constraintTop_toBottomOf="@id/txt_launch" />
 
 
         <androidx.constraintlayout.widget.Guideline

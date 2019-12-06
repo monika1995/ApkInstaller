@@ -29,4 +29,5 @@ public class MapperUtils {
 
     //new version 83 and above page id
     public static final String  LAUNCH_APP_SETTING = "_settings";
+    public static final String  LAUNCH_APK = "_apks";
 }

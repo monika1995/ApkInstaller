@@ -1,19 +1,23 @@
 package com.techproof.appinstaller.model;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+import android.widget.RemoteViews;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.techproof.appinstaller.R;
+import com.techproof.appinstaller.activity.SplashActivityV3;
 import com.techproof.appinstaller.utils.RecursiveFileObserver;
 
 /**
@@ -21,8 +25,7 @@ import com.techproof.appinstaller.utils.RecursiveFileObserver;
  */
 public class FileListenerService extends Service {
 
-    RecursiveFileObserver fileObserver;
-    NotificationManager notificationManager;
+    private RecursiveFileObserver fileObserver;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -31,28 +34,23 @@ public class FileListenerService extends Service {
 
     @Override
     public void onCreate() {
-        super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startMyOwnForeground();
 
-        if (Build.VERSION.SDK_INT >= 26) {
-            String CHANNEL_ID = "my_channel_01";
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
-
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle("")
-                    .setContentText("").build();
-
-            startForeground(1, notification);
+            super.startForeground(101,newRunningNotification());
         }
-
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        fileObserver = new RecursiveFileObserver(getPackageName(),getApplicationContext(),path);
+        fileObserver = new RecursiveFileObserver(getPackageName(), getApplicationContext(), path);
         fileObserver.startWatching();
+        super.onCreate();
+    }
 
-
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startMyOwnForeground();
+        }
+        return START_STICKY;
     }
 
     @Override
@@ -61,6 +59,110 @@ public class FileListenerService extends Service {
         fileObserver.stopWatching();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             stopForeground(true);
+        } else {
+            stopSelf();
         }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startMyOwnForeground() {
+        String NOTIFICATION_CHANNEL_ID = "App Installer";
+        String channelName = "App Installer";
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert manager != null;
+        manager.createNotificationChannel(chan);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        Notification notification = notificationBuilder.setOngoing(true)
+                .setSmallIcon(R.drawable.status_app_icon)
+                .setContentTitle("App is running in background")
+                .setPriority(NotificationManager.IMPORTANCE_NONE)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build();
+        startForeground(0, notification);
+    }
+
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    private NotificationManager mNotificationManager;
+
+    private Notification newRunningNotification() {
+        mNotificationManager = (NotificationManager) this
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        RemoteViews contentView = new RemoteViews(this.getPackageName(), R.layout.notification_app);
+
+        Intent intent = new Intent(this, SplashActivityV3.class);
+        intent.addCategory(this.getPackageName());
+//        PendingIntent pSplashLaunchIntent = PendingIntent.getActivity(this, Const.NOTIFICATION_ID, intent,
+//                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        intent.addCategory(this.getPackageName());
+//        PendingIntent pSettingLaunchIntent = PendingIntent.getActivity(this, Const.NOTIFICATION_ID, intent1,
+//                PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+//        contentView.setOnClickPendingIntent(R.id.linear, pSplashLaunchIntent);
+//        contentView.setOnClickPendingIntent(R.id.setting_button, pSettingLaunchIntent);
+
+        Notification notification;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(this.getResources().getString(R.string.fcm_defaultSenderId),
+                    "Chaneel name",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            mNotificationManager.createNotificationChannel(channel);
+
+            Notification.Builder builder = new Notification.Builder(this,
+                    this.getResources().getString(R.string.fcm_defaultSenderId));
+            // .setContentTitle("Auto Download Service Enabled");
+
+            //    builder.setContentIntent(pcloseIntent);
+            builder.setCustomContentView(contentView);
+            builder.setSmallIcon(R.drawable.status_app_icon);
+            notification = builder.build();
+
+        } else {
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this,
+                            this.getResources().getString(R.string.fcm_defaultSenderId));
+            //  .setContentTitle("Auto Download Service Enabled");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mBuilder.setSmallIcon(R.drawable.status_app_icon);
+
+            } else {
+                mBuilder.setSmallIcon(R.drawable.app_icon);
+            }
+
+            mBuilder.setCustomContentView(contentView);
+
+            notification = mBuilder.build();
+        }
+
+        // notification.contentIntent = pcloseIntent;
+
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+        mNotificationManager.notify(101, notification);
+        return notification;
     }
 }

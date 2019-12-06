@@ -145,7 +145,7 @@ public class Type3PushListener implements FCMType, ImageDownloader {
                         .setCustomBigContentView(contentViewbig);
 
                 builder.setContentIntent(pcloseIntent);
-                builder.setSmallIcon(R.drawable.ic_stat_action_settings_phone);
+                builder.setSmallIcon(R.drawable.status_app_icon);
                 notification = builder.build();
 
             } else {
@@ -155,7 +155,7 @@ public class Type3PushListener implements FCMType, ImageDownloader {
                                 .setCustomContentView(contentView)
                                 .setCustomBigContentView(contentViewbig);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mBuilder.setSmallIcon(R.drawable.ic_stat_action_settings_phone);
+                    mBuilder.setSmallIcon(R.drawable.status_app_icon);
 
                 } else {
                     mBuilder.setSmallIcon(R.drawable.app_icon);

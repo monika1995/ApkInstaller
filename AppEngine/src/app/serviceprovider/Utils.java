@@ -262,13 +262,13 @@ public class Utils {
         //dia.show();
 
         AlertDialog alert = dia.create();
+        alert.show();
 
         Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
         nbutton.setTextColor(Color.BLACK);
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(Color.BLACK);
 
-        alert.show();
     }
 
     public void showFeedbackPrompt(final Context context, String msg) {
@@ -291,12 +291,11 @@ public class Utils {
         //dia.show();
 
         AlertDialog alert = dia.create();
+        alert.show();
         Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
         nbutton.setTextColor(Color.BLACK);
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(Color.BLACK);
-
-        alert.show();
 
     }
 
@@ -321,12 +320,12 @@ public class Utils {
         //dia.show();
 
         AlertDialog alert = dia.create();
+        alert.show();
         Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
         nbutton.setTextColor(Color.BLACK);
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(Color.BLACK);
 
-        alert.show();
 
     }
 

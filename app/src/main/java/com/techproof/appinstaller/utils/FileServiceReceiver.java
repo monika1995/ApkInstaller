@@ -13,11 +13,12 @@ import com.techproof.appinstaller.model.FileListenerService;
 public class FileServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(new Intent(context, FileListenerService.class));
-        }else {
-            context.startService(new Intent(context, FileListenerService.class));
-        }
+        if (intent.getAction() != null)
+            if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(new Intent(context, FileListenerService.class));
+                } else {
+                    context.startService(new Intent(context, FileListenerService.class));
+                }
     }
 }

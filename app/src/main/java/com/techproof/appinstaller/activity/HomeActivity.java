@@ -1,6 +1,6 @@
 package com.techproof.appinstaller.activity;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
@@ -24,14 +24,12 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.view.MenuItemCompat;
@@ -43,7 +41,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.techproof.appinstaller.Common.BaseClass;
 import com.techproof.appinstaller.Common.Constant;
-import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.adapter.ApkPermissionAdapter;
 import com.techproof.appinstaller.adapter.HomePagerAdapter;
@@ -60,12 +57,13 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import app.adshandler.AHandler;
+import app.fcm.MapperUtils;
 import app.inapp.InAppUpdateManager;
 import app.listener.InAppUpdateListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements InAppUpdateListener {
+public class HomeActivity extends BaseActivity implements InAppUpdateListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -82,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     ApkListModel apkListModel;
     ArrayList<String> permissionsList;
     private InAppUpdateManager inAppUpdateManager;
-    public static int count=0;
+    public static int count = 0;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     SearchView searchView;
@@ -94,11 +92,6 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(new Intent(getApplicationContext(), FileListenerService.class));
-        } else {
-            startService(new Intent(getApplicationContext(), FileListenerService.class));
-        }
 
         permissionsList = new ArrayList<>();
         sharedPreferences = getSharedPreferences("My_Pref", 0);
@@ -109,16 +102,16 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         toolbar.inflateMenu(R.menu.toolbar_menu);
         setTabs();
 
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
                 AHandler.getInstance().showFullAds(HomeActivity.this, false);
 
-                if(tab.getPosition()==0) {
+                if (tab.getPosition() == 0) {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APPS);
-                }else {
+                } else {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APKS);
                 }
 
@@ -140,24 +133,20 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         // AppUtils.onClickButtonFirebaseAnalytics(this, Constant.FIREBASE_SETTING);
 
         LinearLayout linearLayout = findViewById(R.id.adsbanner);
-        linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
+        //linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
+        linearLayout.addView(getBanner());
 
         inAppUpdateManager = new InAppUpdateManager(this);
         inAppUpdateManager.checkForAppUpdate(this);
+        callingForMapper(this);
 
-    }
 
-    private void refreshTab(int position) {
-        switch (position) {
-            case 0:
-                AppsFragment appsFragment = (AppsFragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
-                appsFragment.refreshpage();
-                break;
-            case 1:
-                ApksFragment apksFragment = (ApksFragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
-                apksFragment.refreshpage();
-                break;
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            this.startForegroundService(new Intent(this, FileListenerService.class));
+//        } else {
+//            this.startService(new Intent(this, FileListenerService.class));
+//        }
+
     }
 
     public void setInstallDialog(ApkListModel apkListModel) {
@@ -172,6 +161,8 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
 
         LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
         linearLayout.addView(AHandler.getInstance().getBannerHeader(HomeActivity.this));
+        //linearLayout.addView(getBanner());
+
         CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
@@ -188,10 +179,10 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         rvPermissions.setAdapter(permissionAdapter);
 
         if (apkListModel != null) {
-            if(apkListModel.getPackageInfo()!=null) {
+            if (apkListModel.getPackageInfo() != null) {
                 txtAppName.setText(apkListModel.getPackageInfo().packageName);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                txtDownloadedDate.setText( dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified())));
+                txtDownloadedDate.setText(dateFormat.format(new Date(new File(apkListModel.getApkPath()).lastModified())));
                 long fileSizeInMB = 0;
                 try {
                     if (apkListModel.getPackageInfo().applicationInfo.sourceDir != null) {
@@ -351,17 +342,20 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
         LocalBroadcastManager.getInstance(this).registerReceiver(myBroadcastReceiver,
                 new IntentFilter("APK file create"));
 
-        path = sharedPreferences.getString(Constant.APK_PATH,"");
+        path = sharedPreferences.getString(Constant.APK_PATH, "");
         if (!path.equals("")) {
-            apkListModel = new ApkListModel();
-            apkListModel.setApkPath(path);
-            apkListModel.setApkName(new File(path).getName());
-            PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(path, PackageManager.GET_META_DATA);
-            apkListModel.setPackageInfo(packageInfo);
-            setInstallDialog(apkListModel);
+            File file = new File(path);
+            if (file.exists()) {
+                apkListModel = new ApkListModel();
+                apkListModel.setApkPath(path);
+                apkListModel.setApkName(new File(path).getName());
+                PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(path, PackageManager.GET_META_DATA);
+                apkListModel.setPackageInfo(packageInfo);
+                setInstallDialog(apkListModel);
 
-            editor.putString(Constant.APK_PATH,"");
-            editor.commit();
+                editor.putString(Constant.APK_PATH, "");
+                editor.commit();
+            }
         }
     }
 
@@ -372,7 +366,10 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     }
 
     public void changesInFile() {
-        refreshTab(viewPager.getCurrentItem());
+        if (viewPager.getCurrentItem() == 1) {
+            ApksFragment apksFragment = (ApksFragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
+            apksFragment.refreshpage();
+        }
     }
 
     private final BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver() {
@@ -386,23 +383,23 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     public void onBackPressed() {
         // super.onBackPressed();
 
-        if(count==0) {
+        if (count == 0) {
             toolbar.getMenu().findItem(R.id.action_search).setVisible(true);
             toolbar.getMenu().findItem(R.id.action_more).setVisible(true);
             toolbar.getMenu().findItem(R.id.action_delete).setVisible(false);
             toolbar.getMenu().findItem(R.id.action_share).setVisible(false);
 
-            if(viewPager.getCurrentItem()==0) {
+            if (viewPager.getCurrentItem() == 0) {
                 AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
                 if (appsFragment != null)
                     appsFragment.refreshAdapter();
-            }else {
+            } else {
                 ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
                 if (apksFragment != null)
                     apksFragment.refreshAdapter();
             }
             count++;
-        }else {
+        } else {
             AHandler.getInstance().showExitPrompt(this);
             AHandler.getInstance().v2ManageAppExit(this);
         }
@@ -432,6 +429,39 @@ public class HomeActivity extends AppCompatActivity implements InAppUpdateListen
     @Override
     public void onUpdateNotAvailable() {
         AHandler.getInstance().v2CallonAppLaunch(this);
+
     }
 
+    private void callingForMapper(Activity context) {
+        Intent intent = context.getIntent();
+        String type = intent.getStringExtra(MapperUtils.keyType);
+        String value = intent.getStringExtra(MapperUtils.keyValue);
+        System.out.println("AHandler.callingForMapper " + type + " " + value);
+        try {
+            if (type != null && value != null) {
+                if (type.equalsIgnoreCase("url")) {
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(ContextCompat.getColor(context, app.pnd.adshandler.R.color.colorPrimary));
+                    builder.addDefaultShareMenuItem();
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(context, Uri.parse(value));
+
+                } else if (type.equalsIgnoreCase("deeplink")) {
+                    switch (value) {
+
+                        case MapperUtils.LAUNCH_APP_SETTING:
+                            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                            break;
+
+                        case MapperUtils.LAUNCH_APK:
+                            tabs.getTabAt(1).select();
+                            break;
+
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("AHandler.callingForMapper excep " + e.getMessage());
+        }
+    }
 }

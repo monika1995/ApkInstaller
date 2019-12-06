@@ -105,11 +105,17 @@ public class MapperActivity extends AppCompatActivity {
                     launchAppWithMapper(type,MapperUtils.LAUNCH_SETTINGS);
                     break;
 
-                default:
-                    startActivity(new Intent(this, SplashActivityV3.class));
-
+                case MapperUtils.LAUNCH_APP_SETTING:
+                    launchAppWithMapper(type,MapperUtils.LAUNCH_APP_SETTING);
                     break;
 
+                case MapperUtils.LAUNCH_APK:
+                    launchAppWithMapper(type,MapperUtils.LAUNCH_APK);
+                    break;
+
+                default:
+                    startActivity(new Intent(this, SplashActivityV3.class));
+                    break;
             }
 
         } catch (Exception e) {
@@ -120,7 +126,6 @@ public class MapperActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void launchAppWithMapper(String type, String value) {
         startActivity(new Intent(this, SplashActivityV3.class)

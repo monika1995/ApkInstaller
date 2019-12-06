@@ -106,6 +106,14 @@ public class AboutUsActivityTechApp extends AppCompatActivity {
         rl_mail_us.setOnClickListener(mOnClickListener);
 
         LinearLayout linearLayout = findViewById(R.id.adsbanner);
+        if (!Slave.ETC_1.equalsIgnoreCase("1")) {
+
+            linearLayout.addView(AHandler.getInstance().getBannerHeader(AboutUsActivityTechApp.this));
+
+        } else {
+            linearLayout.addView(AHandler.getInstance().getBannerFooter(AboutUsActivityTechApp.this));
+
+        }
         linearLayout.addView(AHandler.getInstance().getBannerHeader(AboutUsActivityTechApp.this));
     }
 

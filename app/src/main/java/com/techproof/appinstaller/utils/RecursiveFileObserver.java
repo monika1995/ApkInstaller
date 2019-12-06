@@ -10,12 +10,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.FileObserver;
 import android.os.Handler;
+import android.os.Looper;
+import android.service.carrier.CarrierService;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -24,7 +28,6 @@ import com.techproof.appinstaller.Common.BaseClass;
 import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
-import com.techproof.appinstaller.activity.SplashActivity;
 import com.techproof.appinstaller.activity.SplashActivityV3;
 
 import java.io.File;
@@ -136,20 +139,26 @@ public class RecursiveFileObserver extends FileObserver
         {
             switch (event)
             {
-                case FileObserver.CREATE:
-                    DebugLogger.d("RecursiveFileObserver CREATE: " + path);
+                case FileObserver.CLOSE_WRITE:
+                    DebugLogger.d("RecursiveFileObserver Close_write: " + path);
                     if (path.contains(".apk")) {
-                        intent = new Intent("APK file create");
-                        intent.putExtra(Constant.PATH, path);
-                        manager.sendBroadcast(intent);
-                        isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, false);
-                        if (isNotification) {
-                            DebugLogger.d("isNotification " + isNotification);
-                            editor.putString(Constant.APK_PATH, path);
-                            editor.commit();
-                            createNotification(context, path);
+                        File file = new File(path);
+                        if(file.exists()) {
+                            intent = new Intent("APK file create");
+                            intent.putExtra(Constant.PATH, path);
+                            manager.sendBroadcast(intent);
+                            isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, false);
+                            if (isNotification) {
+                                DebugLogger.d("isNotification " + isNotification);
+                                editor.putString(Constant.APK_PATH, path);
+                                editor.commit();
+                                createNotification(context, path);
+                            }
                         }
                     }
+                    break;
+                case FileObserver.CREATE:
+                    DebugLogger.d("RecursiveFileObserver CREATE: " + path);
                     break;
                 case FileObserver.MODIFY:
                 case FileObserver.MOVED_TO:
@@ -159,9 +168,9 @@ public class RecursiveFileObserver extends FileObserver
                     break;
                 case FileObserver.DELETE:
                 case FileObserver.DELETE_SELF:
-                    intent = new Intent("APK file create");
+                   /* intent = new Intent("APK file create");
                     intent.putExtra(Constant.PATH, path);
-                    manager.sendBroadcast(intent);
+                    manager.sendBroadcast(intent);*/
                     DebugLogger.d("RecursiveFileObserver DELETE_SELF: " + path);
                     break;
             }
@@ -212,6 +221,7 @@ public class RecursiveFileObserver extends FileObserver
             contentView.setImageViewResource(R.id.img_noti_app, R.drawable.ic_android);
 
             builder.setSmallIcon(R.drawable.status_app_icon);
+            builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.status_app_icon));
             builder.setAutoCancel(true);
             builder.setPriority(Notification.PRIORITY_DEFAULT);
             builder.setContent(contentView);
@@ -227,7 +237,10 @@ public class RecursiveFileObserver extends FileObserver
 
             notification = builder.build();
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(new Random().nextInt(), notification);
+            if(new File(path).exists()) {
+                notificationManager.notify(new Random().nextInt(), notification);
+            }
+
         //}
     }
 }

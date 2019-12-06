@@ -3,15 +3,16 @@ package com.techproof.appinstaller.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.techproof.appinstaller.R;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.adshandler.AHandler;
@@ -32,20 +34,42 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     private Context context;
     private List<PackageInfo> appsList;
     private AppsOnClickListener onClickListener;
-    private String selectedIndex;
+    //private String selectedIndex;
+    private ArrayList<String> adsList;
+    private boolean[] selectionList;
+    private boolean clickValue = false;
 
     public AppsAdapter(Context context, List<PackageInfo> appsList, AppsOnClickListener onClickListener) {
         this.context = context;
         this.appsList = appsList;
         this.onClickListener = onClickListener;
+        this.adsList = new ArrayList<>();
 
         if (!Slave.hasPurchased(context)) {
             for (int position = 0; position < this.appsList.size(); position++) {
                 if ((position == 2 || (position % 8 == 0 && position > 8))) {
                     this.appsList.add(position, new PackageInfo());
+                    this.adsList.add("demo");
                 }
             }
         }
+
+        selectionList = new boolean[appsList.size()];
+    }
+
+    public void updateCount(List<PackageInfo> appsList) {
+        this.appsList = appsList;
+        this.adsList = new ArrayList<>();
+        if (!Slave.hasPurchased(context)) {
+            for (int position = 0; position < this.appsList.size(); position++) {
+                if ((position == 2 || (position % 8 == 0 && position > 8))) {
+                    this.appsList.add(position, new PackageInfo());
+                    this.adsList.add("demo");
+                }
+            }
+        }
+        selectionList = new boolean[appsList.size()];
+        notifyDataSetChanged();
     }
 
     @Override
@@ -71,25 +95,9 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        /*if ((appsList.get(position).applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
-            // It is a system app
-            holder.txtPlayStore.setVisibility(View.GONE);
-        } else {
-            // It is installed by the user
-            holder.txtPlayStore.setVisibility(View.VISIBLE);
-        }*/
         if (getItemViewType(position) == TYPE_FILE) {
             holder.adsLayout.setVisibility(View.GONE);
             holder.layoutApps.setVisibility(View.VISIBLE);
-            if (selectedIndex != null) {
-                if (String.valueOf(position).equals(selectedIndex)) {
-                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.bg_card));
-                } else {
-                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.light_white));
-                }
-            } else {
-                holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.light_white));
-            }
 
             holder.txtAppName.setText(appsList.get(position).applicationInfo.loadLabel(context.getPackageManager()).toString());
             long fileSizeInMB = 0;
@@ -105,23 +113,91 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
             Drawable icon = context.getPackageManager().getApplicationIcon(appsList.get(position).applicationInfo);
             holder.imgApp.setImageDrawable(icon);
+
             holder.txtLaunch.setOnClickListener(view -> onClickListener.launchApps(appsList.get(position).packageName));
             holder.txtPlayStore.setOnClickListener(view -> onClickListener.redirectToPlayStore(appsList.get(position).packageName));
             holder.txtAppDetails.setOnClickListener(view -> onClickListener.appDetails(appsList.get(position), position));
             holder.txtUpdates.setOnClickListener(view -> onClickListener.appUpdates(appsList.get(position)));
+
+            holder.checkBox.setChecked(selectionList[position]);
+
+            if (selectionList[position]) {
+                holder.txtAppDetails.setEnabled(false);
+                holder.txtUpdates.setEnabled(false);
+                holder.txtPlayStore.setEnabled(false);
+                holder.txtLaunch.setEnabled(false);
+                holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.bg_card));
+            } else {
+                holder.txtAppDetails.setEnabled(true);
+                holder.txtUpdates.setEnabled(true);
+                holder.txtPlayStore.setEnabled(true);
+                holder.txtLaunch.setEnabled(true);
+                holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.light_white));
+            }
+
+            if (clickValue) {
+                holder.checkBox.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkBox.setVisibility(View.GONE);
+            }
+
+
+            holder.checkBox.setOnClickListener(v -> {
+                CheckBox checkBox = (CheckBox) v;
+                selectionList[position] = checkBox.isChecked();
+                if (checkBox.isChecked()) {
+                    holder.txtAppDetails.setEnabled(false);
+                    holder.txtUpdates.setEnabled(false);
+                    holder.txtPlayStore.setEnabled(false);
+                    holder.txtLaunch.setEnabled(false);
+                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.bg_card));
+                    //selectedIndex = String.valueOf(position);
+                    selectionList[position] = true;
+                    onClickListener.onClickItem(appsList.get(position), position);
+                } else {
+                    holder.txtAppDetails.setEnabled(true);
+                    holder.txtUpdates.setEnabled(true);
+                    holder.txtPlayStore.setEnabled(true);
+                    holder.txtLaunch.setEnabled(true);
+                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.light_white));
+                    //selectedIndex = String.valueOf(position);
+                    selectionList[position] = false;
+                    onClickListener.onClickDeleteItem(appsList.get(position));
+                }
+            });
+
             holder.layoutApps.setOnLongClickListener(view -> {
-                selectedIndex = String.valueOf(position);
-                notifyDataSetChanged();
+                clickValue = true;
+                if (clickValue) {
+                    selectionList[position] = true;
+                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.bg_card));
+                } else {
+                    selectionList[position] = false;
+                    holder.layoutApps.setBackground(context.getResources().getDrawable(R.color.light_white));
+                }
+                //selectedIndex = String.valueOf(position);
                 onClickListener.onClickItem(appsList.get(position), position);
+                notifyDataSetChanged();
                 return false;
             });
+
+
+            holder.layoutApps.setOnClickListener(v -> {
+                clickValue = true;
+                holder.checkBox.performClick();
+            });
+
+
         } else {
             holder.adsLayout.setVisibility(View.VISIBLE);
             holder.layoutApps.setVisibility(View.GONE);
             holder.adsLayout.removeAllViews();
             holder.adsLayout.addView(AHandler.getInstance().getNativeMedium((Activity) context));
         }
+    }
 
+    public int getListCount() {
+        return adsList.size();
     }
 
     public void setSearchFilter(List<PackageInfo> newList) {
@@ -131,8 +207,12 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     }
 
     public void changeItemColor() {
-        selectedIndex = null;
-        notifyDataSetChanged();
+        clickValue = false;
+        for(int i = 0;i<selectionList.length;i++)
+        {
+            selectionList[i] = false;
+        }
+          notifyDataSetChanged();
     }
 
 
@@ -152,6 +232,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         TextView txtPlayStore;
         ConstraintLayout layoutApps;
         LinearLayout adsLayout;
+        CheckBox checkBox;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -164,6 +245,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
             txtPlayStore = itemView.findViewById(R.id.txt_playstore);
             layoutApps = itemView.findViewById(R.id.layout_apps);
             adsLayout = itemView.findViewById(R.id.ads_layout);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
 
@@ -177,5 +259,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         void appUpdates(PackageInfo packageInfo);
 
         void onClickItem(PackageInfo packageInfo, int pos);
+
+        void onClickDeleteItem(PackageInfo packageInfo);
     }
 }

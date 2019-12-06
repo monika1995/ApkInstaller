@@ -3,17 +3,15 @@ package com.techproof.appinstaller.fragment;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -47,6 +44,7 @@ import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.activity.HomeActivity;
 import com.techproof.appinstaller.adapter.AppPermissionAdapter;
 import com.techproof.appinstaller.adapter.AppsAdapter;
+import com.techproof.appinstaller.model.FileListenerService;
 import com.techproof.appinstaller.model.RefreshpageInterface;
 import com.techproof.appinstaller.model.request.CheckUpdateRequest;
 import com.techproof.appinstaller.model.request.DataRequest;
@@ -62,10 +60,10 @@ import org.jsoup.Jsoup;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -97,6 +95,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     private TextView textView, txtPleaseWait, txtloadingUpdate;
     private TextView btnUpdate;
     private AVLoadingIndicatorView progressBar;
+    HomeActivity homeActivity;
 
     private ApiInterface apiInterface;
     private CheckUpdateRequest checkUpdateRequest;
@@ -106,6 +105,11 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     private Toolbar toolbar;
     int position;
     private PackageInfo selectedItem;
+    private List<PackageInfo> selectedItemList;
+    int UNINSTALL_REQUEST_CODE = 101;
+    int DELETE_REQUEST_CODE = 102;
+    private static List<String> temparr;
+    private static List<Boolean> selectionArr;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,13 +122,18 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apps, container, false);
 
+        homeActivity = (HomeActivity) getActivity();
         ButterKnife.bind(this, view);
-        if(getActivity()!=null) {
+        if (getActivity() != null) {
             toolbar = getActivity().findViewById(R.id.toolbar);
         }
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
+        temparr = new ArrayList<>();
         selectedItem = new PackageInfo();
+        selectedItemList = new ArrayList<>();
+        selectedItemList.clear();
+        selectionArr = new ArrayList<>();
         pkglist = new ArrayList<>();
         appsList = new ArrayList<>();
         sortedList = new ArrayList<>();
@@ -133,20 +142,22 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         appsAdapter = new AppsAdapter(getContext(), sortedList, this);
         rvApps.setAdapter(appsAdapter);
 
+
         imgSorting.setOnClickListener(view1 -> dialogSorting());
+
+        //Toast.makeText(homeActivity, "AppFragement", Toast.LENGTH_SHORT).show();
 
         getAllApps();
 
         return view;
     }
 
-    private int getScreenSize()
-    {
+    private int getScreenSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
-        DebugLogger.d("Screensize" +width + " " + height);
+        DebugLogger.d("Screensize" + width + " " + height);
         return height;
     }
 
@@ -155,11 +166,11 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.dialog_sorting, null), WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         int height = getScreenSize();
 
-        if(height>=2120){
+        if (height >= 2120) {
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -420);
-        }else if(height>=1407){
+        } else if (height >= 1407) {
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 50, -250);
-        } else{
+        } else {
             pw.showAtLocation(getActivity().findViewById(R.id.img_sorting), Gravity.END, 40, -110);
         }
 
@@ -201,36 +212,14 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     }
 
     private void getAllApps() {
-
         try {
-            new getApps().execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+            new getApps(AppsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*final PackageManager pm = getActivity().getPackageManager();
-        //get a list of installed apps.
-        //List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        List<PackageInfo> apps = getActivity().getPackageManager().getInstalledPackages(0);
-
-        appsList.clear();
-        for (PackageInfo packageInfo : apps) {
-            if (pm.getLaunchIntentForPackage(packageInfo.packageName) != null) {
-                appsList.add(packageInfo);
-            }
-        }
-
-        if (lastSortingType > 0) {
-            setFilter(lastSortingType);
-        } else {
-            setFilter(R.id.radio_systemApps);
-        }*/
-        //appsAdapter.notifyDataSetChanged();
     }
 
-    public void setFilter(int type) {
+    private void setFilter(int type) {
         sortedList.clear();
         if (type == R.id.radio_systemApps) {
             for (PackageInfo apps : appsList) {
@@ -269,7 +258,12 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         }
         txtNoRecordFound.setVisibility(View.GONE);
         rvApps.setVisibility(View.VISIBLE);
-        txtTotalApps.setText("Total Apps: " + sortedList.size());
+
+        appsAdapter.updateCount(sortedList);
+
+        int count = (sortedList.size() - appsAdapter.getListCount());
+        txtTotalApps.setText("Total Apps: " + count);
+
         appsAdapter.notifyDataSetChanged();
 
     }
@@ -277,25 +271,33 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     @Override
     public void launchApps(String packageName) {
 
-        AHandler.getInstance().showFullAds(getActivity(),false);
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_LAUNCH);
+        new Handler().postDelayed(() -> {
 
-        Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-        startActivity(launchIntent);
+            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+            startActivity(launchIntent);
+
+        }, 1000);
+
+        /*AHandler.getInstance().showFullAds(getActivity(),false);
+        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_LAUNCH);*/
+
     }
 
     @Override
     public void redirectToPlayStore(String packageName) {
 
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_PLAYSTORE);
-        AHandler.getInstance().showFullAds(getActivity(),false);
+        new Handler().postDelayed(() -> {
+            try {
+                startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Unable to Connect Try Again...", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }, 1000);
 
-        try {
-            startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "Unable to Connect Try Again...", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+
+        /*AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_PLAYSTORE);
+        AHandler.getInstance().showFullAds(getActivity(),false);*/
     }
 
     @Override
@@ -303,12 +305,12 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         setDialogAppDetails(packageInfo);
 
         AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_DETAILS);
-        AHandler.getInstance().showFullAds(getActivity(),false);
+        AHandler.getInstance().showFullAds(getActivity(), false);
 
     }
 
     private void setDialogAppDetails(PackageInfo packageInfo) {
-        dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
+        dialog = new Dialog(getActivity(), R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_appdetails);
         Window window = dialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -319,8 +321,9 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
         linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
+        //linearLayout.addView(homeActivity.getBanner());
 
-        CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
+        CardView cardViewPermissions = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_app);
         TextView txtAppName = dialog.findViewById(R.id.txt_appName);
         TextView txtVersionName = dialog.findViewById(R.id.txt_versionName);
@@ -362,17 +365,18 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
             e.printStackTrace();
         }
         btnUninstall.setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_DELETE);
+            Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
             intent.setData(Uri.parse("package:" + packageInfo.packageName));
-            startActivityForResult(intent, 101);
+            intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+            startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
         });
 
         imgDropDown.setOnClickListener(view -> {
-            if(rvPermissions.getVisibility()==View.VISIBLE) {
+            if (rvPermissions.getVisibility() == View.VISIBLE) {
                 rvPermissions.setVisibility(View.GONE);
                 cardViewPermissions.setVisibility(View.GONE);
                 imgDropDown.setRotation(0);
-            }else {
+            } else {
                 rvPermissions.setVisibility(View.VISIBLE);
                 cardViewPermissions.setVisibility(View.VISIBLE);
                 imgDropDown.setRotation(180);
@@ -383,13 +387,38 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            if (dialog != null)
+        if (requestCode == UNINSTALL_REQUEST_CODE) {
+            DebugLogger.d("ResultCode" + resultCode);
+            if (dialog != null) {
                 dialog.dismiss();
-        } else if (requestCode == 102) {
+            }
+            if (resultCode == getActivity().RESULT_OK) {
+                DebugLogger.d("onActivityResult: user accepted the (un)install");
+                // Toast.makeText(getActivity(), "Uninstalled", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == getActivity().RESULT_CANCELED) {
+                DebugLogger.d("onActivityResult: user canceled the (un)install");
+            } else if (resultCode == getActivity().RESULT_FIRST_USER) {
+                DebugLogger.d("onActivityResult: failed to (un)install");
+            }
+            refreshpage();
+        } else if (requestCode == DELETE_REQUEST_CODE) {
+
+            if (selectedItemList.size() > 0) {
+                if (resultCode == getActivity().RESULT_OK) {
+                    DebugLogger.d("onActivityResult: user accepted the (un)install");
+                } else if (resultCode == getActivity().RESULT_CANCELED) {
+                    DebugLogger.d("onActivityResult: user canceled the (un)install");
+                } else if (resultCode == getActivity().RESULT_FIRST_USER) {
+                    DebugLogger.d("onActivityResult: failed to (un)install");
+                }
+                deleteApp();
+            } else {
+                selectedItemList.clear();
+            }
+            //Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
             getchangeItemColor();
             appsAdapter.changeItemColor();
-
+            refreshpage();
         } else if (requestCode == 103) {
             getchangeItemColor();
             appsAdapter.changeItemColor();
@@ -406,7 +435,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     @Override
     public void appUpdates(PackageInfo packageInfo) {
         boolean isNetwork = BaseClass.isNetworkAvailable(getContext());
-        if(isNetwork){
+        if (isNetwork) {
             setDialogUpdates(packageInfo);
             try {
                 new Handler().postDelayed(() -> {
@@ -424,14 +453,14 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
             AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APP_CHECKUPDATES);
             AHandler.getInstance().showFullAds(getActivity(), false);
-        }else {
+        } else {
             Toast.makeText(getContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setDialogUpdates(PackageInfo packageInfo) {
         appVersionName = packageInfo.versionName;
-        dialog1 = new Dialog(getActivity(),R.style.AlertDialogCustom);
+        dialog1 = new Dialog(getActivity(), R.style.AlertDialogCustom);
         dialog1.setContentView(R.layout.dialog_updates);
         Window window = dialog1.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -442,6 +471,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         LinearLayout linearLayout = dialog1.findViewById(R.id.adsbanner);
         linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
+        //linearLayout.addView(homeActivity.getBanner());
         ImageView imgApp = dialog1.findViewById(R.id.img_app);
         TextView txtAppName = dialog1.findViewById(R.id.txt_appName);
         TextView txtVersionName = dialog1.findViewById(R.id.txt_versionName);
@@ -634,7 +664,6 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         }
     }
 
-
     @Override
     public void onClickItem(PackageInfo packageInfo, int pos) {
         toolbar.getMenu().findItem(R.id.action_search).setVisible(false);
@@ -644,14 +673,31 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         position = pos;
         selectedItem = packageInfo;
+        selectedItemList.add(packageInfo);
 
         HomeActivity.count = 0;
     }
 
+    @Override
+    public void onClickDeleteItem(PackageInfo packageInfo) {
+        for (int i = 0; i < selectedItemList.size(); i++) {
+            if (selectedItemList.get(i).packageName.equalsIgnoreCase(packageInfo.packageName)) {
+                selectedItemList.remove(i);
+            }
+        }
+    }
+
     public void deleteApp() {
-        Intent intent = new Intent(Intent.ACTION_DELETE);
-        intent.setData(Uri.parse("package:" + selectedItem.packageName));
-        startActivityForResult(intent, 102);
+
+        for (int i = 0; i < selectedItemList.size(); i++) {
+
+            Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+            intent.setData(Uri.parse("package:" + selectedItemList.get(i).packageName));
+            intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+            startActivityForResult(intent, DELETE_REQUEST_CODE);
+
+            selectedItemList.remove(i);
+        }
     }
 
     public void shareApp() {
@@ -663,8 +709,8 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         startActivityForResult(sendIntent, 103);
     }
 
-    public void refreshAdapter()
-    {
+    public void refreshAdapter() {
+        selectedItemList.clear();
         appsAdapter.changeItemColor();
     }
 
@@ -673,50 +719,60 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         getAllApps();
     }
 
-    public class getApps extends AsyncTask<List<PackageInfo>,Void,Void>{
+    private static class getApps extends AsyncTask<List<PackageInfo>, Void, List<PackageInfo>> {
+        private PackageManager pm;
+        private ProgressDialog progressDialog;
 
-        final PackageManager pm = getActivity().getPackageManager();
+        WeakReference<AppsFragment> reference;
+
+        getApps(AppsFragment fragment) {
+            reference = new WeakReference<>(fragment);
+            pm = reference.get().getActivity().getPackageManager();
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(reference.get().getContext());
+            progressDialog.setMessage("Loading....");
+            progressDialog.show();
         }
 
         @Override
-        protected Void doInBackground(List<PackageInfo>... voids) {
-
-            List<PackageInfo> apps = getActivity().getPackageManager().getInstalledPackages(0);
-
-            appsList.clear();
+        protected List<PackageInfo> doInBackground(List<PackageInfo>... voids) {
+            reference.get().appsList.clear();
+            List<PackageInfo> apps = reference.get().getActivity().getPackageManager().getInstalledPackages(0);
             for (PackageInfo packageInfo : apps) {
                 if (pm.getLaunchIntentForPackage(packageInfo.packageName) != null) {
-                    appsList.add(packageInfo);
+                    reference.get().appsList.add(packageInfo);
                 }
             }
             //publishProgress(appsList);
-            return null;
+            return reference.get().appsList;
         }
 
-        /*@Override
-        protected void onProgressUpdate(List<PackageInfo>... values) {
-            super.onProgressUpdate(values);
-
-            if (lastSortingType > 0) {
-                setFilter(lastSortingType);
-            } else {
-                setFilter(R.id.radio_systemApps);
-            }
-        }*/
-
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(List<PackageInfo> result) {
             super.onPostExecute(result);
-
-            if (lastSortingType > 0) {
-                setFilter(lastSortingType);
+            progressDialog.dismiss();
+            if (reference.get().lastSortingType > 0) {
+                reference.get().setFilter(reference.get().lastSortingType);
             } else {
-                setFilter(R.id.radio_SortByName);
+                reference.get().setFilter(R.id.radio_SortByName);
             }
+
+            System.out.println("my list is here" + " " + result.size());
+
+
+            if (!AppUtils.isMyServiceRunning(FileListenerService.class, reference.get().getContext())) {
+                System.out.println("hakjshfjkshjfas");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    reference.get().getContext().startForegroundService(new Intent(reference.get().getContext(), FileListenerService.class));
+                } else {
+                    reference.get().getContext().startService(new Intent(reference.get().getContext(), FileListenerService.class));
+                }
+            }
+
         }
     }
 }

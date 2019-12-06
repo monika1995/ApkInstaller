@@ -615,8 +615,6 @@ public class AHandler {
         }
 
     }
-
-
     /**
      * cache Launch full ads
      */
@@ -1056,7 +1054,6 @@ public class AHandler {
                         case MapperUtils.gcmForceAppUpdate:
                             new Utils().showAppUpdatePrompt(context);
                             break;
-
 
                     }
                 }

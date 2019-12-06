@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.FileObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,10 +22,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.techproof.appinstaller.Common.Constant;
+import com.techproof.appinstaller.Common.DebugLogger;
 import com.techproof.appinstaller.R;
 import com.techproof.appinstaller.model.ApkListModel;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.adshandler.AHandler;
@@ -38,20 +44,41 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
     List<ApkListModel> list;
     ApksOnClickListener onClickListener;
     String selectedIndex;
+    private ArrayList<String> adsList;
+    private boolean[] selectionList;
+    private boolean clickValue = false;
 
     public ApksAdapter(Context context,List<ApkListModel> apkList,ApksOnClickListener onClickListener)
     {
         this.context = context;
         this.list = apkList;
         this.onClickListener = onClickListener;
+        this.adsList = new ArrayList<>();
 
         if (!Slave.hasPurchased(context)) {
             for (int position = 0; position < this.list.size(); position++) {
                 if ((position == 2 || (position % 8 == 0 && position > 8))) {
                     this.list.add(position, new ApkListModel());
+                    this.adsList.add("demo");
                 }
             }
         }
+        selectionList = new boolean[apkList.size()];
+    }
+
+    public void updateCount(List<ApkListModel> appsList) {
+        this.list = appsList;
+        this.adsList = new ArrayList<>();
+        if (!Slave.hasPurchased(context)) {
+            for (int position = 0; position < this.list.size(); position++) {
+                if ((position == 2 || (position % 8 == 0 && position > 8))) {
+                    this.list.add(position, new ApkListModel());
+                    this.adsList.add("demo");
+                }
+            }
+        }
+        selectionList = new boolean[appsList.size()];
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -90,6 +117,27 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
                 holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.light_white));
             }
 
+            holder.checkBox.setChecked(selectionList[position]);
+
+            if (selectionList[position]) {
+                holder.txtFileInfo.setEnabled(false);
+                holder.txtPlayStore.setEnabled(false);
+                holder.txtInstall.setEnabled(false);
+                holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.bg_card));
+            } else {
+                holder.txtFileInfo.setEnabled(true);
+                holder.txtPlayStore.setEnabled(true);
+                holder.txtInstall.setEnabled(true);
+                holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.light_white));
+            }
+
+            if (clickValue) {
+                holder.checkBox.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkBox.setVisibility(View.GONE);
+            }
+
+
             if(list.get(position).getPackageInfo()!=null) {
                 holder.txtApkName.setText(list.get(position).getPackageInfo().packageName);
                 Drawable icon = context.getPackageManager().getApplicationIcon(list.get(position).getPackageInfo().applicationInfo);
@@ -115,14 +163,47 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
                 String apkSize = fileSizeInMB + " MB | Version - " + list.get(position).getPackageInfo().versionName;
                 holder.txtVersionName.setText(apkSize);
                 holder.txtPlayStore.setOnClickListener(view -> onClickListener.redirectToPlayStore(list.get(position).getPackageInfo().packageName));
+                holder.txtFileInfo.setOnClickListener(view -> onClickListener.apkDetails(list.get(position)));
+                holder.txtInstall.setOnClickListener(view -> onClickListener.installApk(list.get(position)));
+
+                holder.checkBox.setOnClickListener(v -> {
+                    CheckBox checkBox = (CheckBox) v;
+                    selectionList[position] = checkBox.isChecked();
+                    if (checkBox.isChecked()) {
+                        holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.bg_card));
+                        holder.txtFileInfo.setEnabled(false);
+                        holder.txtPlayStore.setEnabled(false);
+                        holder.txtInstall.setEnabled(false);
+                        selectionList[position] = true;
+                        onClickListener.onClickItem(list.get(position), position);
+                    } else {
+                        holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.light_white));
+                        selectionList[position] = false;
+                        holder.txtFileInfo.setEnabled(true);
+                        holder.txtPlayStore.setEnabled(true);
+                        holder.txtInstall.setEnabled(true);
+                        onClickListener.onClickDeleteItem(list.get(position));
+                    }
+                });
+
                 holder.layoutApks.setOnLongClickListener(view -> {
+                    clickValue = true;
+                    if (clickValue) {
+                        selectionList[position] = true;
+                        holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.bg_card));
+                    } else {
+                        selectionList[position] = false;
+                        holder.layoutApks.setBackground(context.getResources().getDrawable(R.color.light_white));
+                    }
                     onClickListener.onClickItem(list.get(position), position);
-                    selectedIndex = String.valueOf(position);
                     notifyDataSetChanged();
                     return false;
                 });
-                holder.txtFileInfo.setOnClickListener(view -> onClickListener.apkDetails(list.get(position)));
-                holder.txtInstall.setOnClickListener(view -> onClickListener.installApk(list.get(position)));
+
+
+                holder.layoutApks.setOnClickListener(v -> {
+                    holder.checkBox.performClick();
+                });
             }
         }else {
             holder.adsLayout.setVisibility(View.VISIBLE);
@@ -140,8 +221,17 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
     }
 
     public void changeItemColor(){
-        selectedIndex = null;
+        clickValue = false;
+        for(int i = 0;i<selectionList.length;i++)
+        {
+            selectionList[i] = false;
+        }
         notifyDataSetChanged();
+    }
+
+    public int getListCount()
+    {
+        return adsList.size();
     }
 
     @Override
@@ -159,6 +249,7 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
         TextView txtPlayStore;
         ConstraintLayout layoutApks;
         LinearLayout adsLayout;
+        CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -170,6 +261,7 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
             txtPlayStore = itemView.findViewById(R.id.txt_playstore);
             layoutApks = itemView.findViewById(R.id.layout_apks);
             adsLayout = itemView.findViewById(R.id.ads_layout);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
 
@@ -178,5 +270,6 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
         void apkDetails(ApkListModel apkListModel);
         void installApk(ApkListModel apkListModel);
         void onClickItem(ApkListModel apkListModel,int pos);
+        void onClickDeleteItem(ApkListModel ApkListModel);
     }
 }

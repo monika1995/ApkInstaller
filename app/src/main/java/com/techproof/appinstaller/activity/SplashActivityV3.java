@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -37,7 +36,7 @@ import app.serviceprovider.Utils;
  */
 
 
-public class SplashActivityV3 extends AppCompatActivity {
+public class SplashActivityV3 extends BaseActivity {
     private GCMPreferences mPreference;
     RelativeLayout layoutStart;
     private Handler h;
@@ -58,21 +57,18 @@ public class SplashActivityV3 extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
 
 
-        isFromNotification = getIntent().getBooleanExtra(Constant.FROM_NOTIFICATION,false);
+        isFromNotification = getIntent().getBooleanExtra(Constant.FROM_NOTIFICATION, false);
         path = getIntent().getStringExtra(Constant.PATH);
 
-        AHandler.getInstance().v2CallOnSplash(this, new OnCacheFullAdLoaded() {
-            @Override
-            public void onCacheFullAd() {
-                if (!mPreference.isFirsttime()) {
-                    launchApp();
+        AHandler.getInstance().v2CallOnSplash(this, () -> {
+            if (!mPreference.isFirsttime()) {
+                launchApp();
 
-                    try {
-                        if (h != null)
-                            h.removeCallbacks(r);
-                    } catch (Exception e) {
-                        System.out.println("exception splash 1" + " " + e);
-                    }
+                try {
+                    if (h != null)
+                        h.removeCallbacks(r);
+                } catch (Exception e) {
+                    System.out.println("exception splash 1" + " " + e);
                 }
             }
         });
@@ -104,12 +100,14 @@ public class SplashActivityV3 extends AppCompatActivity {
         });
 
 
-        layoutStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        layoutStart.setOnClickListener(view -> {
+            if (checkPermission()) {
                 launchApp();
                 mPreference.setFirstTime(false);
+            } else {
+                requestPermission();
             }
+
         });
 
         if (mPreference.isFirsttime()) {
@@ -131,26 +129,25 @@ public class SplashActivityV3 extends AppCompatActivity {
         new Utils().showPrivacyPolicy(this, layout_tnc, mPreference.isFirsttime());
 
         LinearLayout adsbanner = findViewById(R.id.adsbanner);
-        adsbanner.addView(AHandler.getInstance().getBannerHeader(this));
+        adsbanner.addView(getBanner());
+
+
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(new Intent(SplashActivityV3.this, FileListenerService.class));
+        } else {
+            startService(new Intent(SplashActivityV3.this, FileListenerService.class));
+        }*/
+
 
     }
 
-    private Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            launchApp();
-        }
-    };
+    private Runnable r = this::launchApp;
 
     private void launchApp() {
-        if(checkPermission()){
-            if (!appLaunch) {
-                appLaunch = true;
-                appLaunch(HomeActivity.class);
-                finish();
-            }
-        }else {
-            requestPermission();
+        if (!appLaunch) {
+            appLaunch = true;
+            appLaunch(HomeActivity.class);
+            finish();
         }
     }
 
@@ -163,10 +160,10 @@ public class SplashActivityV3 extends AppCompatActivity {
             if (type != null && value != null) {
                 launchAppWithMapper(cls, type, value);
             } else {
-                startActivity(new Intent(SplashActivityV3.this, cls)
-                );
+                startActivity(new Intent(SplashActivityV3.this, cls));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -207,16 +204,12 @@ public class SplashActivityV3 extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch(requestCode) {
+        switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     DebugLogger.d("Permission grant 1---");
-                    if (!appLaunch) {
-                        appLaunch = true;
-                        appLaunch(HomeActivity.class);
-                        finish();
-
-                    }
+                    launchApp();
+                    mPreference.setFirstTime(false);
                 } else {
                     DebugLogger.d("Permission Denied, You cannot use local drive .");
                     requestPermission();

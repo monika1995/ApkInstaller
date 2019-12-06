@@ -3,6 +3,7 @@ package com.techproof.appinstaller.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -26,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -91,7 +94,10 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     private Toolbar toolbar;
     private int position;
     private ApkListModel selectedItem;
+    private List<ApkListModel> selectedItemList;
     private HomeActivity homeActivity;
+    ProgressDialog progressDialog;
+    List<String> temparr;
 
 
     @Override
@@ -109,6 +115,9 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         homeActivity = (HomeActivity) getActivity();
 
+        selectedItemList = new ArrayList<>();
+        temparr = new ArrayList<>();
+        selectedItemList.clear();
         list = new ArrayList<>();
         apkList = new ArrayList<>();
         sortedList = new ArrayList<>();
@@ -118,12 +127,14 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvApks.setLayoutManager(linearLayoutManager);
-        apksAdapter = new ApksAdapter(getContext(), apkList,this);
+        apksAdapter = new ApksAdapter(getContext(), sortedList,this);
         rvApks.setAdapter(apksAdapter);
 
         imgSorting.setOnClickListener(view1 -> dialogSorting());
 
         getAllApks();
+
+       // Toast.makeText(homeActivity, "ApkFragement", Toast.LENGTH_SHORT).show();
 
         return view;
     }
@@ -200,33 +211,20 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                 long fileSizeInKB1 = size1 / 1024;
                 Obj2Size = (int) fileSizeInKB1 / 1024;
                 obj1Size = (int) fileSizeInKB / 1024;
-                /*try {
-                    if(obj1.getPackageInfo().applicationInfo.sourceDir!=null) {
-                        long size = new File(obj1.getPackageInfo().applicationInfo.sourceDir).length();
-                        long fileSizeInKB = size / 1024;
-                        long size1 = new File(obj2.getPackageInfo().applicationInfo.sourceDir).length();
-                        long fileSizeInKB1 = size1 / 1024;
-                        obj1Size = fileSizeInKB / 1024;
-                        Obj2Size = fileSizeInKB1 / 1024;
-                    }
-                    else {
-                        long size = new File(obj1.getApkPath()).length();
-                        long fileSizeInKB = size / 1024;
-                        obj1Size = fileSizeInKB / 1024;
-                        long size1 = new File(obj2.getApkPath()).length();
-                        long fileSizeInKB1 = size1 / 1024;
-                        Obj2Size = fileSizeInKB1 / 1024;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
                 return (Obj2Size - obj1Size);
             });
         }
         txtNoRecordFound.setVisibility(View.GONE);
         rvApks.setVisibility(View.VISIBLE);
-        txtTotalApps.setText("Total Downloaded Apks: " + sortedList.size());
+
+        apksAdapter.updateCount(sortedList);
+
+        System.out.println("List " + sortedList.size() + " " +apksAdapter.getListCount());
+        int count = sortedList.size() - apksAdapter.getListCount();
+        txtTotalApps.setText("Total Downloaded Apks: " + count);
+
         apksAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -235,22 +233,16 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     }
 
     private void getAllApks() {
-        if (checkPermission()) {
+
             filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
             list.clear();
-            //getDir(filePath);
             try {
-                new getApks().execute(filePath).get();
+                new getApks().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,filePath).get();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-        } else {
-            requestPermission();
-        }
-        //txtTotalApps.setText("Total Downloaded Apks: " + apkList.size());
     }
 
     private void getDir(String path) {
@@ -281,40 +273,30 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
     public class getApks extends AsyncTask<String,Void,Void>{
 
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage("Loading....");
+            progressDialog.show();
         }
 
         @Override
         protected Void doInBackground(String... path) {
 
-            apkList.clear();
-
             getDir(path[0]);
-           // publishProgress();
 
             return null;
         }
 
-        /*@Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-
-            apkList.addAll(list);
-
-            if (lastSortingType > 0) {
-                setFilter(lastSortingType);
-            } else {
-                setFilter(R.id.radio_SortByName);
-            }
-
-        }*/
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+            apkList.clear();
             apkList.addAll(list);
 
             if (lastSortingType > 0) {
@@ -323,55 +305,23 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                 setFilter(R.id.radio_SortByName);
             }
 
-        }
-    }
-
-    private boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        int result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(getActivity(), "Write External Storage permission allows us to read files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]
-                    {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch(requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getAllApks();
-                    DebugLogger.d("Permission grant");
-                } else {
-                    DebugLogger.d("Permission Denied, You cannot use local drive .");
-                    requestPermission();
-                }
-                break;
         }
     }
 
     @Override
     public void redirectToPlayStore(String packageName) {
 
-        AHandler.getInstance().showFullAds(getActivity(),false);
-        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APK_PLAYSTORE);
+        new Handler().postDelayed(() -> {
+            try {
+                startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+            }catch(Exception e) {
+                Toast.makeText(getContext(),"Unable to Connect Try Again...", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }, 1000);
 
-        try {
-            startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
-        }catch(Exception e) {
-            Toast.makeText(getContext(),"Unable to Connect Try Again...", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+       /* AHandler.getInstance().showFullAds(getActivity(),false);
+        AppUtils.onClickButtonFirebaseAnalytics(getActivity(), Constant.FIREBASE_APK_PLAYSTORE);*/
 
     }
 
@@ -395,6 +345,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
         linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
+        //linearLayout.addView(homeActivity.getBanner());
 
         CardView cardViewPermissions =  dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
@@ -415,8 +366,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         txtFilePath.setText(apkListModel.getApkPath());
         long fileSizeInMB = 0;
         try {
-            //tmpInfo = context.getPackageManager().getApplicationInfo(apkList.get(position).packageName,-1);
-            //long size = new File(tmpInfo.sourceDir).length();
             if(apkListModel.getPackageInfo().applicationInfo.sourceDir!=null) {
                 long size = new File(apkListModel.getPackageInfo().applicationInfo.sourceDir).length();
                 long fileSizeInKB = size / 1024;
@@ -437,13 +386,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         permissionsList.addAll(new BaseClass().getListOfPermissions(getContext(),apkListModel.getApkPath()));
         ApkPermissionAdapter permissionAdapter = new ApkPermissionAdapter(getContext(),permissionsList);
         rvPermissions.setAdapter(permissionAdapter);
-        /*if(permissionsList.size()>0) {
-            rvPermissions.setVisibility(View.VISIBLE);
-            permissionText.setVisibility(View.VISIBLE);
-        }else {
-            rvPermissions.setVisibility(View.GONE);
-            permissionText.setVisibility(View.INVISIBLE);
-        }*/
 
         imgDropDown.setOnClickListener(view -> {
             if(rvPermissions.getVisibility()==View.VISIBLE) {
@@ -478,6 +420,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         LinearLayout linearLayout = dialog.findViewById(R.id.adsbanner);
         linearLayout.addView(AHandler.getInstance().getBannerHeader(getActivity()));
+        //linearLayout.addView(homeActivity.getBanner());
         CardView cvPermission = dialog.findViewById(R.id.cardView_permissions);
         ImageView imgApp = dialog.findViewById(R.id.img_apk);
         TextView txtAppName = dialog.findViewById(R.id.txt_apkName);
@@ -495,11 +438,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String installTime = dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified()));
         txtDownloadedDate.setText(installTime);
-        //txtAppName.setText(apkListModel.getPackageInfo().applicationInfo.loadLabel(getContext().getPackageManager()).toString());
         long fileSizeInMB = 0;
         try {
-            //tmpInfo = context.getPackageManager().getApplicationInfo(apkList.get(position).packageName,-1);
-            //long size = new File(tmpInfo.sourceDir).length();
             if(apkListModel.getPackageInfo().applicationInfo.sourceDir!=null) {
                 long size = new File(apkListModel.getPackageInfo().applicationInfo.sourceDir).length();
                 long fileSizeInKB = size / 1024;
@@ -521,13 +461,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         permissionsList.addAll(new BaseClass().getListOfPermissions(getContext(),apkListModel.getApkPath()));
         ApkPermissionAdapter permissionAdapter = new ApkPermissionAdapter(getContext(),permissionsList);
         rvPermissions.setAdapter(permissionAdapter);
-        /*if(permissionsList.size()>0) {
-            rvPermissions.setVisibility(View.VISIBLE);
-            permissionText.setVisibility(View.VISIBLE);
-        }else {
-            rvPermissions.setVisibility(View.GONE);
-            permissionText.setVisibility(View.INVISIBLE);
-        }*/
 
         txtInstall.setOnClickListener(view ->{
             homeActivity.installApk(new File(apkListModel.getApkPath()));
@@ -588,40 +521,48 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         position = pos;
         selectedItem = apkListModel;
+        selectedItemList.add(apkListModel);
 
         HomeActivity.count = 0;
+    }
+
+    @Override
+    public void onClickDeleteItem(ApkListModel apkListModel) {
+        for(int i =0 ;i<selectedItemList.size();i++)
+        {
+            if(selectedItemList.get(i).getApkName().equalsIgnoreCase(apkListModel.getApkName()))
+            {
+                selectedItemList.remove(i);
+            }
+        }
     }
 
     public void deleteApk() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Delete an APK");
-        builder.setMessage("Do you want to delete this APK?").setPositiveButton("Ok",(dialogInterface, i) -> {
-            String filename = selectedItem.getApkPath();
-            String[] fileArr = filename.split("0");
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + fileArr[1]);
-           /* if(file.exists()) {
-                file.delete();
-                if (file.exists()) {
-                    try {
-                        file.getCanonicalFile().delete();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (file.exists()) {
-                        getContext().deleteFile(file.getName());
-                    }
+        builder.setMessage("Do you want to delete the APKs?").setPositiveButton("Ok",(dialogInterface, i) -> {
+           /* for (int j=0;j<selectedItemList.size();j++) {
+                String filename = selectedItemList.get(j).getApkPath();
+                File file = new File(filename);
+                if (getActivity() != null) {
+                    Uri imageUriLcl = FileProvider.getUriForFile(getActivity(),
+                            getActivity().getApplicationContext().getPackageName() +
+                                    ".provider", file);
+                    ContentResolver contentResolver = getActivity().getContentResolver();
+                    contentResolver.delete(imageUriLcl, null, null);
                 }
-            }*/
-           if(getActivity()!=null) {
-               Uri imageUriLcl = FileProvider.getUriForFile(getActivity(),
-                       getActivity().getApplicationContext().getPackageName() +
-                               ".provider", file);
-               ContentResolver contentResolver = getActivity().getContentResolver();
-               contentResolver.delete(imageUriLcl, null, null);
-           }
+            }
+            progressDialog.dismiss();*/
+           // Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+            try {
+                new deleteApkAsync().execute().get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             getchangeItemColor();
             apksAdapter.changeItemColor();
             apksAdapter.notifyDataSetChanged();
+            refreshpage();
         }).setNegativeButton("CANCEL",(dialogInterface, i) -> {
             dialogInterface.dismiss();
             getchangeItemColor();
@@ -633,6 +574,42 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
             alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
         });
         alertDialog.show();
+    }
+
+    public class deleteApkAsync extends AsyncTask<Void,Void,Void>
+    {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait.....");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for (int j=0;j<selectedItemList.size();j++) {
+                String filename = selectedItemList.get(j).getApkPath();
+                File file = new File(filename);
+                if (getActivity() != null) {
+                    Uri imageUriLcl = FileProvider.getUriForFile(getActivity(),
+                            getActivity().getApplicationContext().getPackageName() +
+                                    ".provider", file);
+                    ContentResolver contentResolver = getActivity().getContentResolver();
+                    contentResolver.delete(imageUriLcl, null, null);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+        }
     }
 
     public void shareApk() {
@@ -667,36 +644,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         toolbar.getMenu().findItem(R.id.action_share).setVisible(false);
     }
 
-   /* public void addInList(String path)
-    {
-        try {
-            PackageInfo pi = getActivity().getPackageManager().getPackageArchiveInfo(path,PackageManager.GET_META_DATA);
-            ApkListModel apkListModel = new ApkListModel();
-            apkListModel.setApkPath(path);
-            apkListModel.setApkName(new File(path).getName());
-            apkListModel.setPackageInfo(pi);
-            apkList.add(apkListModel);
-            apksAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteInList(String path)
-    {
-        try {
-            PackageInfo pi = getActivity().getPackageManager().getPackageArchiveInfo(path,PackageManager.GET_META_DATA);
-            ApkListModel apkListModel = new ApkListModel();
-            apkListModel.setApkPath(path);
-            apkListModel.setApkName(new File(path).getName());
-            apkListModel.setPackageInfo(pi);
-            apkList.remove(apkListModel);
-            apksAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
     @Override
     public void refreshpage() {
         getAllApks();
@@ -704,6 +651,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
     public void refreshAdapter()
     {
+        selectedItemList.clear();
         apksAdapter.changeItemColor();
     }
 

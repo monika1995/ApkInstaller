@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import com.jaredrummler.apkparser.ApkParser;
 import com.jaredrummler.apkparser.model.AndroidManifest;
 import com.techproof.appinstaller.R;
-import com.techproof.appinstaller.activity.SplashActivity;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
