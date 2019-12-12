@@ -92,6 +92,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
                 android:text="@string/alert_turnoff"
                 android:textColor="@color/off_white"
+                android:visibility="gone"
                 android:textSize="@dimen/sp_10"/>
 
             <androidx.appcompat.widget.SwitchCompat

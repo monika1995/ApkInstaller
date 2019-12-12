@@ -139,11 +139,11 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
 
 
             if(list.get(position).getPackageInfo()!=null) {
-                holder.txtApkName.setText(list.get(position).getPackageInfo().packageName);
+                String apkName = list.get(position).getPackageInfo().applicationInfo.loadLabel(context.getPackageManager()) + ".apk";
+                holder.txtApkName.setText(apkName);
                 Drawable icon = context.getPackageManager().getApplicationIcon(list.get(position).getPackageInfo().applicationInfo);
                 holder.imgApk.setImageDrawable(icon);
 
-                ApplicationInfo tmpInfo = null;
                 long fileSizeInMB = 0;
                 try {
                     //tmpInfo = context.getPackageManager().getApplicationInfo(apkList.get(position).packageName,-1);
@@ -201,9 +201,13 @@ public class ApksAdapter extends RecyclerView.Adapter<ApksAdapter.ViewHolder> {
                 });
 
 
-                holder.layoutApks.setOnClickListener(v -> {
-                    holder.checkBox.performClick();
-                });
+                if (clickValue) {
+                    holder.layoutApks.setOnClickListener(v -> {
+                        holder.checkBox.performClick();
+                    });
+                } else {
+                    holder.layoutApks.setOnClickListener(null);
+                }
             }
         }else {
             holder.adsLayout.setVisibility(View.VISIBLE);

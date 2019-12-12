@@ -5,12 +5,13 @@ package com.techproof.appinstaller.Common;
  */
 public class Constant {
 
-    public static String BASE_URL = "http://appservices.in/";
-    public static String PREF_NAME = "app_installer";
-    public static String IS_NOTIFICATION = "isNotification";
-    public static String FROM_NOTIFICATION = "fromNotification";
-    public static String PATH = "path";
-    public static String APK_PATH = "apkpath";
+    public static final String BASE_URL = "http://appservices.in/";
+    public static final String PREF_NAME = "app_installer";
+    public static final String IS_NOTIFICATION = "isNotification";
+    public static final String FROM_NOTIFICATION = "fromNotification";
+    public static final String PATH = "path";
+    public static final String APK_PATH = "apkpath";
+    public static final Integer NOTIFICATION_ID = 101;
 
 
     public static final String FIREBASE_SETTING = "AN_Setting";

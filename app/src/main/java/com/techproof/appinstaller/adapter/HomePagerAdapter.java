@@ -9,10 +9,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.techproof.appinstaller.activity.HomeActivity;
 import com.techproof.appinstaller.fragment.ApksFragment;
 import com.techproof.appinstaller.fragment.AppsFragment;
 
-public class HomePagerAdapter extends FragmentStatePagerAdapter {
+public class HomePagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
     int totalTabs;

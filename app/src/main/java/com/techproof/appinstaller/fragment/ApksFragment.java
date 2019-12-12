@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -54,11 +55,13 @@ import com.techproof.appinstaller.activity.HomeActivity;
 import com.techproof.appinstaller.adapter.ApksAdapter;
 import com.techproof.appinstaller.adapter.ApkPermissionAdapter;
 import com.techproof.appinstaller.model.ApkListModel;
+import com.techproof.appinstaller.model.FileListenerService;
 import com.techproof.appinstaller.model.RefreshpageInterface;
 import com.techproof.appinstaller.utils.AppUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,8 +99,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     private ApkListModel selectedItem;
     private List<ApkListModel> selectedItemList;
     private HomeActivity homeActivity;
-    ProgressDialog progressDialog;
     List<String> temparr;
+    private ProgressDialog progressBar;
 
 
     @Override
@@ -106,12 +109,10 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_apks, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this, view);
+        System.out.println("bcsdkjdb-ApkFragement--- checked 01");
 
         homeActivity = (HomeActivity) getActivity();
 
@@ -132,9 +133,26 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         imgSorting.setOnClickListener(view1 -> dialogSorting());
 
-        getAllApks();
+        System.out.println("bcsdkjdb-ApkFragement---1");
 
-       // Toast.makeText(homeActivity, "ApkFragement", Toast.LENGTH_SHORT).show();
+    }
+
+    public void fetchAllApks()
+    {
+        getAllApks();
+       /* new Handler().postDelayed(() ->
+                getAllApks(),200);*/
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        System.out.println("bcsdkjdb-ApkFragement--- checked 02");
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_apks, container, false);
+
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -224,7 +242,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         txtTotalApps.setText("Total Downloaded Apks: " + count);
 
         apksAdapter.notifyDataSetChanged();
-
+        progressBar.dismiss();
     }
 
     @Override
@@ -232,17 +250,24 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         super.onResume();
     }
 
-    private void getAllApks() {
+    public void getAllApks() {
 
-            filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-            list.clear();
-            try {
-                new getApks().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,filePath).get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        //new getApks().execute();
+
+                progressBar = new ProgressDialog(getContext());
+                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressBar.setMessage("Loading ...");
+                progressBar.setIndeterminate(true);
+                progressBar.show();
+                new Handler().postDelayed(() ->{
+                    try {
+                        new getApks().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    } ,200);
     }
 
     private void getDir(String path) {
@@ -256,6 +281,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
                     if (file.isFile() && file.getName().contains(".apk") ) {
                         PackageInfo info = pm.getPackageArchiveInfo(file.getPath(), 0);
                         if(info!=null) {
+                            info.applicationInfo.sourceDir = file.getPath();
+                            info.applicationInfo.publicSourceDir = file.getPath();
                             ApkListModel apkListModel = new ApkListModel();
                             apkListModel.setApkName(file.getName());
                             apkListModel.setApkPath(file.getPath());
@@ -271,39 +298,50 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         DebugLogger.d("ListSize"+list.size());
     }
 
-    public class getApks extends AsyncTask<String,Void,Void>{
+    public class getApks extends AsyncTask<Void,Void,Void>{
 
-        private ProgressDialog progressDialog;
+        private ProgressDialog progressBar;
 
         @Override
         protected void onPreExecute() {
+
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.setMessage("Loading....");
-            progressDialog.show();
+
+            list.clear();
         }
 
         @Override
-        protected Void doInBackground(String... path) {
+        protected Void doInBackground(Void... path) {
 
-            getDir(path[0]);
+            filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+            getDir(filePath);
 
-            return null;
+         return null;
+
         }
-
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressDialog.dismiss();
+
             apkList.clear();
             apkList.addAll(list);
+            //progressBar.dismiss();
 
+            System.out.println("bcsdkjdb-ApkFragement---data load");
             if (lastSortingType > 0) {
                 setFilter(lastSortingType);
             } else {
                 setFilter(R.id.radio_SortByName);
             }
+
+           /* if (!AppUtils.isMyServiceRunning(FileListenerService.class, getContext())) {
+                System.out.println("bcsdkjdb-AppFragement---data load");                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    getContext().startForegroundService(new Intent(getContext(), FileListenerService.class));
+                } else {
+                    getContext().startService(new Intent(getContext(), FileListenerService.class));
+                }
+            }*/
 
         }
     }
@@ -337,7 +375,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_apkdetails);
         Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -362,7 +401,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String installTime = dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified()));
         txtDownloadedDate.setText(installTime);
-        txtAppName.setText(apkListModel.getPackageInfo().packageName);
         txtFilePath.setText(apkListModel.getApkPath());
         long fileSizeInMB = 0;
         try {
@@ -380,10 +418,23 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         }
         String apkSize = fileSizeInMB + " MB | Version - " + apkListModel.getPackageInfo().versionName;
         txtVersionName.setText(apkSize);
-        Drawable icon = getContext().getPackageManager().getApplicationIcon(apkListModel.getPackageInfo().applicationInfo);
-        imgApp.setImageDrawable(icon);
+        if(apkListModel.getPackageInfo().applicationInfo!=null) {
+            String apkName = apkListModel.getPackageInfo().applicationInfo.loadLabel(getContext().getPackageManager()) + ".apk";
+            txtAppName.setText(apkName);
+            Drawable icon = getContext().getPackageManager().getApplicationIcon(apkListModel.getPackageInfo().applicationInfo);
+            imgApp.setImageDrawable(icon);
+        }else {
+            txtAppName.setText(apkListModel.getPackageInfo().packageName);
+            Drawable icon = getContext().getPackageManager().getApplicationIcon(apkListModel.getPackageInfo().applicationInfo);
+            imgApp.setImageDrawable(icon);
+        }
         permissionsList.clear();
-        permissionsList.addAll(new BaseClass().getListOfPermissions(getContext(),apkListModel.getApkPath()));
+        try {
+            permissionsList.addAll(new BaseClass().getListOfPermissions(getContext(), apkListModel.getApkPath()));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         ApkPermissionAdapter permissionAdapter = new ApkPermissionAdapter(getContext(),permissionsList);
         rvPermissions.setAdapter(permissionAdapter);
 
@@ -412,7 +463,8 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         dialog = new Dialog(getActivity(),R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_apkinstall);
         Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
         window.setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -434,7 +486,12 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         cvPermission.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPermissions.setLayoutManager(linearLayoutManager);
-        txtAppName.setText(apkListModel.getPackageInfo().packageName);
+        if(apkListModel.getPackageInfo().applicationInfo!=null){
+            String apkName = apkListModel.getPackageInfo().applicationInfo.loadLabel(getContext().getPackageManager()) + ".apk";
+            txtAppName.setText(apkName);
+        }else {
+            txtAppName.setText(apkListModel.getPackageInfo().packageName);
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String installTime = dateFormat.format( new Date(new File(apkListModel.getApkPath()).lastModified()));
         txtDownloadedDate.setText(installTime);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App Installer</string>
+    <string name="app_name">Apk Installer</string>
     <string name="start">Start</string>
     <string name="proceeding_text">By Proceeding, you agree to the \n <u>Privacy Policy</u> &amp; <u>Terms of service</u></string>
 
@@ -40,10 +40,12 @@
     <string name="no_apks_found">No Apks Found</string>
     <string name="manage_notification">Manage Notification</string>
     <string name="apk_alert">New APK found alert</string>
-    <string name="alert_turnon">Turn ON to be notified to install a downloaded APK</string>
+    <string name="alert_turnon">Turn ON to be notified to install a downloaded APK. Turn OFF if you don\'t wish to be bothered</string>
     <string name="alert_turnoff">Turn OFF if you don\'t wish to be bothered</string>
     <string name="new_apk_found">New APK Found</string>
     <string name="notification_desc">Want to install this app</string>
     <string name="no_update_available">No Update Available</string>
     <string name="update_available">Update Available</string>
+    <string name="notifi_title">Apk Installer is running</string>
+    <string name="notifi_desc">You will be notified when you have new APKs on your device.</string>
 </resources>

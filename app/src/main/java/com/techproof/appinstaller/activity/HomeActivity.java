@@ -10,10 +10,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,6 +27,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -85,6 +89,7 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
     SharedPreferences sharedPreferences;
     SearchView searchView;
     SearchManager searchManager;
+    boolean apkHit = false;
 
 
     @Override
@@ -100,6 +105,10 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.toolbar_menu);
+
+        LinearLayout linearLayout = findViewById(R.id.adsbanner);
+        linearLayout.addView(getBanner());
+
         setTabs();
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
@@ -113,6 +122,12 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APPS);
                 } else {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APKS);
+                    ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(tab.getPosition());
+                    if (apksFragment != null)
+                        if(!apkHit) {
+                            apksFragment.fetchAllApks();
+                            apkHit = true;
+                        }
                 }
 
                 viewPager.setCurrentItem(tab.getPosition());
@@ -132,20 +147,11 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
         // Example Firebase App analytics
         // AppUtils.onClickButtonFirebaseAnalytics(this, Constant.FIREBASE_SETTING);
 
-        LinearLayout linearLayout = findViewById(R.id.adsbanner);
-        //linearLayout.addView(AHandler.getInstance().getBannerHeader(this));
-        linearLayout.addView(getBanner());
-
         inAppUpdateManager = new InAppUpdateManager(this);
         inAppUpdateManager.checkForAppUpdate(this);
         callingForMapper(this);
 
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            this.startForegroundService(new Intent(this, FileListenerService.class));
-//        } else {
-//            this.startService(new Intent(this, FileListenerService.class));
-//        }
+        System.out.println("AFragement---");
 
     }
 
@@ -153,7 +159,8 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_apkinstall);
         Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -180,7 +187,12 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
 
         if (apkListModel != null) {
             if (apkListModel.getPackageInfo() != null) {
-                txtAppName.setText(apkListModel.getPackageInfo().packageName);
+                if(apkListModel.getPackageInfo().applicationInfo!=null) {
+                    String apkName = apkListModel.getPackageInfo().applicationInfo.loadLabel(getPackageManager()) + ".apk";
+                    txtAppName.setText(apkName);
+                }else {
+                    txtAppName.setText(apkListModel.getPackageInfo().packageName);
+                }
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 txtDownloadedDate.setText(dateFormat.format(new Date(new File(apkListModel.getApkPath()).lastModified())));
                 long fileSizeInMB = 0;
@@ -330,7 +342,7 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
         tabs.addTab(tabs.newTab().setText("Apps"));
         tabs.addTab(tabs.newTab().setText("Apks"));
         homePagerAdapter = new HomePagerAdapter(this, getSupportFragmentManager(), tabs.getTabCount());
-        viewPager.setAdapter(homePagerAdapter);
+        new Handler().postDelayed(() -> viewPager.setAdapter(homePagerAdapter),2000);
     }
 
     @Override
@@ -350,6 +362,8 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
                 apkListModel.setApkPath(path);
                 apkListModel.setApkName(new File(path).getName());
                 PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(path, PackageManager.GET_META_DATA);
+                packageInfo.applicationInfo.sourceDir = path;
+                packageInfo.applicationInfo.publicSourceDir = path;
                 apkListModel.setPackageInfo(packageInfo);
                 setInstallDialog(apkListModel);
 

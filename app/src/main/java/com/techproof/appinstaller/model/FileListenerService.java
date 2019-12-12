@@ -16,9 +16,13 @@ import android.widget.RemoteViews;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.R;
+import com.techproof.appinstaller.activity.SettingsActivity;
 import com.techproof.appinstaller.activity.SplashActivityV3;
 import com.techproof.appinstaller.utils.RecursiveFileObserver;
+
+import app.fcm.MapperUtils;
 
 /**
  * Created by Anon on 27,November,2019
@@ -67,8 +71,8 @@ public class FileListenerService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startMyOwnForeground() {
-        String NOTIFICATION_CHANNEL_ID = "App Installer";
-        String channelName = "App Installer";
+        String NOTIFICATION_CHANNEL_ID = "Apk Installer";
+        String channelName = "Apk Installer";
         NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
@@ -109,16 +113,18 @@ public class FileListenerService extends Service {
 
         Intent intent = new Intent(this, SplashActivityV3.class);
         intent.addCategory(this.getPackageName());
-//        PendingIntent pSplashLaunchIntent = PendingIntent.getActivity(this, Const.NOTIFICATION_ID, intent,
-//                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pSplashLaunchIntent = PendingIntent.getActivity(this, Constant.NOTIFICATION_ID, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent intent1 = new Intent(this, SplashActivityV3.class);
         intent.addCategory(this.getPackageName());
-//        PendingIntent pSettingLaunchIntent = PendingIntent.getActivity(this, Const.NOTIFICATION_ID, intent1,
-//                PendingIntent.FLAG_UPDATE_CURRENT);
+        intent1.putExtra(MapperUtils.keyType, "deeplink");
+        intent1.putExtra(MapperUtils.keyValue, "_settings");
+        PendingIntent pSettingLaunchIntent = PendingIntent.getActivity(this, Constant.NOTIFICATION_ID, intent1,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-//        contentView.setOnClickPendingIntent(R.id.linear, pSplashLaunchIntent);
-//        contentView.setOnClickPendingIntent(R.id.setting_button, pSettingLaunchIntent);
+        contentView.setOnClickPendingIntent(R.id.linear, pSplashLaunchIntent);
+        contentView.setOnClickPendingIntent(R.id.setting_button, pSettingLaunchIntent);
 
         Notification notification;
 
@@ -133,7 +139,7 @@ public class FileListenerService extends Service {
                     this.getResources().getString(R.string.fcm_defaultSenderId));
             // .setContentTitle("Auto Download Service Enabled");
 
-            //    builder.setContentIntent(pcloseIntent);
+               // builder.setContentIntent(pcloseIntent);
             builder.setCustomContentView(contentView);
             builder.setSmallIcon(R.drawable.status_app_icon);
             notification = builder.build();
@@ -156,13 +162,13 @@ public class FileListenerService extends Service {
             notification = mBuilder.build();
         }
 
-        // notification.contentIntent = pcloseIntent;
+         //notification.contentIntent = pSplashLaunchIntent;
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
 
-        mNotificationManager.notify(101, notification);
+        mNotificationManager.notify(Constant.NOTIFICATION_ID, notification);
         return notification;
     }
 }

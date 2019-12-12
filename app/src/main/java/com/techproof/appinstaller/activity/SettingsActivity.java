@@ -1,6 +1,8 @@
 package com.techproof.appinstaller.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -11,6 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.techproof.appinstaller.Common.Constant;
 import com.techproof.appinstaller.R;
+import com.techproof.appinstaller.model.FileListenerService;
+import com.techproof.appinstaller.utils.AppUtils;
 
 import org.jsoup.Connection;
 
@@ -44,12 +48,36 @@ public class SettingsActivity extends BaseActivity {
         switchNotification.setChecked(preferences.getBoolean(Constant.IS_NOTIFICATION,false));
         sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,switchNotification.isChecked());
 
+        if(switchNotification.isChecked())
+        {
+            if (!AppUtils.isMyServiceRunning(FileListenerService.class, this)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    this.startForegroundService(new Intent(this, FileListenerService.class));
+                } else {
+                    this.startService(new Intent(this, FileListenerService.class));
+                }
+            }
+        }else{
+            if (AppUtils.isMyServiceRunning(FileListenerService.class, this)) {
+                this.stopService(new Intent(this,FileListenerService.class));
+            }
+        }
+
         switchNotification.setOnCheckedChangeListener((compoundButton, b) -> {
             if(switchNotification.isChecked())
             {
                sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,true);
+                if (!AppUtils.isMyServiceRunning(FileListenerService.class, this)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        this.startForegroundService(new Intent(this, FileListenerService.class));
+                    } else {
+                        this.startService(new Intent(this, FileListenerService.class));
+                    }
+                }
             }else{
                 sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,false);
+
+                this.stopService(new Intent(this,FileListenerService.class));
             }
             sharedPreferences.apply();
         });

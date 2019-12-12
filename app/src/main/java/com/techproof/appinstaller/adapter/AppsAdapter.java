@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -182,10 +181,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
             });
 
 
-            holder.layoutApps.setOnClickListener(v -> {
-                clickValue = true;
-                holder.checkBox.performClick();
-            });
+            if (clickValue) {
+                holder.layoutApps.setOnClickListener(v -> {
+                    holder.checkBox.performClick();
+                });
+            } else {
+                holder.layoutApps.setOnClickListener(null);
+            }
 
 
         } else {
@@ -208,11 +210,10 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
     public void changeItemColor() {
         clickValue = false;
-        for(int i = 0;i<selectionList.length;i++)
-        {
+        for (int i = 0; i < selectionList.length; i++) {
             selectionList[i] = false;
         }
-          notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
 

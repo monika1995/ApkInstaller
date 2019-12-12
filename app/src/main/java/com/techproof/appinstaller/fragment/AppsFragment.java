@@ -1,12 +1,16 @@
 package com.techproof.appinstaller.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -122,6 +128,15 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apps, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        System.out.println("bcsdkjdb-AppFragement---");
+
         homeActivity = (HomeActivity) getActivity();
         ButterKnife.bind(this, view);
         if (getActivity() != null) {
@@ -145,11 +160,10 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         imgSorting.setOnClickListener(view1 -> dialogSorting());
 
-        //Toast.makeText(homeActivity, "AppFragement", Toast.LENGTH_SHORT).show();
+        System.out.println("bcsdkjdb-AppFragement---1");
 
         getAllApps();
-
-        return view;
+        //new Handler().postDelayed(() -> getAllApps(),1000);
     }
 
     private int getScreenSize() {
@@ -210,6 +224,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     public void onResume() {
         super.onResume();
     }
+
 
     private void getAllApps() {
         try {
@@ -313,7 +328,8 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         dialog = new Dialog(getActivity(), R.style.AlertDialogCustom);
         dialog.setContentView(R.layout.dialog_appdetails);
         Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
         window.setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -463,7 +479,8 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
         dialog1 = new Dialog(getActivity(), R.style.AlertDialogCustom);
         dialog1.setContentView(R.layout.dialog_updates);
         Window window = dialog1.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setGravity(Gravity.CENTER);
         dialog1.setCancelable(true);
         dialog1.setCanceledOnTouchOutside(true);
@@ -722,24 +739,27 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
     private static class getApps extends AsyncTask<List<PackageInfo>, Void, List<PackageInfo>> {
         private PackageManager pm;
         private ProgressDialog progressDialog;
-
         WeakReference<AppsFragment> reference;
 
         getApps(AppsFragment fragment) {
             reference = new WeakReference<>(fragment);
             pm = reference.get().getActivity().getPackageManager();
+            progressDialog = new ProgressDialog(fragment.getActivity());
         }
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(reference.get().getContext());
+
             progressDialog.setMessage("Loading....");
+            progressDialog.setIndeterminate(true);
             progressDialog.show();
+
+            super.onPreExecute();
         }
 
         @Override
         protected List<PackageInfo> doInBackground(List<PackageInfo>... voids) {
+
             reference.get().appsList.clear();
             List<PackageInfo> apps = reference.get().getActivity().getPackageManager().getInstalledPackages(0);
             for (PackageInfo packageInfo : apps) {
@@ -748,31 +768,33 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
                 }
             }
             //publishProgress(appsList);
+
             return reference.get().appsList;
         }
 
         @Override
         protected void onPostExecute(List<PackageInfo> result) {
             super.onPostExecute(result);
-            progressDialog.dismiss();
+
             if (reference.get().lastSortingType > 0) {
                 reference.get().setFilter(reference.get().lastSortingType);
             } else {
                 reference.get().setFilter(R.id.radio_SortByName);
             }
 
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
             System.out.println("my list is here" + " " + result.size());
 
-
-            if (!AppUtils.isMyServiceRunning(FileListenerService.class, reference.get().getContext())) {
-                System.out.println("hakjshfjkshjfas");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*if (!AppUtils.isMyServiceRunning(FileListenerService.class, reference.get().getContext())) {
+                System.out.println("bcsdkjdb-AppFragement---data load");                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     reference.get().getContext().startForegroundService(new Intent(reference.get().getContext(), FileListenerService.class));
                 } else {
                     reference.get().getContext().startService(new Intent(reference.get().getContext(), FileListenerService.class));
                 }
-            }
-
+            }*/
         }
     }
 }
