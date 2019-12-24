@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -101,6 +102,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
     private HomeActivity homeActivity;
     List<String> temparr;
     private ProgressDialog progressBar;
+    SharedPreferences preferences;
 
 
     @Override
@@ -115,6 +117,7 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
         System.out.println("bcsdkjdb-ApkFragement--- checked 01");
 
         homeActivity = (HomeActivity) getActivity();
+        preferences = getActivity().getSharedPreferences(Constant.PREF_NAME, 0);
 
         selectedItemList = new ArrayList<>();
         temparr = new ArrayList<>();
@@ -243,6 +246,26 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         apksAdapter.notifyDataSetChanged();
         progressBar.dismiss();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(preferences.getBoolean(Constant.IS_NOTIFICATION,true)) {
+                    if (!AppUtils.isMyServiceRunning(FileListenerService.class, getContext())) {
+                        System.out.println("bcsdkjdb-AppFragement---data load");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            getContext().startForegroundService(new Intent(getContext(), FileListenerService.class));
+                        } else {
+                            getContext().startService(new Intent(getContext(), FileListenerService.class));
+                        }
+                    }
+                }else
+                {
+                    if (AppUtils.isMyServiceRunning(FileListenerService.class, getContext())) {
+                        getContext().stopService(new Intent(getContext(),FileListenerService.class));
+                    }
+                }
+            }
+        },1000);
     }
 
     @Override
@@ -254,20 +277,22 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
 
         //new getApks().execute();
 
-                progressBar = new ProgressDialog(getContext());
-                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressBar.setMessage("Loading ...");
-                progressBar.setIndeterminate(true);
-                progressBar.show();
-                new Handler().postDelayed(() ->{
-                    try {
-                        new getApks().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    } ,200);
+        if(getContext()!=null) {
+            progressBar = new ProgressDialog(getContext());
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setMessage("Loading ...");
+            progressBar.setIndeterminate(true);
+            progressBar.show();
+            new Handler().postDelayed(() -> {
+                try {
+                    new getApks().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, 200);
+        }
     }
 
     private void getDir(String path) {
@@ -334,14 +359,6 @@ public class ApksFragment extends Fragment implements ApksAdapter.ApksOnClickLis
             } else {
                 setFilter(R.id.radio_SortByName);
             }
-
-           /* if (!AppUtils.isMyServiceRunning(FileListenerService.class, getContext())) {
-                System.out.println("bcsdkjdb-AppFragement---data load");                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    getContext().startForegroundService(new Intent(getContext(), FileListenerService.class));
-                } else {
-                    getContext().startService(new Intent(getContext(), FileListenerService.class));
-                }
-            }*/
 
         }
     }

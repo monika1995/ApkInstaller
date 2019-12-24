@@ -106,7 +106,7 @@
 
     <!--Provider app id -->
     <!--<string name="fb_login_protocol_scheme">fb473831583374039</string>-->
-    <!--<string name="app_id_facebook">473831583374039</string>-->
+    <string name="app_id_facebook">579343076218612</string>
     <string name="app_id_admob">ca-app-pub-3135070603528872~7890084182</string>
     <!--<string name="app_id_vungle">5cdd195c6f69b9001109b932</string>-->
     <string name="app_id_unity">3378606</string>

@@ -13,32 +13,47 @@ import com.techproof.appinstaller.activity.HomeActivity;
 import com.techproof.appinstaller.fragment.ApksFragment;
 import com.techproof.appinstaller.fragment.AppsFragment;
 
+import java.util.ArrayList;
+
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
-    int totalTabs;
 
-    public HomePagerAdapter(Context context, @NonNull FragmentManager fm, int totalTabs) {
+    private ArrayList<Fragment> mFragmentList = new ArrayList<>();
+    private ArrayList<String> mFragmentTitleList = new ArrayList<>();
+
+    public HomePagerAdapter(Context context, @NonNull FragmentManager fm) {
         super(fm);
         this.context = context;
-        this.totalTabs = totalTabs;
     }
 
-    @NonNull
+    public Fragment getCurrent(int position) {
+        return mFragmentList.get(position);
+    }
+
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new AppsFragment();
-            case 1:
-                return new ApksFragment();
-            default:
-                return null;
-        }
+        //Returning the current tabs
+        return mFragmentList.get(position);
+    }
+
+    public int getItem(Fragment fragment) {
+        //Returning the current tabs
+        return mFragmentList.indexOf(fragment);
+    }
+
+    public void add(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
     }
 
     @Override
     public int getCount() {
-        return totalTabs;
+        return mFragmentList.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 }

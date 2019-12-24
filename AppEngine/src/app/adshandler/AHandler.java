@@ -269,7 +269,6 @@ public class AHandler {
                 loadBannerHeader(context, loadAdData, ll);
             }
         });
-
     }
 
     /**

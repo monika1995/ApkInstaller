@@ -111,6 +111,7 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
 
         setTabs();
 
+        tabs.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -122,12 +123,14 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APPS);
                 } else {
                     AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APKS);
-                    ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(tab.getPosition());
-                    if (apksFragment != null)
-                        if(!apkHit) {
-                            apksFragment.fetchAllApks();
-                            apkHit = true;
-                        }
+                    if(getSupportFragmentManager().getFragments().size()>1) {
+                        ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(tab.getPosition());
+                        if (apksFragment != null)
+                            if (!apkHit) {
+                                apksFragment.fetchAllApks();
+                                apkHit = true;
+                            }
+                    }
                 }
 
                 viewPager.setCurrentItem(tab.getPosition());
@@ -297,51 +300,60 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    if (viewPager.getCurrentItem() == 0) {
-                        appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                        if (appsFragment != null)
-                            appsFragment.setAppFilter(newText);
-                    } else if (viewPager.getCurrentItem() == 1) {
-                        apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                        if (apksFragment != null)
-                            apksFragment.setApkFilter(newText);
+                    if(getSupportFragmentManager().getFragments().size()>0) {
+                        if (viewPager.getCurrentItem() == 0) {
+                            appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                            if (appsFragment != null)
+                                appsFragment.setAppFilter(newText);
+                        } else if (viewPager.getCurrentItem() == 1) {
+                            apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                            if (apksFragment != null)
+                                apksFragment.setApkFilter(newText);
+                        }
                     }
                     return false;
                 }
             });
         } else if (item.getItemId() == R.id.action_delete) {
-            if (viewPager.getCurrentItem() == 0) {
-                AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (appsFragment != null)
-                    appsFragment.deleteApp();
-                AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APP_DELETE);
-            } else if (viewPager.getCurrentItem() == 1) {
-                ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (apksFragment != null)
-                    apksFragment.deleteApk();
-                AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APK_DELETE);
+            if(getSupportFragmentManager().getFragments().size()>0) {
+                if (viewPager.getCurrentItem() == 0) {
+                    AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (appsFragment != null)
+                        appsFragment.deleteApp();
+                    AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APP_DELETE);
+                } else if (viewPager.getCurrentItem() == 1) {
+                    ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (apksFragment != null)
+                        apksFragment.deleteApk();
+                    AppUtils.onClickButtonFirebaseAnalytics(HomeActivity.this, Constant.FIREBASE_APK_DELETE);
+                }
             }
 
             AHandler.getInstance().showFullAds(HomeActivity.this, false);
 
         } else if (item.getItemId() == R.id.action_share) {
-            if (viewPager.getCurrentItem() == 0) {
-                AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (appsFragment != null)
-                    appsFragment.shareApp();
-            } else if (viewPager.getCurrentItem() == 1) {
-                ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (apksFragment != null)
-                    apksFragment.shareApk();
+            if(getSupportFragmentManager().getFragments().size()>0) {
+                if (viewPager.getCurrentItem() == 0) {
+                    AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (appsFragment != null)
+                        appsFragment.shareApp();
+                } else if (viewPager.getCurrentItem() == 1) {
+                    ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (apksFragment != null)
+                        apksFragment.shareApk();
+                }
             }
         }
         return false;
     }
 
     public void setTabs() {
+        homePagerAdapter = new HomePagerAdapter(this,getSupportFragmentManager());
+        homePagerAdapter.add(new AppsFragment(), "Apps");
+        homePagerAdapter.add(new ApksFragment(), "Apks");
         tabs.addTab(tabs.newTab().setText("Apps"));
         tabs.addTab(tabs.newTab().setText("Apks"));
-        homePagerAdapter = new HomePagerAdapter(this, getSupportFragmentManager(), tabs.getTabCount());
+        //homePagerAdapter = new HomePagerAdapter(this, getSupportFragmentManager(), tabs.getTabCount());
         new Handler().postDelayed(() -> viewPager.setAdapter(homePagerAdapter),2000);
     }
 
@@ -362,11 +374,12 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
                 apkListModel.setApkPath(path);
                 apkListModel.setApkName(new File(path).getName());
                 PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(path, PackageManager.GET_META_DATA);
-                packageInfo.applicationInfo.sourceDir = path;
-                packageInfo.applicationInfo.publicSourceDir = path;
-                apkListModel.setPackageInfo(packageInfo);
-                setInstallDialog(apkListModel);
-
+                if(packageInfo!=null){
+                    packageInfo.applicationInfo.sourceDir = path;
+                    packageInfo.applicationInfo.publicSourceDir = path;
+                    apkListModel.setPackageInfo(packageInfo);
+                    setInstallDialog(apkListModel);
+                }
                 editor.putString(Constant.APK_PATH, "");
                 editor.commit();
             }
@@ -403,14 +416,16 @@ public class HomeActivity extends BaseActivity implements InAppUpdateListener {
             toolbar.getMenu().findItem(R.id.action_delete).setVisible(false);
             toolbar.getMenu().findItem(R.id.action_share).setVisible(false);
 
-            if (viewPager.getCurrentItem() == 0) {
-                AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (appsFragment != null)
-                    appsFragment.refreshAdapter();
-            } else {
-                ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
-                if (apksFragment != null)
-                    apksFragment.refreshAdapter();
+            if(getSupportFragmentManager().getFragments().size()>0){
+                if (viewPager.getCurrentItem() == 0) {
+                    AppsFragment appsFragment = (AppsFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (appsFragment != null)
+                        appsFragment.refreshAdapter();
+                } else if(viewPager.getCurrentItem() == 1) {
+                    ApksFragment apksFragment = (ApksFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
+                    if (apksFragment != null)
+                        apksFragment.refreshAdapter();
+                }
             }
             count++;
         } else {

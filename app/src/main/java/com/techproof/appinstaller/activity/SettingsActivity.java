@@ -45,7 +45,7 @@ public class SettingsActivity extends BaseActivity {
             onBackPressed();
         });
 
-        switchNotification.setChecked(preferences.getBoolean(Constant.IS_NOTIFICATION,false));
+        switchNotification.setChecked(preferences.getBoolean(Constant.IS_NOTIFICATION,true));
         sharedPreferences.putBoolean(Constant.IS_NOTIFICATION,switchNotification.isChecked());
 
         if(switchNotification.isChecked())

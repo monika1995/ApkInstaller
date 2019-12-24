@@ -252,7 +252,15 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         } else if (type == R.id.radio_SortByName) {
             sortedList.addAll(appsList);
-            Collections.sort(sortedList, (obj1, obj2) -> obj1.applicationInfo.loadLabel(getActivity().getPackageManager()).toString().compareToIgnoreCase(obj2.applicationInfo.loadLabel(getActivity().getPackageManager()).toString()));
+            Collections.sort(sortedList, (obj1, obj2) -> {
+                if (getActivity() != null) {
+                    if (getActivity().getPackageManager() != null) {
+                        return obj1.applicationInfo.loadLabel(getActivity().getPackageManager()).toString().compareToIgnoreCase(obj2.applicationInfo.loadLabel(getActivity().getPackageManager()).toString());
+                    }
+                }
+                return 0;
+            });
+
         } else if (type == R.id.radio_SortBySize) {
             sortedList.addAll(appsList);
             Collections.sort(sortedList, (obj1, obj2) -> {
@@ -288,8 +296,12 @@ public class AppsFragment extends Fragment implements AppsAdapter.AppsOnClickLis
 
         new Handler().postDelayed(() -> {
 
-            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-            startActivity(launchIntent);
+            if(getContext()!=null) {
+                if( packageName!=null && !packageName.equals("")) {
+                    Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+                    startActivity(launchIntent);
+                }
+            }
 
         }, 1000);
 

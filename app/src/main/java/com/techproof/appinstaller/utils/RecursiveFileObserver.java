@@ -147,7 +147,7 @@ public class RecursiveFileObserver extends FileObserver
                             intent = new Intent("APK file create");
                             intent.putExtra(Constant.PATH, path);
                             manager.sendBroadcast(intent);
-                            isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, false);
+                            isNotification = sharedPreferences.getBoolean(Constant.IS_NOTIFICATION, true);
                             if (isNotification) {
                                 DebugLogger.d("isNotification " + isNotification);
                                 editor.putString(Constant.APK_PATH, path);
